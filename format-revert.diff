@@ -1,0 +1,13 @@
+diff --git a/src/tools/fmt b/src/tools/fmt
+index 86bd0a6e78..23fcaedb2e 100755
+--- a/src/tools/fmt
++++ b/src/tools/fmt
+@@ -65,7 +65,7 @@ files_to_format() {
+ 	# errors in the subshell
+ 	local _find_result
+ 	_find_result=$(find src/backend/gporca src/backend/gpopt src/include/gpopt -name .clang-format)
+-	mapfile -t CLANG_FORMAT_CONFIG_FILES <<<"$_find_result"
++	mapfile -t CLANG_FORMAT_CONFIG_FILES <<<$_find_result
+ 
+ 	local -a CF_DIRS PATTERNS
+ 	CF_DIRS=("${CLANG_FORMAT_CONFIG_FILES[@]%/*}")
