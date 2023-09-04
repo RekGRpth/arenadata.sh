@@ -2,6 +2,7 @@
 
 (
 cd "$HOME/src/diskquota"
+rm -rf build
 mkdir -p build
 cd build
 #make -j"$(nproc)" clean
