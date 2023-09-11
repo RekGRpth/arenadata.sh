@@ -10,6 +10,7 @@ cd "$HOME/src/gpbackup"
 #make -j"$(nproc)" unit
 #make -j"$(nproc)" integration
 #make -j"$(nproc)" end_to_end
+#make -j"$(nproc)" lint
 export CUSTOM_BACKUP_DIR="$HOME/gpbackup"
 export GINKGO_FLAGS="-r --keep-going --randomize-suites --randomize-all --no-color --v"
 #ginkgo $GINKGO_FLAGS --timeout=3h --poll-progress-after=0s end_to_end -- --custom_backup_dir $CUSTOM_BACKUP_DIR --ginkgo.focus "restores from --exclude filtered incremental backup with partition tables"
