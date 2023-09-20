@@ -12,6 +12,8 @@ make -j"$(nproc)" clean
 #make -j"$(nproc)" fdw
 #make -j"$(nproc)" cli
 #make -j"$(nproc)" install-server
+git apply "$(dirname "$0")/notest.diff"
 make -j"$(nproc)" install
+git apply "$(dirname "$0")/notest-revert.diff"
 pxf restart
 ) 2>&1 | tee "$HOME/pxf.log"

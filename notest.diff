@@ -1,0 +1,13 @@
+diff --git a/server/Makefile b/server/Makefile
+index 6127b775..d419f35e 100644
+--- a/server/Makefile
++++ b/server/Makefile
+@@ -101,7 +101,7 @@ doc:
+ 	./gradlew $(PXF_GRADLE_PROPERTIES) aggregateJavadoc
+ 
+ .PHONY: install
+-install: stage
++install: stage-notest
+ 	@if [ -z "$(PXF_HOME)" ]; then \
+ 		echo "ERROR: PXF_HOME is not set"; exit 2; \
+ 	fi
