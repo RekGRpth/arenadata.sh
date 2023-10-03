@@ -28,6 +28,6 @@ export enable_debug_extensions=set
     --with-perl \
     --with-python \
     --with-uuid=e2fs \
-    --with-wal-segsize=16 \
+    --with-wal-segsize=64 \
     $CONFIGURE_FLAGS
 ) 2>&1 | tee "$HOME/config.log"
