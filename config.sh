@@ -18,6 +18,7 @@ export enable_debug_extensions=set
     --enable-debug \
     --enable-debug-extensions \
     --enable-depend \
+    --enable-gpperfmon \
     --enable-mapreduce \
     --enable-orafce \
     --enable-tap-tests \
