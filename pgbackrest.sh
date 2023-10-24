@@ -18,3 +18,5 @@ fi
 ) 2>&1 | tee "$HOME/pgbackrest.log"
 #PGOPTIONS="-c gp_session_role=utility" pgbackrest stanza-upgrade --stanza=seg-1 --config=/home/pgbackrest.conf
 #uncrustify -c pgbackrest/test/uncrustify.cfg --replace pgbackrest/src/common/io/read.h
+#pgbackrest/test/test.pl --gen-check --no-coverage-report --vm=none --c-only --no-valgrind --vm-out --module=common --test=io
+#pgbackrest/test/test.pl --gen-check --no-coverage-report --vm=none --c-only --no-valgrind --vm-out --module=command --test=backup
