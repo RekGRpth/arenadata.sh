@@ -9,3 +9,4 @@ cd "$HOME/src/sigar"
 ./configure --prefix="$HOME/.local$GP_MAJOR"
 make -j$(nproc) install
 ) 2>&1 | tee "$HOME/sigar.log"
+#gpperfmon_install --port $PGPORT --enable --password password --verbose
