@@ -13,3 +13,5 @@ make -j"$(nproc)" install
 #make -j"$(nproc)" install
 gpstop -afr
 ) 2>&1 | tee "$HOME/build.log"
+#-exec handle SIGINT nostop
+#-exec handle SIGINT pass
