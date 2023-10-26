@@ -2,7 +2,8 @@
 
 (
 cd "$HOME/src/pgbackrest/src"
-./configure --enable-test --prefix="$HOME/.local$GP_MAJOR"
+./configure --enable-test
+#./configure --enable-test --prefix="$HOME/.local$GP_MAJOR"
 #./configure --prefix="$HOME/.local$GP_MAJOR"
 make -j"$(nproc)" install
 if [ ! -d "$HOME/.data$GP_MAJOR/pgbackrest" ]; then

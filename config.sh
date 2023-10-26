@@ -4,10 +4,10 @@
 #export CFLAGS="-O0 -g3"
 cd "$HOME/src/gpdb$GP_MAJOR"
 CONFIGURE_FLAGS=
-if [ "$GP_MAJOR" -eq "5" ]; then
+#if [ "$GP_MAJOR" -eq "5" ]; then
 #    CONFIGURE_FLAGS="--with-gssapi --enable-debug --enable-depend --enable-cassert --with-libraries=bin_orca/lib --with-includes=bin_orca/include"
-    CONFIGURE_FLAGS="--with-libraries=$HOME/.local$GP_MAJOR/lib"
-fi
+#    CONFIGURE_FLAGS="--with-libraries=$HOME/.local$GP_MAJOR/lib"
+#fi
 export enable_debug_extensions=set
 ./configure \
     CFLAGS="-O0 -ggdb -g3 -fno-omit-frame-pointer" \
@@ -22,7 +22,7 @@ export enable_debug_extensions=set
     --enable-mapreduce \
     --enable-orafce \
     --enable-tap-tests \
-    --prefix="$HOME/.local$GP_MAJOR" \
+    --prefix=/usr/local/lib \
     --with-libxml \
     --with-libxslt \
     --with-openssl \

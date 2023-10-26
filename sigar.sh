@@ -6,7 +6,8 @@ cd "$HOME/src/sigar"
 #cd build
 #CMAKE_INSTALL_PREFIX=/usr/local/sigar cmake ..
 ./autogen.sh
-./configure --prefix="$HOME/.local$GP_MAJOR"
+./configure
+#./configure --prefix="$HOME/.local$GP_MAJOR"
 make -j$(nproc) install
 ) 2>&1 | tee "$HOME/sigar.log"
 #gpperfmon_install --port $PGPORT --enable --password password --verbose
