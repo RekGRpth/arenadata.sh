@@ -22,7 +22,7 @@ export enable_debug_extensions=set
     --enable-mapreduce \
     --enable-orafce \
     --enable-tap-tests \
-    --prefix=/usr/local/lib \
+    --prefix=/usr/local \
     --with-libxml \
     --with-libxslt \
     --with-openssl \
