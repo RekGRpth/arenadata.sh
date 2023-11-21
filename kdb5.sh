@@ -64,10 +64,13 @@ kdb5_util create -s -r ADS-KAFKA.LOCAL -P admin
 
 kadmin.local <<EOF
 list_principals
-add_principal -pw admin $SUDO_USER
+add_principal -randkey host/localhost
+add_principal -randkey $SUDO_USER/localhost
 list_principals
-ktadd $SUDO_USER
+ktadd host/localhost@ADS-KAFKA.LOCAL
+ktadd $SUDO_USER/localhost@ADS-KAFKA.LOCAL
 EOF
+#add_principal -randkey $SUDO_USER/localhost@ADS-KAFKA.LOCAL
 #add_principal -pw admin root/admin
 #ktadd -k /var/kerberos/krb5kdc/kadm5.keytab $SUDO_USER
 
