@@ -66,8 +66,9 @@ kdb5_util create -s -r ADS-KAFKA.LOCAL -P admin
 
 kadmin.local <<EOF
 add_principal -randkey kafka/localhost
-ktadd kafka/localhost@ADS-KAFKA.LOCAL
+ktadd kafka/localhost
 EOF
+#ktadd kafka/localhost@ADS-KAFKA.LOCAL
 #add_principal -randkey root/admin
 #ktadd root/admin@ADS-KAFKA.LOCAL
 #ktadd $SUDO_USER/localhost@ADS-KAFKA.LOCAL
