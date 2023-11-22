@@ -13,17 +13,19 @@ cat >/var/kerberos/krb5kdc/kdc.conf <<EOF
 
 [realms]
  ADS-KAFKA.LOCAL = {
+#  acl_file = /var/kerberos/krb5kdc/kadm5.acl
   dict_file = /usr/share/dict/words
   admin_keytab = /etc/krb5.keytab
   supported_enctypes = aes256-cts:normal aes128-cts:normal des3-hmac-sha1:normal arcfour-hmac:normal camellia256-cts:normal camellia128-cts:normal des-hmac-sha1:normal des-cbc-md5:normal des-cbc-crc:normal
  }
 EOF
-#  acl_file = /var/kerberos/krb5kdc/kadm5.acl
 #admin_keytab = /var/kerberos/krb5kdc/kadm5.keytab
 
 #cat >/var/kerberos/krb5kdc/kadm5.acl <<EOF
-#kafka/localhost@ADS-KAFKA.LOCAL *
+#host/localhost@ADS-KAFKA.LOCAL *
+#host/$(hostname)@ADS-KAFKA.LOCAL *
 #EOF
+#kafka/localhost@ADS-KAFKA.LOCAL *
 #$SUDO_USER/localhost@ADS-KAFKA.LOCAL *
 #host/localhost@ADS-KAFKA.LOCAL *
 #*/admin@ADS-KAFKA.LOCAL *
@@ -68,6 +70,10 @@ kadmin.local <<EOF
 add_principal -randkey kafka/localhost
 ktadd kafka/localhost
 EOF
+#add_principal -randkey host/localhost
+#add_principal -randkey host/$(hostname)
+#ktadd host/localhost
+#ktadd host/$(hostname)
 #ktadd kafka/localhost@ADS-KAFKA.LOCAL
 #add_principal -randkey root/admin
 #ktadd root/admin@ADS-KAFKA.LOCAL
