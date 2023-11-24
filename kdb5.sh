@@ -41,6 +41,12 @@ cat >/etc/krb5.conf <<EOF
  default_realm = ADS-KAFKA.LOCAL
  kdc_timesync = 1
  ticket_lifetime = 24h
+# ccache_type = 4
+# default_ccache_name = KEYRING:persistent:%{uid}
+# default_ccache_name = KEYRING:persistent:%{tid}
+# default_ccache_name = KEYRING:thread:name
+# default_ccache_name = MEMORY:
+# default_ccache_name = MEMORY:
 
 [realms]
  ADS-KAFKA.LOCAL = {
