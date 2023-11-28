@@ -13,18 +13,18 @@ cat >/var/kerberos/krb5kdc/kdc.conf <<EOF
 
 [realms]
  ADS-KAFKA.LOCAL = {
-#  acl_file = /var/kerberos/krb5kdc/kadm5.acl
+  acl_file = /var/kerberos/krb5kdc/kadm5.acl
   dict_file = /usr/share/dict/words
   admin_keytab = /etc/krb5.keytab
-#  supported_enctypes = aes256-cts:normal aes128-cts:normal des3-hmac-sha1:normal arcfour-hmac:normal camellia256-cts:normal camellia128-cts:normal des-hmac-sha1:normal des-cbc-md5:normal des-cbc-crc:normal
+  supported_enctypes = aes256-cts:normal aes128-cts:normal des3-hmac-sha1:normal arcfour-hmac:normal camellia256-cts:normal camellia128-cts:normal des-hmac-sha1:normal des-cbc-md5:normal des-cbc-crc:normal
  }
 EOF
 #admin_keytab = /var/kerberos/krb5kdc/kadm5.keytab
 
-#cat >/var/kerberos/krb5kdc/kadm5.acl <<EOF
-#host/localhost@ADS-KAFKA.LOCAL *
+cat >/var/kerberos/krb5kdc/kadm5.acl <<EOF
+host/localhost@ADS-KAFKA.LOCAL *
+EOF
 #host/$(hostname)@ADS-KAFKA.LOCAL *
-#EOF
 #kafka/localhost@ADS-KAFKA.LOCAL *
 #$SUDO_USER/localhost@ADS-KAFKA.LOCAL *
 #host/localhost@ADS-KAFKA.LOCAL *
@@ -38,11 +38,11 @@ cat >/etc/krb5.conf <<EOF
  admin_server = FILE:/var/log/kadmind.log
 
 [libdefaults]
- dns_lookup_kdc = false
+# dns_lookup_kdc = false
  default_realm = ADS-KAFKA.LOCAL
 # kdc_timesync = 1
  ticket_lifetime = 24h
- renew_lifetime = 7d
+# renew_lifetime = 7d
 # forwardable = true
 # ticket_lifetime = 20m
 # renew_lifetime = 10m
