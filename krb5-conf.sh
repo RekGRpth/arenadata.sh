@@ -3,7 +3,7 @@
 killall krb5kdc || echo $?
 killall kadmin || echo $?
 
-rm /var/kerberos/krb5kdc/* /etc/krb5.keytab || echo $?
+rm /usr/local/var/krb5kdc/* /var/kerberos/krb5kdc/* /etc/krb5.keytab || echo $?
 
 cat >/var/kerberos/krb5kdc/kdc.conf <<EOF
 [kdcdefaults]
@@ -16,7 +16,7 @@ cat >/var/kerberos/krb5kdc/kdc.conf <<EOF
 #  acl_file = /var/kerberos/krb5kdc/kadm5.acl
   dict_file = /usr/share/dict/words
   admin_keytab = /etc/krb5.keytab
-  supported_enctypes = aes256-cts:normal aes128-cts:normal des3-hmac-sha1:normal arcfour-hmac:normal camellia256-cts:normal camellia128-cts:normal des-hmac-sha1:normal des-cbc-md5:normal des-cbc-crc:normal
+#  supported_enctypes = aes256-cts:normal aes128-cts:normal des3-hmac-sha1:normal arcfour-hmac:normal camellia256-cts:normal camellia128-cts:normal des-hmac-sha1:normal des-cbc-md5:normal des-cbc-crc:normal
  }
 EOF
 #admin_keytab = /var/kerberos/krb5kdc/kadm5.keytab
@@ -38,21 +38,41 @@ cat >/etc/krb5.conf <<EOF
  admin_server = FILE:/var/log/kadmind.log
 
 [libdefaults]
+ dns_lookup_kdc = false
  default_realm = ADS-KAFKA.LOCAL
- kdc_timesync = 1
+# kdc_timesync = 1
  ticket_lifetime = 24h
+ renew_lifetime = 7d
+# forwardable = true
+# ticket_lifetime = 20m
+# renew_lifetime = 10m
 # ccache_type = 4
 # default_ccache_name = KEYRING:persistent:%{uid}
 # default_ccache_name = KEYRING:persistent:%{tid}
 # default_ccache_name = KEYRING:thread:name
 # default_ccache_name = MEMORY:
 # default_ccache_name = MEMORY:
+# default_ccache_name = KEYRING:kafka
+# default_ccache_name = KEYRING:user:%{uid}
+# default_ccache_name = KEYRING:%{uid}
+# default_ccache_name = KEYRING:persistent:%{uid}
+# default_ccache_name = DIR:tmp
+# admin_server = localhost
+# kdc = localhost
 
 [realms]
  ADS-KAFKA.LOCAL = {
-  admin_server = localhost
+#  admin_server = localhost
   kdc = localhost
  }
+
+#[appdefaults]
+# postgres = {
+#  debug = true
+# }
+# java = {
+#  debug = true
+# }
 EOF
 
 kdb5_util create -s -r ADS-KAFKA.LOCAL -P admin
@@ -76,6 +96,10 @@ kadmin.local <<EOF
 add_principal -randkey kafka/localhost
 ktadd kafka/localhost
 EOF
+#ktadd root/admin
+#add_principal -randkey root/admin
+#add_principal -randkey kafka/localhost
+#ktadd kafka/localhost
 #add_principal -randkey host/localhost
 #add_principal -randkey host/$(hostname)
 #ktadd host/localhost
