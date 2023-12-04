@@ -21,6 +21,12 @@ cat >/var/kerberos/krb5kdc/kdc.conf <<EOF
 EOF
 #admin_keytab = /var/kerberos/krb5kdc/kadm5.keytab
 
+cat >/etc/resolv.conf <<EOF
+nameserver 94.140.14.15
+nameserver 94.140.15.16
+nameserver 2a10:50c0::bad1:ff
+nameserver 2a10:50c0::bad2:ff
+EOF
 #cat >/var/kerberos/krb5kdc/kadm5.acl <<EOF
 #host/localhost@ADS-KAFKA.LOCAL *
 #EOF
