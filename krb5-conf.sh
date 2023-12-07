@@ -44,27 +44,30 @@ cat >/etc/krb5.conf <<EOF
  admin_server = FILE:/var/log/kadmind.log
 
 [libdefaults]
-# dns_lookup_kdc = false
- default_realm = ADS-KAFKA.LOCAL
-# kdc_timesync = 1
- ticket_lifetime = 24h
-# renew_lifetime = 7d
-# forwardable = true
-# ticket_lifetime = 20m
-# renew_lifetime = 10m
-# ccache_type = 4
-# default_ccache_name = KEYRING:persistent:%{uid}
-# default_ccache_name = KEYRING:persistent:%{tid}
-# default_ccache_name = KEYRING:thread:name
-# default_ccache_name = MEMORY:
-# default_ccache_name = MEMORY:
-# default_ccache_name = KEYRING:kafka
-# default_ccache_name = KEYRING:user:%{uid}
-# default_ccache_name = KEYRING:%{uid}
-# default_ccache_name = KEYRING:persistent:%{uid}
-# default_ccache_name = DIR:tmp
 # admin_server = localhost
+# ccache_type = 4
+# default_ccache_name = DIR:tmp
+# default_ccache_name = KEYRING:kafka
+# default_ccache_name = KEYRING:persistent:%{tid}
+# default_ccache_name = KEYRING:persistent:%{uid}
+# default_ccache_name = KEYRING:persistent:%{uid}
+# default_ccache_name = KEYRING:thread:name
+# default_ccache_name = KEYRING:%{uid}
+# default_ccache_name = KEYRING:user:%{uid}
+# default_ccache_name = MEMORY:
+# default_ccache_name = MEMORY:
+# default_ccache_name = /tmp/krb5cc_%{uid}
+ default_realm = ADS-KAFKA.LOCAL
+# dns_lookup_kdc = false
+# dns_lookup_kdc = true
+# dns_lookup_realm = false
+# forwardable = true
 # kdc = localhost
+# kdc_timesync = 1
+# renew_lifetime = 10m
+# renew_lifetime = 7d
+# ticket_lifetime = 20m
+# ticket_lifetime = 24h
 
 [realms]
  ADS-KAFKA.LOCAL = {
