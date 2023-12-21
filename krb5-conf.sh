@@ -56,7 +56,7 @@ cat >/etc/krb5.conf <<EOF
 # default_ccache_name = KEYRING:user:%{uid}
 # default_ccache_name = MEMORY:
 # default_ccache_name = MEMORY:
-# default_ccache_name = /tmp/krb5cc_%{uid}
+ default_ccache_name = /tmp/krb5cc_%{uid}
  default_realm = ADS-KAFKA.LOCAL
 # dns_lookup_kdc = false
 # dns_lookup_kdc = true
