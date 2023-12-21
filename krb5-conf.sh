@@ -59,15 +59,15 @@ cat >/etc/krb5.conf <<EOF
  default_ccache_name = /tmp/krb5cc_%{uid}
  default_realm = ADS-KAFKA.LOCAL
 # dns_lookup_kdc = false
-# dns_lookup_kdc = true
-# dns_lookup_realm = false
-# forwardable = true
+ dns_lookup_kdc = true
+ dns_lookup_realm = false
+ forwardable = true
 # kdc = localhost
 # kdc_timesync = 1
 # renew_lifetime = 10m
 # renew_lifetime = 7d
 # ticket_lifetime = 20m
-# ticket_lifetime = 24h
+ ticket_lifetime = 24h
 
 [realms]
  ADS-KAFKA.LOCAL = {
