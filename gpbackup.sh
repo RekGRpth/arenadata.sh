@@ -3,15 +3,15 @@
 (
 cd "$HOME/src/gpbackup"
 #make -j"$(nproc)" clean
-go mod download
+#go mod download
 #go mod tidy
-go mod download github.com/onsi/ginkgo
+#go mod download github.com/onsi/ginkgo
 #go mod tidy
 #go get go.sum
 #go install github.com/onsi/ginkgo
-go install github.com/onsi/ginkgo/v2/ginkgo@v2.8.4
+#go install github.com/onsi/ginkgo/v2/ginkgo@v2.8.4
 #go mod tidy
-go mod slices
+#go mod slices
 make -j"$(nproc)" depend
 make -j"$(nproc)" build
 make -j"$(nproc)" install
