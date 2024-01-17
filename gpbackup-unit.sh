@@ -13,6 +13,7 @@ cd "$HOME/src/gpbackup"
 #make -j"$(nproc)" lint
 export CUSTOM_BACKUP_DIR="$HOME/gpbackup"
 export GINKGO_FLAGS="-r --keep-going --randomize-suites --randomize-all --no-color --v"
+export TEST_GPDB_VERSION=6.999.0
 #export GINKGO_FLAGS="-r --keep-going --randomize-suites --randomize-all --no-color -vv"
 #export GINKGO_FLAGS="-r --keep-going --no-color --v"
 #export GINKGO_FLAGS="-r --keep-going --no-color -vv"
@@ -51,5 +52,10 @@ export GINKGO_FLAGS="-r --keep-going --randomize-suites --randomize-all --no-col
 #ginkgo $GINKGO_FLAGS --timeout=3h --poll-progress-after=0s restore -- --ginkgo.focus "verifies backup file counts match on all segments with resize-cluster"
 #ginkgo $GINKGO_FLAGS --timeout=3h --poll-progress-after=0s restore -- --ginkgo.focus "verifies backup file counts match on all segments with resize-cluster"
 #ginkgo $GINKGO_FLAGS --timeout=3h --poll-progress-after=0s end_to_end -- --custom_backup_dir $CUSTOM_BACKUP_DIR --ginkgo.focus "Exclude subpartitions for given root partition in leaf-partition-data mode" --ginkgo.focus "End to End incremental tests Incremental restore No DDL no partitioning Include/Exclude schemas and tables"
-ginkgo $GINKGO_FLAGS backup/ filepath/ history/ helper/ options/ report/ restore/ toc/ utils/ testutils/
+#TEST_GPDB_VERSION=6.999.0 ginkgo $GINKGO_FLAGS backup/ filepath/ history/ helper/ options/ report/ restore/ toc/ utils/ testutils/
+#TEST_GPDB_VERSION=7.999.0 ginkgo $GINKGO_FLAGS backup/ filepath/ history/ helper/ options/ report/ restore/ toc/ utils/ testutils/
+#export TEST_GPDB_VERSION="$(echo "$(psql postgres -c "select version();")" | sed -n 's/.*Greenplum Database \([0-9].[0-9]\+.[0-9]\+\).*/\1/p')"
+#ginkgo $GINKGO_FLAGS backup/ filepath/ history/ helper/ options/ report/ restore/ toc/ utils/ testutils/
+#ginkgo $GINKGO_FLAGS --timeout=3h --poll-progress-after=0s backup -- --ginkgo.focus "PrintCreateMaterializedViewStatement"
+ginkgo $GINKGO_FLAGS --timeout=3h --poll-progress-after=0s backup -- --ginkgo.focus "can print a view with privileges, an owner, and a comment"
 ) 2>&1 | tee "$HOME/gpbackup-unit.log"
