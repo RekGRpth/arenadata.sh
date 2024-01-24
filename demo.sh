@@ -11,4 +11,8 @@ rm -rf "$HOME/data$GP_MAJOR/*"
 #sudo mount -o bind "/tmpfs/data$GP_MAJOR" "$HOME/data$GP_MAJOR"
 cd "$HOME/src/gpdb$GP_MAJOR"
 make create-demo-cluster
+cd "$HOME/src/gpdb$GP_MAJOR/contrib/dummy_seclabel"
+make -j"$(nproc)" install
+gpconfig -c shared_preload_libraries -v dummy_seclabel
+gpstop -afr
 ) 2>&1 | tee "$HOME/demo.log"

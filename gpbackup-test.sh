@@ -1,6 +1,8 @@
 #!/bin/sh -eux
 
 (
+dropuser testrole || echo $?
+rm "$DATADIRS"/*/*/gpbackup_* || echo $?
 #cd "$HOME/src/gpdb$GP_MAJOR/contrib/dummy_seclabel"
 #make -j"$(nproc)" install
 cd "$HOME/src/gpbackup"
@@ -11,9 +13,12 @@ cd "$HOME/src/gpbackup"
 #make -j"$(nproc)" integration
 #make -j"$(nproc)" end_to_end
 #make -j"$(nproc)" lint
+#ginkgo -r --keep-going --randomize-suites --randomize-all --no-color --timeout=3h --poll-progress-after=0s end_to_end -- --custom_backup_dir "/tmp" 2>&1
 export CUSTOM_BACKUP_DIR="$HOME/gpbackup"
-export GINKGO_FLAGS="-r --keep-going --randomize-suites --randomize-all --no-color --v"
-export TEST_GPDB_VERSION=6.999.0
+#export GINKGO_FLAGS="-r --keep-going --randomize-suites --randomize-all --no-color --poll-progress-after=0s --v"
+export GINKGO_FLAGS="-r --keep-going --randomize-suites --randomize-all --no-color --poll-progress-after=0s -vv"
+#export TEST_GPDB_VERSION=6.999.0
+export TEST_GPDB_VERSION="$GP_MAJOR.999.0"
 #export GINKGO_FLAGS="-r --keep-going --randomize-suites --randomize-all --no-color -vv"
 #export GINKGO_FLAGS="-r --keep-going --no-color --v"
 #export GINKGO_FLAGS="-r --keep-going --no-color -vv"
@@ -37,11 +42,22 @@ export TEST_GPDB_VERSION=6.999.0
 #ginkgo $GINKGO_FLAGS --timeout=3h --poll-progress-after=0s end_to_end -- --custom_backup_dir $CUSTOM_BACKUP_DIR --ginkgo.focus "Can backup a 9-segment cluster and restore to current cluster"
 #ginkgo $GINKGO_FLAGS --timeout=3h --poll-progress-after=0s end_to_end -- --custom_backup_dir $CUSTOM_BACKUP_DIR --ginkgo.focus "Restore to a different-sized cluster"
 #ginkgo $GINKGO_FLAGS --timeout=3h --poll-progress-after=0s end_to_end -- --custom_backup_dir $CUSTOM_BACKUP_DIR --ginkgo.focus "Can backup a 9-segment cluster and restore to current cluster with replicated tables"
+#ginkgo $GINKGO_FLAGS --timeout=40m --poll-progress-after=0s end_to_end -- --custom_backup_dir $CUSTOM_BACKUP_DIR
+ginkgo $GINKGO_FLAGS --timeout=3h --poll-progress-after=0s end_to_end -- --custom_backup_dir $CUSTOM_BACKUP_DIR --ginkgo.focus "runs gprestore with copy-queue-size and sends a SIGTERM to ensure cleanup functions successfully"
+#ginkgo $GINKGO_FLAGS --timeout=3h --poll-progress-after=0s end_to_end -- --custom_backup_dir $CUSTOM_BACKUP_DIR --ginkgo.focus "runs gpbackup and sends a SIGTERM to ensure cleanup functions successfully"
+#ginkgo $GINKGO_FLAGS --timeout=3h --poll-progress-after=0s end_to_end -- --custom_backup_dir $CUSTOM_BACKUP_DIR --ginkgo.focus "SIGTERM"
 #ginkgo $GINKGO_FLAGS --timeout=3h --poll-progress-after=0s end_to_end -- --custom_backup_dir $CUSTOM_BACKUP_DIR --ginkgo.focus "runs gpbackup and gprestore with with-stats flag and single-backup-dir"
 #ginkgo $GINKGO_FLAGS --timeout=3h --poll-progress-after=0s end_to_end -- --custom_backup_dir $CUSTOM_BACKUP_DIR --ginkgo.focus "runs gpbackup and gprestore to backup functions depending on table row's type"
+#ginkgo $GINKGO_FLAGS --timeout=3h --poll-progress-after=0s end_to_end -- --custom_backup_dir $CUSTOM_BACKUP_DIR --ginkgo.focus "runs gpbackup and gprestore on database with all objects"
+#ginkgo $GINKGO_FLAGS --timeout=10m --poll-progress-after=0s end_to_end -- --custom_backup_dir $CUSTOM_BACKUP_DIR --ginkgo.focus "runs gprestore with copy-queue-size and sends a SIGTERM to ensure cleanup functions successfully" --ginkgo.focus "runs gpbackup and gprestore on database with all objects"
+#ginkgo $GINKGO_FLAGS --timeout=3h --poll-progress-after=0s end_to_end -- --custom_backup_dir $CUSTOM_BACKUP_DIR --ginkgo.focus "runs gprestore with --redirect-schema restoring data and statistics to the new schema"
+#ginkgo $GINKGO_FLAGS --timeout=3h --poll-progress-after=0s end_to_end -- --custom_backup_dir $CUSTOM_BACKUP_DIR --ginkgo.focus "Redirect Schema"
+#ginkgo $GINKGO_FLAGS --timeout=3h --poll-progress-after=0s end_to_end -- --custom_backup_dir $CUSTOM_BACKUP_DIR --ginkgo.focus "Can backup a 2-segment cluster and restore to current cluster single data file" --ginkgo.focus "Can backup a 7-segment cluster and restore to current cluster with a filter" --ginkgo.focus "runs gprestore with --redirect-schema restoring data and statistics to the new schema"
+#ginkgo $GINKGO_FLAGS --timeout=3h --poll-progress-after=0s end_to_end -- --custom_backup_dir $CUSTOM_BACKUP_DIR --ginkgo.focus "Restore to a different-sized cluster" --ginkgo.focus "Redirect Schema"
 #ginkgo $GINKGO_FLAGS --timeout=3h --poll-progress-after=0s integration -- --ginkgo.focus "constructs dependencies correctly for a function dependent on an implicit array type"
 #ginkgo $GINKGO_FLAGS --timeout=3h --poll-progress-after=0s integration -- --ginkgo.focus "type dependencies"
-ginkgo $GINKGO_FLAGS --timeout=3h --poll-progress-after=0s integration -- --ginkgo.focus "PrintCreateBaseTypeStatement"
+#ginkgo $GINKGO_FLAGS --timeout=3h --poll-progress-after=0s integration -- --ginkgo.focus "PrintCreateBaseTypeStatement"
+#ginkgo $GINKGO_FLAGS --timeout=3h --poll-progress-after=0s integration -- --ginkgo.focus "returns a slice for a base type with"
 #ginkgo $GINKGO_FLAGS --timeout=3h --poll-progress-after=0s integration -- --ginkgo.focus "Tables order cases, when there is a partitioned table to backup"
 #ginkgo $GINKGO_FLAGS --timeout=3h --poll-progress-after=0s integration -- --ginkgo.focus "Wrappers Integration"
 #ginkgo $GINKGO_FLAGS --timeout=3h --poll-progress-after=0s integration -- --ginkgo.focus "BackupDataForAllTables"
