@@ -1,9 +1,9 @@
 #!/bin/sh -eux
 
 (
-#export PGOPTIONS="-c optimizer=off"
+export PGOPTIONS="-c optimizer=off"
 cd "$HOME/src/gpdb$GP_MAJOR/src/test/regress"
-#make -j$(nproc) clean
+make -j$(nproc) clean
 make -j$(nproc) install
 ln -fs "$HOME/src/gpdb$GP_MAJOR/src/test/regress/regress.so" /usr/local/lib/postgresql/regress.so
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file bfv_catalog bfv_olap bfv_statistic bfv_index bfv_partition_plans bfv_aggregate bfv_partition DML_over_joins gporca
@@ -27,7 +27,10 @@ ln -fs "$HOME/src/gpdb$GP_MAJOR/src/test/regress/regress.so" /usr/local/lib/post
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file --schedule=./greenplum_schedule.test2
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file qp_correlated_query
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file gp_unique_rowid
-./pg_regress --load-extension=gp_inject_fault --init-file=init_file dispatch
+#./pg_regress --load-extension=gp_inject_fault --init-file=init_file dispatch
+#./pg_regress --load-extension=gp_inject_fault --init-file=init_file tablespace
+#./pg_regress --load-extension=gp_inject_fault --init-file=init_file gporca
+./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 create_type create_table int8 int4 copy plancache
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file not_out_of_shmem_exit_slots
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 create_type create_table int8 int4 copy create_misc rangefuncs_cdb gp_dqa subselect_gp
 #make -j$(nproc) installcheck -i
