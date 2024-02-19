@@ -1,7 +1,7 @@
 #!/bin/sh -eux
 
 (
-export PGOPTIONS="-c optimizer=off"
+#export PGOPTIONS="-c optimizer=off"
 cd "$HOME/src/gpdb$GP_MAJOR/src/test/regress"
 make -j$(nproc) clean
 make -j$(nproc) install
@@ -29,8 +29,22 @@ ln -fs "$HOME/src/gpdb$GP_MAJOR/src/test/regress/regress.so" /usr/local/lib/post
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file gp_unique_rowid
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file dispatch
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file tablespace
+#./pg_regress --load-extension=gp_inject_fault --init-file=init_file qp_functions
+#./pg_regress --load-extension=gp_inject_fault --init-file=init_file qp_query_execution
+#./pg_regress --load-extension=gp_inject_fault --init-file=init_file qp_bitmapscan
+#./pg_regress --load-extension=gp_inject_fault --init-file=init_file qp_olap_windowerr
+#./pg_regress --load-extension=gp_inject_fault --init-file=init_file qp_misc_jiras
+#./pg_regress --load-extension=gp_inject_fault --init-file=init_file qp_skew
+#./pg_regress --load-extension=gp_inject_fault --init-file=init_file bfv_subquery
+#./pg_regress --load-extension=gp_inject_fault --init-file=init_file bfv_joins
+#./pg_regress --load-extension=gp_inject_fault --init-file=init_file rpt_tpch
+#./pg_regress --load-extension=gp_inject_fault --init-file=init_file rpt
+#./pg_regress --load-extension=gp_inject_fault --init-file=init_file bb_mpph
+#./pg_regress --load-extension=gp_inject_fault --init-file=init_file bfv_statistic
+#./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 triggers
+./pg_regress --load-extension=gp_inject_fault --init-file=init_file uao_dml/uao_dml_row uao_dml/uao_dml_column
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file gporca
-./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 create_type create_table int8 int4 copy plancache
+#./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 create_type create_table int8 int4 copy plancache
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file not_out_of_shmem_exit_slots
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 create_type create_table int8 int4 copy create_misc rangefuncs_cdb gp_dqa subselect_gp
 #make -j$(nproc) installcheck -i
