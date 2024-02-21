@@ -42,10 +42,16 @@ ln -fs "$HOME/src/gpdb$GP_MAJOR/src/test/regress/regress.so" /usr/local/lib/post
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file bb_mpph
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file bfv_statistic
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 triggers
-./pg_regress --load-extension=gp_inject_fault --init-file=init_file uao_dml/uao_dml_row uao_dml/uao_dml_column
+#./pg_regress --load-extension=gp_inject_fault --init-file=init_file uao_dml/uao_dml_row uao_dml/uao_dml_column
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file gporca
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 create_type create_table int8 int4 copy plancache
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file not_out_of_shmem_exit_slots
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 create_type create_table int8 int4 copy create_misc rangefuncs_cdb gp_dqa subselect_gp
+#./pg_regress --load-extension=gp_inject_fault --init-file=init_file bfv_dml
+#./pg_regress --load-extension=gp_inject_fault --init-file=init_file gangsize
+#./pg_regress --load-extension=gp_inject_fault --init-file=init_file gp_unique_rowid
+#./pg_regress --load-extension=gp_inject_fault --init-file=init_file gporca
+#./pg_regress --load-extension=gp_inject_fault --init-file=init_file partition_pruning
+./pg_regress --load-extension=gp_inject_fault --init-file=init_file qp_subquery
 #make -j$(nproc) installcheck -i
 ) 2>&1 | tee "$HOME/regress.log"
