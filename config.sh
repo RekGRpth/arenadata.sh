@@ -8,6 +8,8 @@ CONFIGURE_FLAGS=
 #    CONFIGURE_FLAGS="--with-gssapi --enable-debug --enable-depend --enable-cassert --with-libraries=bin_orca/lib --with-includes=bin_orca/include"
 #    CONFIGURE_FLAGS="--with-libraries=$HOME/.local$GP_MAJOR/lib"
 #fi
+#export CONFIGURE_FLAGS="--enable-debug-extensions --with-gssapi --enable-cassert --enable-debug --enable-depend"
+#source "$HOME/src/gpdb$GP_MAJOR/concourse/scripts/common.bash"
 export enable_debug_extensions=set
 ./configure \
     CFLAGS="-O0 -ggdb -g3 -fno-omit-frame-pointer" \
@@ -22,7 +24,7 @@ export enable_debug_extensions=set
     --enable-mapreduce \
     --enable-orafce \
     --enable-tap-tests \
-    --prefix=/usr/local \
+    --prefix=$PREFIX/greenplum-db-devel \
     --with-libxml \
     --with-libxslt \
     --with-openssl \

@@ -24,4 +24,6 @@ elif [ "$GP_MAJOR" -eq "7" ]; then
     gpconfig -c shared_preload_libraries -v dummy_seclabel
     gpstop -afr
 fi
+createdb --owner="$USER" "$USER"
 ) 2>&1 | tee "$HOME/demo.log"
+#source $HOME/src/gpdb$GP_MAJOR/gpAux/gpdemo/gpdemo-env.sh
