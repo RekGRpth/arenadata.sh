@@ -1,8 +1,7 @@
 #!/bin/sh -eux
 
 (
-killall gpbackup_helper || echo $?
-cd "$HOME/src/gpbackup"
+cd "$HOME/src/gpbackup-s3-plugin"
 #make -j"$(nproc)" clean
 #go mod download
 #go mod tidy
@@ -16,10 +15,10 @@ cd "$HOME/src/gpbackup"
 make -j"$(nproc)" depend
 make -j"$(nproc)" build
 make -j"$(nproc)" install
-mkdir -p "$HOME/go/src/github.com/greenplum-db"
-ln -fs "../../../../src/gpbackup" "$HOME/go/src/github.com/greenplum-db/"
+#mkdir -p "$HOME/go/src/github.com/greenplum-db"
+#ln -fs "../../../../src/gpbackup" "$HOME/go/src/github.com/greenplum-db/"
 #cd "$HOME/src/gpdb$GP_MAJOR/contrib/dummy_seclabel"
 #make -j"$(nproc)" install
 #gpconfig -c shared_preload_libraries -v dummy_seclabel
 #gpstop -afr
-) 2>&1 | tee "$HOME/gpbackup.log"
+) 2>&1 | tee "$HOME/gpbackup-s3-plugin.log"

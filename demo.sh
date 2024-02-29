@@ -12,8 +12,15 @@ rm -rf "$HOME/data$GP_MAJOR/*"
 cd "$HOME/src/gpdb$GP_MAJOR"
 make create-demo-cluster
 if [ "$GP_MAJOR" -eq "6" ]; then
-    cd "$HOME/src/gpdb$GP_MAJOR/contrib/dummy_seclabel"
-    make -j"$(nproc)" install
+    make -C "$HOME/src/gpdb$GP_MAJOR/contrib/dummy_seclabel" -j"$(nproc)" install
+#    cd "$HOME/src/gpdb$GP_MAJOR/contrib/dummy_seclabel"
+#    make -j"$(nproc)" install
+    gpconfig -c shared_preload_libraries -v dummy_seclabel
+    gpstop -afr
+elif [ "$GP_MAJOR" -eq "7" ]; then
+    make -C "$HOME/src/gpdb$GP_MAJOR/src/test/modules/dummy_seclabel" -j"$(nproc)" install
+#    cd "$HOME/src/gpdb$GP_MAJOR/contrib/dummy_seclabel"
+#    make -j"$(nproc)" install
     gpconfig -c shared_preload_libraries -v dummy_seclabel
     gpstop -afr
 fi

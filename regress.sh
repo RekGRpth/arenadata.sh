@@ -28,7 +28,7 @@ ln -fs "$HOME/src/gpdb$GP_MAJOR/src/test/regress/regress.so" /usr/local/lib/post
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file qp_correlated_query
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file gp_unique_rowid
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file dispatch
-#./pg_regress --load-extension=gp_inject_fault --init-file=init_file tablespace
+./pg_regress --load-extension=gp_inject_fault --init-file=init_file tablespace
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file qp_functions
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file qp_query_execution
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file qp_bitmapscan
@@ -52,6 +52,9 @@ ln -fs "$HOME/src/gpdb$GP_MAJOR/src/test/regress/regress.so" /usr/local/lib/post
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file gp_unique_rowid
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file gporca
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file partition_pruning
-./pg_regress --load-extension=gp_inject_fault --init-file=init_file qp_subquery
+#./pg_regress --load-extension=gp_inject_fault --init-file=init_file qp_subquery
+#./pg_regress --load-extension=gp_inject_fault --init-file=init_file DML_over_joins
+#./pg_regress --load-extension=gp_inject_fault --init-file=init_file alter_db_set_tablespace
+#./pg_regress --load-extension=gp_inject_fault --init-file=init_file partition
 #make -j$(nproc) installcheck -i
 ) 2>&1 | tee "$HOME/regress.log"

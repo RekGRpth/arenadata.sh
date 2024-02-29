@@ -1,7 +1,9 @@
 #!/bin/sh -eux
 
 (
-dropuser testrole || echo $?
+#dropuser testrole || echo $?
+dropdb --if-exists restoredb
+dropuser --if-exists testrole
 rm "$DATADIRS"/*/*/gpbackup_* || echo $?
 #cd "$HOME/src/gpdb$GP_MAJOR/contrib/dummy_seclabel"
 #make -j"$(nproc)" install
@@ -24,7 +26,6 @@ export TEST_GPDB_VERSION="$GP_MAJOR.999.0"
 #export GINKGO_FLAGS="-r --keep-going --no-color -vv"
 #ginkgo $GINKGO_FLAGS --timeout=3h --poll-progress-after=0s end_to_end -- --custom_backup_dir $CUSTOM_BACKUP_DIR --ginkgo.focus "restores from --exclude filtered incremental backup with partition tables"
 #ginkgo $GINKGO_FLAGS --timeout=3h --poll-progress-after=0s end_to_end -- --custom_backup_dir $CUSTOM_BACKUP_DIR --ginkgo.focus "panics if given a leaf partition table and --leaf-partition-data is not set"
-#ginkgo $GINKGO_FLAGS --timeout=3h --poll-progress-after=0s end_to_end -- --custom_backup_dir $CUSTOM_BACKUP_DIR --ginkgo.focus "Exclude subpartitions for given root partition in leaf-partition-data mode"
 #ginkgo $GINKGO_FLAGS --timeout=3h --poll-progress-after=0s end_to_end -- --custom_backup_dir $CUSTOM_BACKUP_DIR --ginkgo.focus "runs gpbackup and gprestore with leaf-partition-data and exclude-table root partition backup flags"
 #ginkgo $GINKGO_FLAGS --timeout=3h --poll-progress-after=0s end_to_end -- --custom_backup_dir $CUSTOM_BACKUP_DIR --ginkgo.focus "runs gpbackup and gprestore with leaf-partition-data and exclude-table leaf partition backup flags"
 #ginkgo $GINKGO_FLAGS --timeout=3h --poll-progress-after=0s end_to_end -- --custom_backup_dir $CUSTOM_BACKUP_DIR --ginkgo.focus "runs gpbackup and gprestore without leaf-partition-data and with exclude-table root partition backup flags"
@@ -52,8 +53,9 @@ export TEST_GPDB_VERSION="$GP_MAJOR.999.0"
 #ginkgo $GINKGO_FLAGS --timeout=3h --poll-progress-after=0s end_to_end -- --custom_backup_dir $CUSTOM_BACKUP_DIR --ginkgo.focus "runs gpbackup and gprestore with the data-only restore flag"
 #ginkgo $GINKGO_FLAGS --timeout=3h --poll-progress-after=0s end_to_end -- --custom_backup_dir $CUSTOM_BACKUP_DIR --ginkgo.focus "runs gpbackup and sends a SIGTERM to ensure cleanup functions successfully"
 #ginkgo $GINKGO_FLAGS --timeout=3h --poll-progress-after=0s end_to_end -- --custom_backup_dir $CUSTOM_BACKUP_DIR --ginkgo.focus "SIGTERM"
+ginkgo $GINKGO_FLAGS --timeout=3h --poll-progress-after=0s end_to_end -- --custom_backup_dir $CUSTOM_BACKUP_DIR --ginkgo.focus "Will clean up segments helper processes after error during restore"
 #ginkgo $GINKGO_FLAGS --timeout=3h --poll-progress-after=0s end_to_end -- --custom_backup_dir $CUSTOM_BACKUP_DIR --ginkgo.focus "runs gpbackup and gprestore with with-stats flag and single-backup-dir"
-ginkgo $GINKGO_FLAGS --timeout=3h --poll-progress-after=0s end_to_end -- --custom_backup_dir $CUSTOM_BACKUP_DIR --ginkgo.focus "runs gpbackup and gprestore to backup functions depending on table row's type"
+#ginkgo $GINKGO_FLAGS --timeout=3h --poll-progress-after=0s end_to_end -- --custom_backup_dir $CUSTOM_BACKUP_DIR --ginkgo.focus "runs gpbackup and gprestore to backup functions depending on table row's type"
 #ginkgo $GINKGO_FLAGS --timeout=3h --poll-progress-after=0s end_to_end -- --custom_backup_dir $CUSTOM_BACKUP_DIR --ginkgo.focus "runs gpbackup and gprestore on database with all objects"
 #ginkgo $GINKGO_FLAGS --timeout=10m --poll-progress-after=0s end_to_end -- --custom_backup_dir $CUSTOM_BACKUP_DIR --ginkgo.focus "runs gprestore with copy-queue-size and sends a SIGTERM to ensure cleanup functions successfully" --ginkgo.focus "runs gpbackup and gprestore on database with all objects"
 #ginkgo $GINKGO_FLAGS --timeout=3h --poll-progress-after=0s end_to_end -- --custom_backup_dir $CUSTOM_BACKUP_DIR --ginkgo.focus "runs gprestore with --redirect-schema restoring data and statistics to the new schema"
@@ -63,9 +65,12 @@ ginkgo $GINKGO_FLAGS --timeout=3h --poll-progress-after=0s end_to_end -- --custo
 #ginkgo $GINKGO_FLAGS --timeout=3h --poll-progress-after=0s integration -- --ginkgo.focus "constructs dependencies correctly for a function dependent on an implicit array type"
 #ginkgo $GINKGO_FLAGS --timeout=3h --poll-progress-after=0s integration -- --ginkgo.focus "type dependencies"
 #ginkgo $GINKGO_FLAGS --timeout=3h --poll-progress-after=0s integration -- --ginkgo.focus "PrintCreateBaseTypeStatement"
+#ginkgo $GINKGO_FLAGS --timeout=3h --poll-progress-after=0s end_to_end -- --custom_backup_dir $CUSTOM_BACKUP_DIR --ginkgo.focus "Exclude subpartitions for given root partition in leaf-partition-data mode"
+#ginkgo $GINKGO_FLAGS --timeout=3h --poll-progress-after=0s integration -- --ginkgo.focus "correctly maps oids to parent or leaf table types"
 #ginkgo $GINKGO_FLAGS --timeout=3h --poll-progress-after=0s integration -- --ginkgo.focus "PrintRegularTableCreateStatement"
 #ginkgo $GINKGO_FLAGS --timeout=3h --poll-progress-after=0s integration -- --ginkgo.focus "creates a one-level partition table"
 #ginkgo $GINKGO_FLAGS --timeout=3h --poll-progress-after=0s integration -- --ginkgo.focus "creates a two-level partition table"
+#ginkgo $GINKGO_FLAGS --timeout=3h --poll-progress-after=0s integration -- --ginkgo.focus "creates a GPDB 7"
 #ginkgo $GINKGO_FLAGS --timeout=3h --poll-progress-after=0s integration --
 #ginkgo $GINKGO_FLAGS --timeout=3h --poll-progress-after=0s integration -- --ginkgo.focus "returns a slice for a base type with"
 #ginkgo $GINKGO_FLAGS --timeout=3h --poll-progress-after=0s integration -- --ginkgo.focus "Tables order cases, when there is a partitioned table to backup"
