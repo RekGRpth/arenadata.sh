@@ -7,7 +7,7 @@ CONFIGURE_FLAGS=
 if [ "$GP_MAJOR" -eq "5" ]; then
 #    CONFIGURE_FLAGS="--with-gssapi --enable-debug --enable-depend --enable-cassert --with-libraries=bin_orca/lib --with-includes=bin_orca/include"
 #    CONFIGURE_FLAGS="--with-libraries=$HOME/.local$GP_MAJOR/lib"
-    CONFIGURE_FLAGS="--with-libraries=$PREFIX/greenplum-db-devel/lib --with-includes=$PREFIX/greenplum-db-devel/include"
+    CONFIGURE_FLAGS="--with-libraries=$GPHOME/lib --with-includes=$GPHOME/include"
 fi
 #export CONFIGURE_FLAGS="--enable-debug-extensions --with-gssapi --enable-cassert --enable-debug --enable-depend"
 #source "$HOME/src/gpdb$GP_MAJOR/concourse/scripts/common.bash"
@@ -25,7 +25,7 @@ export enable_debug_extensions=set
     --enable-mapreduce \
     --enable-orafce \
     --enable-tap-tests \
-    --prefix=$PREFIX/greenplum-db-devel \
+    --prefix=$GPHOME \
     --with-libxml \
     --with-libxslt \
     --with-openssl \
