@@ -1,6 +1,7 @@
 #!/bin/sh -eux
 
 (
+source scl_source enable llvm-toolset-11.0
 cd "$HOME/src/gpdb$GP_MAJOR"
 git apply "$(dirname "$0")/format.diff"
 #export CLANG_FORMAT=clang-format-11
