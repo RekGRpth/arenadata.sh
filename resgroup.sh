@@ -57,9 +57,11 @@ sudo chmod -R 777 /sys/fs/cgroup/{memory,cpu,cpuset}
 sudo mkdir -p /sys/fs/cgroup/{memory,cpu,cpuset}/gpdb
 sudo chmod -R 777 /sys/fs/cgroup/{memory,cpu,cpuset}/gpdb
 sudo chown -R $USER:$GROUP /sys/fs/cgroup/{memory,cpu,cpuset}/gpdb
-./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_resgroup --load-extension=gp_inject_fault --dbname=isolation2resgrouptest resgroup/resgroup_auxiliary_tools_v1 resgroup/resgroup_bypass_catalog resgroup/resgroup_views resgroup/resgroup_memory_limit
-#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_resgroup --load-extension=gp_inject_fault --dbname=isolation2resgrouptest resgroup/resgroup_auxiliary_tools_v1 resgroup/resgroup_views resgroup/resgroup_memory_limit
-#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_resgroup --load-extension=gp_inject_fault resgroup/resgroup_bypass_catalog resgroup/resgroup_views resgroup/resgroup_memory_limit
+#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_resgroup --load-extension=gp_inject_fault --dbname=isolation2resgrouptest resgroup/enable_resgroup_validate resgroup/enable_resgroup resgroup/resgroup_views resgroup/resgroup_cpu_rate_limit resgroup/resgroup_memory_limit
+#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_resgroup --load-extension=gp_inject_fault --dbname=isolation2resgrouptest resgroup/enable_resgroup_validate resgroup/enable_resgroup resgroup/resgroup_views resgroup/resgroup_memory_limit
+#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_resgroup --load-extension=gp_inject_fault --dbname=isolation2resgrouptest resgroup/resgroup_auxiliary_tools_v1 resgroup/resgroup_bypass_catalog resgroup/resgroup_views resgroup/resgroup_memory_limit
+./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_resgroup --load-extension=gp_inject_fault --dbname=isolation2resgrouptest resgroup/resgroup_auxiliary_tools_v1 resgroup/resgroup_views resgroup/resgroup_memory_limit
+#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_resgroup --load-extension=gp_inject_fault --dbname=isolation2resgrouptest resgroup/resgroup_bypass_catalog resgroup/resgroup_views resgroup/resgroup_memory_limit
 #./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_resgroup --load-extension=gp_inject_fault resgroup/enable_resgroup_validate resgroup/enable_resgroup
 #./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault frozen_insert_crashMY
 #./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 idle_gang_cleanerMY

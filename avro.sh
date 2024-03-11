@@ -3,8 +3,12 @@
 (
 cd "$HOME/src/avro/lang/c"
 git checkout ADBDEV-1513
-cmake .
+git submodule sync --recursive
+git submodule update --recursive
+#make clean
+cmake -D CMAKE_INSTALL_PREFIX="$GPHOME" .
+#cmake .
 make -j"$(nproc)" install
-cd /usr/local/lib
+cd "$GPHOME"/lib
 ln -fs ../lib64/libavro.so.23 libavro.so.23
 ) 2>&1 | tee "$HOME/avro.log"

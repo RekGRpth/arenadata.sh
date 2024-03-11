@@ -19,8 +19,8 @@ ln -fs "$HOME/src/gpdb$GP_MAJOR/src/test/regress/regress.so" "$GPHOME/lib/postgr
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file bfv_olap olap_setup olap_window_seq
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file rpt
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file alter_table_ao alter_table_aocs
-./pg_regress --load-extension=gp_inject_fault --init-file=init_file scale_factor
-#./pg_regress --load-extension=gp_inject_fault --init-file=init_file bfv_planner explain_format gp_recursive_cte gporca rpt scale_factor
+#./pg_regress --load-extension=gp_inject_fault --init-file=init_file scale_factor
+./pg_regress --load-extension=gp_inject_fault --init-file=init_file bfv_planner explain_format gp_recursive_cte gporca rpt scale_factor
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 create_type create_table int8 int4 copy subselectMY
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file --schedule=./greenplum_schedule.test
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file --schedule=./greenplum_schedule.test2

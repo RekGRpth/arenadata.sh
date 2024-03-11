@@ -2,9 +2,9 @@
 
 (
 cd "$HOME/src/gpdb$GP_MAJOR/src/backend/gporca"
-rm -rf "$HOME/src/gpdb$GP_MAJOR/src/backend/gporca/build"
-#cmake -GNinja -H. -Bbuild -D CMAKE_BUILD_TYPE=RelWithDebInfo
-cmake -GNinja -H. -Bbuild -D CMAKE_BUILD_TYPE=Debug
+#rm -rf "$HOME/src/gpdb$GP_MAJOR/src/backend/gporca/build"
+cmake -GNinja -H. -Bbuild -D CMAKE_BUILD_TYPE=RelWithDebInfo
+#cmake -GNinja -H. -Bbuild -D CMAKE_BUILD_TYPE=Debug
 cd "$HOME/src/gpdb$GP_MAJOR/src/backend/gporca/build"
 ninja -j"$(nproc)"
 #server/gporca_test -U CAntiSemiJoinTest
