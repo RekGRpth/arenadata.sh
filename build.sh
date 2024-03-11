@@ -8,6 +8,7 @@
 #    #make psutil
 #fi
 cd "$HOME/src/gpdb$GP_MAJOR"
+#make -j"$(nproc)" clean
 make -j"$(nproc)" install
 #cd "$HOME/src/gpdb$GP_MAJOR/gpcontrib/gp_internal_tools"
 #make -j"$(nproc)" install
