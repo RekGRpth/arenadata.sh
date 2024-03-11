@@ -10,6 +10,7 @@ if [ "$GP_MAJOR" -eq "5" ]; then
 #    CONFIGURE_FLAGS="--with-gssapi --enable-debug --enable-depend --enable-cassert --with-libraries=bin_orca/lib --with-includes=bin_orca/include"
 #    CONFIGURE_FLAGS="--with-libraries=$HOME/.local$GP_MAJOR/lib"
     CONFIGURE_FLAGS="--with-libraries=$GPHOME/lib --with-includes=$GPHOME/include"
+    export LD_LIBRARY_PATH="$GPHOME/lib"
 fi
 #export CONFIGURE_FLAGS="--enable-debug-extensions --with-gssapi --enable-cassert --enable-debug --enable-depend"
 #source "$HOME/src/gpdb$GP_MAJOR/concourse/scripts/common.bash"
