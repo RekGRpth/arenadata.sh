@@ -56,6 +56,7 @@ ln -fs "$HOME/src/gpdb$GP_MAJOR/src/test/regress/regress.so" "$GPHOME/lib/postgr
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file DML_over_joins
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file alter_db_set_tablespace
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file partition
-./pg_regress --load-extension=gp_inject_fault --init-file=init_file gp_tsrf
+#./pg_regress --load-extension=gp_inject_fault --init-file=init_file gp_tsrf
+./pg_regress --load-extension=gp_inject_fault --init-file=init_file gp_explain
 #make -j$(nproc) installcheck -i
 ) 2>&1 | tee "$HOME/regress.log"
