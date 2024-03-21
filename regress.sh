@@ -37,7 +37,7 @@ ln -fs "$HOME/src/gpdb$GP_MAJOR/src/test/regress/regress.so" "$GPHOME/lib/postgr
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file qp_misc_jiras
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file qp_skew
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file bfv_subquery
-#./pg_regress --load-extension=gp_inject_fault --init-file=init_file bfv_joins
+./pg_regress --load-extension=gp_inject_fault --init-file=init_file bfv_joins
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file rpt_tpch
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file rpt
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file bb_mpph
@@ -62,7 +62,7 @@ ln -fs "$HOME/src/gpdb$GP_MAJOR/src/test/regress/regress.so" "$GPHOME/lib/postgr
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file update_gp
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file bfv_dml gangsize gp_unique_rowid gporca partition_pruning qp_subquery update_gp
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file createdb gp_tablespace_with_faults gp_tablespace temp_tablespaces default_tablespace
-./pg_regress --load-extension=gp_inject_fault --init-file=init_file temp_tablespaces
+#./pg_regress --load-extension=gp_inject_fault --init-file=init_file temp_tablespaces
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file dispatch
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file functional_deps
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 create_type create_table int8 int4 copy bitmapscan bitmapscan_ao join_gp
