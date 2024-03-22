@@ -47,8 +47,8 @@ make -j$(nproc) install
 #./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault segwalrep/dtm_recovery_on_standby
 #./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault segwalrep/dtm_recovery_on_standby orphaned_gang_cleaner
 #./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault prevent_ao_wal
-#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault frozen_insert_crash
-./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault pg_rewind_fail_missing_xlog
+./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault frozen_insert_crash
+#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault pg_rewind_fail_missing_xlog
 #./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault segwalrep/dtx_recovery_wait_lsn
 #./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault segwalrep/replication_keeps_crash
 #sudo cgconfigparser -l /etc/cgconfig.conf
