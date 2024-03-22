@@ -9,6 +9,8 @@ rm -rf "$HOME/data$GP_MAJOR/*"
 #ln -fs "/tmpfs/data$GP_MAJOR" "$HOME/data$GP_MAJOR"
 #mkdir -p "$HOME/data$GP_MAJOR"
 #sudo mount -o bind "/tmpfs/data$GP_MAJOR" "$HOME/data$GP_MAJOR"
+killall -9 psql || echo $?
+killall -9 postgres || echo $?
 cd "$HOME/src/gpdb$GP_MAJOR"
 make create-demo-cluster
 if [ "$GP_MAJOR" -eq "6" ]; then
