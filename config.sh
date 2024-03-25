@@ -28,6 +28,7 @@ fi
     --enable-debug \
     --enable-debug-extensions \
     --enable-depend \
+    --enable-gpcloud \
     --enable-gpperfmon \
     --enable-ic-proxy \
     --enable-mapreduce \
@@ -39,6 +40,7 @@ fi
     --with-ldap \
     --with-libxml \
     --with-libxslt \
+    --with-llvm \
     --with-openssl \
     --with-pam \
     --with-perl \
