@@ -22,7 +22,6 @@ fi
 ./configure \
     CFLAGS="-O0 -ggdb -g3 -fno-omit-frame-pointer" \
     CXXFLAGS="-DGPOS_DEBUG -O0 -ggdb -g3 -fno-omit-frame-pointer" \
-    LIBS="-llber" \
     --disable-rpath \
     --enable-cassert \
     --enable-debug \
