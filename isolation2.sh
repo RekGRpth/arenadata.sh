@@ -1,6 +1,7 @@
 #!/bin/sh -eux
 
 (
+#export PGOPTIONS="-c optimizer=off"
 cd "$HOME/src/gpdb$GP_MAJOR/src/test/isolation2"
 make -j$(nproc) clean
 make -j$(nproc) install
