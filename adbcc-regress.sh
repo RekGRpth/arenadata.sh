@@ -1,7 +1,7 @@
 #!/bin/sh -eux
 
 (
-export PGOPTIONS="-c optimizer=off"
+#export PGOPTIONS="-c optimizer=off"
 cd "$HOME/src/adbcc/adcc-extension"
 #make -j"$(nproc)" installcheck
 #/home/.local$GP_MAJOR/lib/postgresql/pgxs/src/makefiles/../../src/test/regress/pg_regress --load-extension=plpythonu --load-extension=socket --load-extension=gp_inject_fault cdb_dispatch_replace_ccnt
