@@ -49,7 +49,8 @@ make -j$(nproc) install
 #./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault segwalrep/dtm_recovery_on_standby orphaned_gang_cleaner
 #./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault prevent_ao_wal
 #./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault frozen_insert_crash
-./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault pg_rewind_fail_missing_xlog
+./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault pg_rewind_fail_missing_xlog || cat regression.diffs
+#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault setup cached_plan gpdispatch checkpoint_dtx_info lockmodes prepare_limit pg_rewind_fail_missing_xlog
 #./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault segwalrep/dtx_recovery_wait_lsn
 #./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault segwalrep/replication_keeps_crash
 #sudo cgconfigparser -l /etc/cgconfig.conf
@@ -65,4 +66,5 @@ make -j$(nproc) install
 #./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault segwalrep/fts_unblock_primary segwalrep/recoverseg_from_file
 #make -j$(nproc) installcheck -i
 #test -f regression.diffs && cat regression.diffs
+#) || cat "$HOME/src/gpdb$GP_MAJOR/src/test/isolation2/regression.diffs" 2>&1 | tee "$HOME/isolation2.log"
 ) 2>&1 | tee "$HOME/isolation2.log"
