@@ -1,6 +1,7 @@
 #!/bin/sh -eux
 
 (
+killall cat || echo $?
 killall gpbackup_helper || echo $?
 cd "$HOME/src/gpbackup"
 #make -j"$(nproc)" clean
@@ -22,4 +23,5 @@ ln -fs "../../../../src/gpbackup" "$HOME/go/src/github.com/greenplum-db/"
 #make -j"$(nproc)" install
 #gpconfig -c shared_preload_libraries -v dummy_seclabel
 #gpstop -afr
+find "$DATADIRS" -name "gpbackup_*_script_*" -o -name "gpbackup_*_pipe_*" -o -name "gpbackup_*_skip_*" -o -name "gpbackup_*_oid_*" | while read name; do rm "$name"; done
 ) 2>&1 | tee "$HOME/gpbackup.log"

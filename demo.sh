@@ -17,12 +17,14 @@ if [ "$GP_MAJOR" -eq "6" ]; then
     make -C "$HOME/src/gpdb$GP_MAJOR/contrib/dummy_seclabel" -j"$(nproc)" install
 #    cd "$HOME/src/gpdb$GP_MAJOR/contrib/dummy_seclabel"
 #    make -j"$(nproc)" install
+#    gpconfig -c client_connection_check_interval -v 2min
     gpconfig -c shared_preload_libraries -v dummy_seclabel
     gpstop -afr
 elif [ "$GP_MAJOR" -eq "7" ]; then
     make -C "$HOME/src/gpdb$GP_MAJOR/src/test/modules/dummy_seclabel" -j"$(nproc)" install
 #    cd "$HOME/src/gpdb$GP_MAJOR/contrib/dummy_seclabel"
 #    make -j"$(nproc)" install
+#    gpconfig -c client_connection_check_interval -v 2min
     gpconfig -c shared_preload_libraries -v dummy_seclabel
     gpstop -afr
 fi

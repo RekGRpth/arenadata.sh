@@ -13,6 +13,7 @@ cd "$HOME/src/gpbackup"
 #make -j"$(nproc)" lint
 #export CUSTOM_BACKUP_DIR="$HOME/gpbackup"
 export GINKGO_FLAGS="-r --keep-going --randomize-suites --randomize-all --no-color --v"
+#export GINKGO_FLAGS="-r --keep-going --randomize-suites --randomize-all --no-color --poll-progress-after=0s -vv"
 #export GINKGO_FLAGS="-r --keep-going --randomize-suites --randomize-all --no-color"
 #ginkgo $GINKGO_FLAGS --timeout=3h --poll-progress-after=0s end_to_end -- --custom_backup_dir $CUSTOM_BACKUP_DIR --ginkgo.focus "restores from --exclude filtered incremental backup with partition tables"
 #ginkgo $GINKGO_FLAGS --timeout=3h --poll-progress-after=0s end_to_end -- --custom_backup_dir $CUSTOM_BACKUP_DIR --ginkgo.focus "panics if given a leaf partition table and --leaf-partition-data is not set"
@@ -38,5 +39,6 @@ export GINKGO_FLAGS="-r --keep-going --randomize-suites --randomize-all --no-col
 #ginkgo $GINKGO_FLAGS --timeout=3h --poll-progress-after=0s restore -- --ginkgo.focus "verifies backup file counts match on all segments with resize-cluster"
 #ginkgo $GINKGO_FLAGS --timeout=3h --poll-progress-after=0s restore -- --ginkgo.focus "verifies backup file counts match on all segments with resize-cluster"
 #ginkgo $GINKGO_FLAGS --timeout=3h --poll-progress-after=0s end_to_end -- --custom_backup_dir $CUSTOM_BACKUP_DIR --ginkgo.focus "Exclude subpartitions for given root partition in leaf-partition-data mode" --ginkgo.focus "End to End incremental tests Incremental restore No DDL no partitioning Include/Exclude schemas and tables"
-ginkgo $GINKGO_FLAGS integration
+#ginkgo $GINKGO_FLAGS integration
+ginkgo $GINKGO_FLAGS --timeout=3h --poll-progress-after=0s integration -- --ginkgo.focus "correctly errors if a piped copy command fails"
 ) 2>&1 | tee "$HOME/gpbackup-integration.log"
