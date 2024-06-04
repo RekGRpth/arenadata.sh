@@ -25,3 +25,4 @@ ln -fs "../../../../src/gpbackup" "$HOME/go/src/github.com/greenplum-db/"
 #gpstop -afr
 find "$DATADIRS" -name "gpbackup_*_script_*" -o -name "gpbackup_*_pipe_*" -o -name "gpbackup_*_skip_*" -o -name "gpbackup_*_oid_*" | while read name; do rm "$name"; done
 ) 2>&1 | tee "$HOME/gpbackup.log"
+#PATH=~/docker/gpdb/.opt/go/bin:$PATH GOPATH=~/docker/gpdb/.go go get github.com/itchyny/json2yaml
