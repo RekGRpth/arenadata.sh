@@ -11,23 +11,27 @@ rm -rf "$HOME/data$GP_MAJOR/*"
 #sudo mount -o bind "/tmpfs/data$GP_MAJOR" "$HOME/data$GP_MAJOR"
 killall -9 psql || echo $?
 killall -9 postgres || echo $?
-cd "$HOME/src/gpdb$GP_MAJOR"
-make create-demo-cluster
+BLDWRAP_POSTGRES_CONF_ADDONS=
 if [ "$GP_MAJOR" -eq "6" ]; then
     make -C "$HOME/src/gpdb$GP_MAJOR/contrib/dummy_seclabel" -j"$(nproc)" install
 #    cd "$HOME/src/gpdb$GP_MAJOR/contrib/dummy_seclabel"
 #    make -j"$(nproc)" install
 #    gpconfig -c client_connection_check_interval -v 2min
-    gpconfig -c shared_preload_libraries -v dummy_seclabel
-    gpstop -afr
+#    gpconfig -c shared_preload_libraries -v dummy_seclabel
+#    gpstop -afr
+    BLDWRAP_POSTGRES_CONF_ADDONS="shared_preload_libraries=dummy_seclabel"
 elif [ "$GP_MAJOR" -eq "7" ]; then
     make -C "$HOME/src/gpdb$GP_MAJOR/src/test/modules/dummy_seclabel" -j"$(nproc)" install
 #    cd "$HOME/src/gpdb$GP_MAJOR/contrib/dummy_seclabel"
 #    make -j"$(nproc)" install
 #    gpconfig -c client_connection_check_interval -v 2min
-    gpconfig -c shared_preload_libraries -v dummy_seclabel
-    gpstop -afr
+#    gpconfig -c shared_preload_libraries -v dummy_seclabel
+#    gpstop -afr
+    BLDWRAP_POSTGRES_CONF_ADDONS="shared_preload_libraries='dummy_seclabel'"
 fi
+cd "$HOME/src/gpdb$GP_MAJOR"
+export BLDWRAP_POSTGRES_CONF_ADDONS="$BLDWRAP_POSTGRES_CONF_ADDONS"
+make create-demo-cluster
 createdb --owner="$USER" "$USER"
 ) 2>&1 | tee "$HOME/demo.log"
 #source $HOME/src/gpdb$GP_MAJOR/gpAux/gpdemo/gpdemo-env.sh
