@@ -31,6 +31,9 @@ elif [ "$GP_MAJOR" -eq "7" ]; then
 fi
 cd "$HOME/src/gpdb$GP_MAJOR"
 export BLDWRAP_POSTGRES_CONF_ADDONS="$BLDWRAP_POSTGRES_CONF_ADDONS"
+#export BLDWRAP_POSTGRES_CONF_ADDONS="gp_keep_all_xlog=true"
+#export BLDWRAP_POSTGRES_CONF_ADDONS="wal_recycle=off"
+#export BLDWRAP_POSTGRES_CONF_ADDONS="wal_debug=on"
 make create-demo-cluster
 createdb --owner="$USER" "$USER"
 ) 2>&1 | tee "$HOME/demo.log"
