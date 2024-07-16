@@ -33,6 +33,7 @@ fi
     --enable-mapreduce \
     --enable-orafce \
     --enable-orca \
+    --enable-tap-tests \
     --prefix=$GPHOME \
     --with-gssapi \
     --with-gssapi \
@@ -48,3 +49,4 @@ fi
     --with-uuid=e2fs \
     $CONFIGURE_FLAGS
 ) 2>&1 | tee "$HOME/config.log"
+#    --with-wal-segsize=1 \
