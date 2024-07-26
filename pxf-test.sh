@@ -4,8 +4,8 @@
 #cd "$HOME/src/pxf/external-table"
 #cd "$HOME/src/pxf/fdw"
 cd "$HOME/src/pxf/regression"
-make -j"$(nproc)" FDW_FilterPushDownTest
-#make -j"$(nproc)" FilterPushDownTest
+#make -j"$(nproc)" FDW_FilterPushDownTest
+make -j"$(nproc)" FilterPushDownTest
 #go mod init
 #go mod init github.com/golang/dep/cmd/dep
 #go mod init github.com/onsi/ginkgo/ginkgo
