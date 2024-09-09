@@ -65,7 +65,10 @@ sudo chown -R $USER:$GROUP /sys/fs/cgroup/{memory,cpu,cpuset}/gpdb
 #./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_resgroup --dbname=isolation2resgrouptest resgroup/enable_resgroup_validate resgroup/enable_resgroup resgroup/resgroup_memory_limit resgroup/resgroup_memory_runaway resgroup/disable_resgroup
 #./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_resgroup --dbname=isolation2resgrouptest resgroup/resgroup_views_seg_down
 #./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_resgroup --load-extension=gp_inject_fault --dbname=isolation2resgrouptest resgroup/resgroup_bypass_catalog resgroup/resgroup_views resgroup/resgroup_memory_limit
-./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_resgroup --dbname=isolation2resgrouptest resgroup/enable_resgroup_validate resgroup/enable_resgroup
+#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_resgroup --dbname=isolation2resgrouptest resgroup/enable_resgroup_validate resgroup/enable_resgroup
+./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_resgroup --dbname=isolation2resgrouptest resgroup/enable_resgroup_validate resgroup/enable_resgroup resgroup/disable_resgroup resgroup/resgroup_startup_memory
+#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_resgroup --dbname=isolation2resgrouptest resgroup/disable_resgroup
+#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_resgroup --dbname=isolation2resgrouptest resgroup/enable_resgroup_validate resgroup/resgroup_startup_memory
 #./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault frozen_insert_crashMY
 #./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 idle_gang_cleanerMY
 #./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault cancel_query cancel_queryMY
