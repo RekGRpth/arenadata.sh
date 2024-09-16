@@ -8,9 +8,9 @@ if [ ! -f /home/gpadmin/sqldump/dump.sql ]; then
 fi
 cd "$HOME/src/gpdb$GP_MAJOR/gpMgmt"
 make -j$(nproc) install
-export DATADIRS=/data/gpdata/gpexpand/data
-export MASTER_DATA_DIRECTORY="$DATADIRS/master/gpseg-1"
-gpstop -a || echo $?
+#export DATADIRS=/data/gpdata/gpexpand/data
+#export MASTER_DATA_DIRECTORY="$DATADIRS/master/gpseg-1"
+#gpstop -a || echo $?
 #sudo rm -rf /data/gpdata
 sudo mkdir -p /data/gpdata
 sudo chown -R $USER:$GROUP /data/gpdata
@@ -67,5 +67,9 @@ rm "$HOME/gpAdminLogs/"* || echo $?
 #export PYTHONPATH="$PYTHONPATH":"$PEXPECT_LIB":"$TEST_DIR"
 #PYTHONPATH="$PYTHONPATH":"$GPHOME/bin/lib":"$HOME/src/gpdb$GP_MAJOR/gpMgmt" 
 #behave "$HOME/src/gpdb$GP_MAJOR/gpMgmt/test/behave/"* --tags=gpexpand --name='gpexpand should skip already expanded/broken tables when redistributing' --verbose
-behave test/behave/mgmt_utils --tags=gpexpand --name='gpexpand should skip already expanded/broken tables when redistributing' --verbose
+#behave test/behave/mgmt_utils --tags=gpexpand --name='gpexpand should skip already expanded/broken tables when redistributing' --verbose
+#behave test/behave/mgmt_utils --tags=gpactivatestandby --name='gprecoverseg recoveries failed segment when standby works instead of coordinator' --verbose
+#behave test/behave/mgmt_utils --tags=gpinitstandby --name='gpinitstandby should create pg_hba entry to segment primary' --verbose
+behave test/behave/mgmt_utils --tags=gpinitstandby --name='gpinitstandby should create pg_hba standby entry to segment primary and mirror' --verbose
+#behave test/behave/mgmt_utils --tags=gpactivatestandby --name='gpstate after running gpactivatestandby works' --verbose
 ) 2>&1 | tee "$HOME/behave.log"
