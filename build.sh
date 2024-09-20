@@ -10,6 +10,15 @@
 cd "$HOME/src/gpdb$GP_MAJOR"
 #make -j"$(nproc)" clean
 make -j"$(nproc)" install
+
+if [ -n "$PYTHON3" ]; then
+    export PYTHON="$PYTHON3"
+    make -C src/pl/plpython clean
+    #pushd ${GPDB_SRC_PATH}
+    ./config.status --recheck
+    make -C src/pl/plpython install
+    #popd
+fi
 #cd "$HOME/src/gpdb$GP_MAJOR/gpcontrib/gp_internal_tools"
 #make -j"$(nproc)" install
 gpstop -afr
