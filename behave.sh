@@ -15,13 +15,13 @@ make -j$(nproc) install
 sudo mkdir -p /data/gpdata
 sudo chown -R $USER:$GROUP /data/gpdata
 #sudo bash -c 'echo "cdw" >/etc/hostname'
-if [ "$(hostname)" != "cdw" ]; then
-    sudo bash -c 'echo "$(hostname -i) cdw" >>/etc/hosts'
-    sudo bash -c 'echo "$(hostname -i) sdw1" >>/etc/hosts'
-    sudo bash -c 'echo "$(hostname -i) sdw2" >>/etc/hosts'
-    sudo bash -c 'echo "$(hostname -i) sdw3" >>/etc/hosts'
-    sudo hostname cdw
-fi
+#if [ "$(hostname)" != "cdw" ]; then
+#    sudo bash -c 'echo "$(hostname -i) cdw" >>/etc/hosts'
+#    sudo bash -c 'echo "$(hostname -i) sdw1" >>/etc/hosts'
+#    sudo bash -c 'echo "$(hostname -i) sdw2" >>/etc/hosts'
+#    sudo bash -c 'echo "$(hostname -i) sdw3" >>/etc/hosts'
+#    sudo hostname cdw
+#fi
 rm "$HOME/gpAdminLogs/"* || echo $?
 #cd /data/gpdata
 #cd "$HOME"
@@ -43,6 +43,7 @@ rm "$HOME/gpAdminLogs/"* || echo $?
 #make -j$(nproc) -f Makefile.behave behave tags=gplogfilter
 #make -j$(nproc) -f Makefile.behave behave tags=gpexpand
 #behave test/behave/mgmt_utils --tags=gpperfmon -n "install gpperfmon" -n "run gpperfmon" -n "get info about current queries"
+behave test/behave/mgmt_utils --tags=gpperfmon -n "install gpperfmon" -n "run gpperfmon" -n "gpperfmon does not log PL/pgSQL statements with log_min_messages < debug4"
 #behave test/behave/mgmt_utils --tags=gpperfmon -n "install gpperfmon" -n "run gpperfmon" -n "get info about current queries"
 #behave test/behave/mgmt_utils --tags=gpperfmon -n "install gpperfmon" -n "run gpperfmon"
 #behave test/behave/mgmt_utils --tags=gpperfmon -n "run gpperfmon" -n "get info about current queries"
@@ -70,6 +71,6 @@ rm "$HOME/gpAdminLogs/"* || echo $?
 #behave test/behave/mgmt_utils --tags=gpexpand --name='gpexpand should skip already expanded/broken tables when redistributing' --verbose
 #behave test/behave/mgmt_utils --tags=gpactivatestandby --name='gprecoverseg recoveries failed segment when standby works instead of coordinator' --verbose
 #behave test/behave/mgmt_utils --tags=gpinitstandby --name='gpinitstandby should create pg_hba entry to segment primary' --verbose
-behave test/behave/mgmt_utils --tags=gpinitstandby --name='gpinitstandby should create pg_hba standby entry to segment primary and mirror' --verbose
+#behave test/behave/mgmt_utils --tags=gpinitstandby --name='gpinitstandby should create pg_hba standby entry to segment primary and mirror' --verbose
 #behave test/behave/mgmt_utils --tags=gpactivatestandby --name='gpstate after running gpactivatestandby works' --verbose
 ) 2>&1 | tee "$HOME/behave.log"
