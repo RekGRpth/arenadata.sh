@@ -29,9 +29,11 @@ ln -fs "$HOME/src/gpdb$GP_MAJOR/src/test/regress/regress.so" "$GPHOME/lib/postgr
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file bfv_dml_rpt
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file segspace
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file alter_table_ao alter_table_aocs
+#./pg_regress --load-extension=gp_inject_fault --init-file=init_file expand_table_ao expand_table_aoco
+./pg_regress --load-extension=gp_inject_fault --init-file=init_file expand_table_ao expand_table_aoco alter_table_ao alter_table_aocs
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file scale_factor
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file bfv_joins bfv_planner explain_format gp_recursive_cte gporca rpt scale_factor
-./pg_regress --load-extension=gp_inject_fault --init-file=init_file explain_format
+#./pg_regress --load-extension=gp_inject_fault --init-file=init_file explain_format
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 create_type create_table int8 int4 copy subselectMY
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file --schedule=./greenplum_schedule.test
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file --schedule=./greenplum_schedule.test2
@@ -67,6 +69,8 @@ ln -fs "$HOME/src/gpdb$GP_MAJOR/src/test/regress/regress.so" "$GPHOME/lib/postgr
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file DML_over_joins
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file alter_db_set_tablespace
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file partition
+#./pg_regress --load-extension=gp_inject_fault --init-file=init_file gp_query_id
+#./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 create_type create_table copy prepare
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file gp_tsrf
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file gp_explain
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file update_gp

@@ -12,7 +12,7 @@ cd "$HOME/src/gpdb$GP_MAJOR"
 make -j"$(nproc)" install
 
 if [ "$GP_MAJOR" -eq "6" ]; then
-    if [ -n "$PYTHON3" ]; then
+    if [ -n "${PYTHON3:-}" ]; then
         export PYTHON="$PYTHON3"
         make -C src/pl/plpython clean
         #pushd ${GPDB_SRC_PATH}

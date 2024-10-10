@@ -27,7 +27,8 @@ rm "$HOME/gpAdminLogs/"* || echo $?
 #cd "$HOME"
 #ln -fs "$HOME/src/gpdb$GP_MAJOR/gpMgmt/test" .
 #gpstop -afr
-#createdb --owner="$USER" gptest
+dropdb gptest || echo $?
+createdb --owner="$USER" gptest
 #export MASTER_DATA_DIRECTORY=/data/gpdata/coordinator/gpseg-1
 #cd "$HOME/src/gpdb$GP_MAJOR"
 #sudo groupadd --system docker
@@ -43,7 +44,8 @@ rm "$HOME/gpAdminLogs/"* || echo $?
 #make -j$(nproc) -f Makefile.behave behave tags=gplogfilter
 #make -j$(nproc) -f Makefile.behave behave tags=gpexpand
 #behave test/behave/mgmt_utils --tags=gpperfmon -n "install gpperfmon" -n "run gpperfmon" -n "get info about current queries"
-behave test/behave/mgmt_utils --tags=gpperfmon -n "install gpperfmon" -n "run gpperfmon" -n "gpperfmon does not log PL/pgSQL statements with log_min_messages < debug4"
+#behave test/behave/mgmt_utils --tags=gpperfmon -n "install gpperfmon" -n "run gpperfmon" -n "gpperfmon does not log PL/pgSQL statements with log_min_messages < debug4"
+behave test/behave/mgmt_utils --tags=gpperfmon -n "install gpperfmon" -n "run gpperfmon" -n "gpperfmon only logs nested statements if log_min_messages is set to debug4 or debug5"
 #behave test/behave/mgmt_utils --tags=gpperfmon -n "install gpperfmon" -n "run gpperfmon" -n "get info about current queries"
 #behave test/behave/mgmt_utils --tags=gpperfmon -n "install gpperfmon" -n "run gpperfmon"
 #behave test/behave/mgmt_utils --tags=gpperfmon -n "run gpperfmon" -n "get info about current queries"

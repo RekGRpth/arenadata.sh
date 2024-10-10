@@ -5,6 +5,8 @@ cd "$HOME/src/pgbackrest/src"
 ./configure --enable-test
 #./configure --enable-test --prefix="$HOME/.local$GP_MAJOR"
 #./configure --prefix="$HOME/.local$GP_MAJOR"
+make -j"$(nproc)" clean
+exit
 make -j"$(nproc)" install
 rm -rf "$HOME/.data/$GP_MAJOR/pgbackrest"
 if [ ! -d "$HOME/.data/$GP_MAJOR/pgbackrest" ]; then
@@ -30,3 +32,4 @@ fi
 #pgbackrest/test/test.pl --gen-check --no-coverage-report --vm=none --c-only --no-valgrind --vm-out --module=common --test=walfilter
 #pgbackrest/test/test.pl --gen-check --no-coverage-report --vm=none --c-only --no-valgrind --vm-out --module=command --test=archive-get
 #pgbackrest/test/test.pl --gen-check --no-coverage-report --vm=none --c-only --no-valgrind --vm-out --module=postgres --test=interface
+#PKG_CONFIG_PATH=/usr/local/lib/pkgconfig pgbackrest/test/test.pl --gen-check --no-coverage-report --vm=none --c-only --no-valgrind --vm-out --module=command --test=backup
