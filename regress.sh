@@ -28,9 +28,11 @@ ln -fs "$HOME/src/gpdb$GP_MAJOR/src/test/regress/regress.so" "$GPHOME/lib/postgr
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file rpt
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file bfv_dml_rpt
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file segspace
-#./pg_regress --load-extension=gp_inject_fault --init-file=init_file alter_table_ao alter_table_aocs
+./pg_regress --load-extension=gp_inject_fault --init-file=init_file alter_table_ao alter_table_aocs
+#./pg_regress --load-extension=gp_inject_fault --init-file=init_file aux_ao_rels_stat
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file expand_table_ao expand_table_aoco
-./pg_regress --load-extension=gp_inject_fault --init-file=init_file expand_table_ao expand_table_aoco alter_table_ao alter_table_aocs
+#./pg_regress --load-extension=gp_inject_fault --init-file=init_file expand_table_ao expand_table_aoco alter_table_ao alter_table_aocs
+#./pg_regress --load-extension=gp_inject_fault --init-file=init_file explain_analyze
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file scale_factor
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file bfv_joins bfv_planner explain_format gp_recursive_cte gporca rpt scale_factor
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file explain_format

@@ -23,6 +23,7 @@ if [ "$GP_MAJOR" -eq "6" ]; then
 fi
 #cd "$HOME/src/gpdb$GP_MAJOR/gpcontrib/gp_internal_tools"
 #make -j"$(nproc)" install
+gpconfig -c gp_log_stack_trace_lines -v true --skipvalidation
 gpstop -afr
 ) 2>&1 | tee "$HOME/build.log"
 #-exec handle SIGINT nostop
