@@ -6,7 +6,8 @@ rm -rf build
 mkdir -p build
 cd build
 #make -j"$(nproc)" clean
-cmake .. -DDISKQUOTA_DDL_CHANGE_CHECK=off
+cmake .. -DCMAKE_BUILD_TYPE= -DDISKQUOTA_DDL_CHANGE_CHECK=off
+#cmake --build .
 make -j"$(nproc)" install
 #gpconfig -c shared_preload_libraries -v diskquota-2.2
 gpconfig -c shared_preload_libraries -v "$(../tests/data/current_binary_name)"

@@ -3,6 +3,7 @@
 (
 killall cat || echo $?
 killall gpbackup_helper || echo $?
+killall timeout || echo $?
 cd "$HOME/src/gpbackup"
 #make -j"$(nproc)" clean
 #go mod download
