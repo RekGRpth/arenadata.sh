@@ -1,10 +1,10 @@
-#!/bin/sh -eux
+#!/bin/bash -eux
 
 (
 #export CFLAGS="-O0 -g3"
 cd "$HOME/src/gpdb$GP_MAJOR"
 CONFIGURE_FLAGS=
-if [ "$GP_MAJOR" -eq "5" ]; then
+if [[ "$GP_MAJOR" == "5c" ]]; then
     sudo rpm -i --replacepkgs https://ci.arenadata.io/artifactory/ADB/6.7.1_arenadata4/centos/7/community/x86_64/sigar-1.6.5-163.el7.x86_64.rpm
     sudo rpm -i --replacepkgs https://ci.arenadata.io/artifactory/ADB/6.7.1_arenadata4/centos/7/community/x86_64/sigar-headers-1.6.5-163.el7.x86_64.rpm
 #    CONFIGURE_FLAGS="--with-gssapi --enable-debug --enable-depend --enable-cassert --with-libraries=bin_orca/lib --with-includes=bin_orca/include"

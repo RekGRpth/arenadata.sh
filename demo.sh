@@ -1,4 +1,4 @@
-#!/bin/sh -eux
+#!/bin/bash -eux
 
 (
 #test -f "$HOME/data$GP_MAJOR/qddir/demoDataDir-1/postmaster.pid" && test -f "/tmp/.s.PGSQL.${GP_MAJOR}432" &&  
@@ -22,6 +22,7 @@ elif [[ "$GP_MAJOR" == "7c" || "$GP_MAJOR" == "7u" ]]; then
 fi
 cd "$HOME/src/gpdb$GP_MAJOR"
 export BLDWRAP_POSTGRES_CONF_ADDONS="$BLDWRAP_POSTGRES_CONF_ADDONS"
+#export BLDWRAP_POSTGRES_CONF_ADDONS="gp_log_stack_trace_lines=false"
 #export BLDWRAP_POSTGRES_CONF_ADDONS="gp_keep_all_xlog=true"
 #export BLDWRAP_POSTGRES_CONF_ADDONS="wal_recycle=off"
 #export BLDWRAP_POSTGRES_CONF_ADDONS="wal_debug=on"
