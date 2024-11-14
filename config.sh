@@ -20,8 +20,8 @@ fi
 #export enable_debug_extensions=set
 #    LDFLAGS="-Wl,--enable-new-dtags -Wl,-rpath,\$/../lib" \
 ./configure \
-    CFLAGS="-O0 -ggdb -g3 -fno-omit-frame-pointer" \
-    CXXFLAGS="-DGPOS_DEBUG -O0 -ggdb -g3 -fno-omit-frame-pointer" \
+    CFLAGS="-O0 -ggdb -g3 -fno-omit-frame-pointer -fno-pie -no-pie -Wclobbered" \
+    CXXFLAGS="-DGPOS_DEBUG -O0 -ggdb -g3 -fno-omit-frame-pointer -fno-pie -no-pie -Wclobbered" \
     --disable-rpath \
     --enable-cassert \
     --enable-debug \

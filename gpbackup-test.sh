@@ -1,4 +1,4 @@
-#!/bin/sh -eux
+#!/bin/bash -eux
 
 (
 killall cat || echo $?
@@ -26,7 +26,12 @@ export CUSTOM_BACKUP_DIR="$HOME/gpbackup"
 export GINKGO_FLAGS="-r --keep-going --randomize-suites --randomize-all --no-color --poll-progress-after=0s --v --trace"
 #export GINKGO_FLAGS="-r --keep-going --randomize-suites --randomize-all --no-color --poll-progress-after=0s -vv"
 #export TEST_GPDB_VERSION=6.999.0
-export TEST_GPDB_VERSION="$GP_MAJOR.999.0"
+#export TEST_GPDB_VERSION="$GP_MAJOR.999.0"
+if [[ "$GP_MAJOR" == "6c" || "$GP_MAJOR" == "6u" ]]; then
+    export TEST_GPDB_VERSION="6.999.0"
+elif [[ "$GP_MAJOR" == "7c" || "$GP_MAJOR" == "7u" ]]; then
+    export TEST_GPDB_VERSION="7.999.0"
+fi
 #export GINKGO_FLAGS="-r --keep-going --randomize-suites --randomize-all --no-color -vv"
 #export GINKGO_FLAGS="-r --keep-going --no-color --v"
 #export GINKGO_FLAGS="-r --keep-going --no-color -vv"
@@ -62,6 +67,8 @@ export TEST_GPDB_VERSION="$GP_MAJOR.999.0"
 #ginkgo $GINKGO_FLAGS --timeout=3h --poll-progress-after=0s end_to_end -- --custom_backup_dir $CUSTOM_BACKUP_DIR --ginkgo.focus "Restore to a different-sized cluster"
 #ginkgo $GINKGO_FLAGS --timeout=3h --poll-progress-after=0s end_to_end -- --custom_backup_dir $CUSTOM_BACKUP_DIR --ginkgo.focus "Can backup a 9-segment cluster and restore to current cluster with replicated tables"
 #ginkgo $GINKGO_FLAGS --timeout=3h --poll-progress-after=0s end_to_end -- --custom_backup_dir $CUSTOM_BACKUP_DIR --ginkgo.focus "Running gprestore without the --timestamp flag"
+#ginkgo $GINKGO_FLAGS --timeout=3h --poll-progress-after=0s end_to_end -- --custom_backup_dir $CUSTOM_BACKUP_DIR --ginkgo.focus "Running gprestore without the --timestamp flag" --ginkgo.focus "Will not hang if gpbackup and gprestore runs with single-data-file and the helper goes down at its start"
+#ginkgo $GINKGO_FLAGS --timeout=3h --poll-progress-after=0s end_to_end -- --custom_backup_dir $CUSTOM_BACKUP_DIR --ginkgo.focus "errors out if there are no backups in a user-provided backup directory" --ginkgo.focus "Will not hang if gpbackup and gprestore runs with single-data-file and the helper goes down at its start"
 #ginkgo $GINKGO_FLAGS --timeout=3h --poll-progress-after=0s end_to_end -- --custom_backup_dir $CUSTOM_BACKUP_DIR --ginkgo.focus "errors out if there are no backups in a user-provided backup directory"
 #ginkgo $GINKGO_FLAGS --timeout=3h --poll-progress-after=0s end_to_end -- --custom_backup_dir $CUSTOM_BACKUP_DIR --ginkgo.focus "runs gpbackup with --without-globals and --metadata-only"
 #ginkgo $GINKGO_FLAGS --timeout=3h --poll-progress-after=0s end_to_end -- --custom_backup_dir $CUSTOM_BACKUP_DIR --ginkgo.focus "Restores table data distributed by multi-key enum"
@@ -106,7 +113,7 @@ export TEST_GPDB_VERSION="$GP_MAJOR.999.0"
 #ginkgo $GINKGO_FLAGS --timeout=3h --poll-progress-after=0s end_to_end -- --custom_backup_dir $CUSTOM_BACKUP_DIR --ginkgo.focus "Will not start next batch after error during resize single data file restore"
 #ginkgo $GINKGO_FLAGS --timeout=3h --poll-progress-after=0s end_to_end -- --custom_backup_dir $CUSTOM_BACKUP_DIR --ginkgo.focus "Will fatal error after helper error on resize-restore"
 #ginkgo $GINKGO_FLAGS --timeout=3h --poll-progress-after=0s end_to_end -- --custom_backup_dir $CUSTOM_BACKUP_DIR --ginkgo.focus "Will not hang and fatal error after helper error on resize-restore with jobs"
-ginkgo $GINKGO_FLAGS --timeout=3h --poll-progress-after=0s end_to_end -- --custom_backup_dir $CUSTOM_BACKUP_DIR --ginkgo.focus "Will not hang if gpbackup runs with single-data-file and copy-queue-size and the helper goes down at its start"
+#ginkgo $GINKGO_FLAGS --timeout=3h --poll-progress-after=0s end_to_end -- --custom_backup_dir $CUSTOM_BACKUP_DIR --ginkgo.focus "Will not hang if gpbackup runs with single-data-file and copy-queue-size and the helper goes down at its start"
 #ginkgo $GINKGO_FLAGS --timeout=3h --poll-progress-after=0s end_to_end -- --custom_backup_dir $CUSTOM_BACKUP_DIR --ginkgo.focus "Will error after helper fatal error on resize-restore"
 #ginkgo $GINKGO_FLAGS --timeout=3h --poll-progress-after=0s end_to_end -- --custom_backup_dir $CUSTOM_BACKUP_DIR --ginkgo.focus "Will not hang and error after helper fatal error on resize-restore with jobs"
 #ginkgo $GINKGO_FLAGS --timeout=3h --poll-progress-after=0s end_to_end -- --custom_backup_dir $CUSTOM_BACKUP_DIR --ginkgo.focus "Will not hang and fatal error after helper error on resize-restore with jobs"
@@ -172,8 +179,10 @@ ginkgo $GINKGO_FLAGS --timeout=3h --poll-progress-after=0s end_to_end -- --custo
 #ginkgo $GINKGO_FLAGS --timeout=3h --poll-progress-after=0s end_to_end -- --custom_backup_dir $CUSTOM_BACKUP_DIR --ginkgo.focus "Restores from an incremental backup based on a from-timestamp incremental with --copy-queue-size"
 #ginkgo $GINKGO_FLAGS --timeout=3h --poll-progress-after=0s end_to_end -- --custom_backup_dir $CUSTOM_BACKUP_DIR --ginkgo.focus "runs gpbackup and gprestore with single-data-file flag without compression with copy-queue-size"
 #ginkgo $GINKGO_FLAGS --timeout=3h --poll-progress-after=0s end_to_end -- --custom_backup_dir $CUSTOM_BACKUP_DIR --ginkgo.focus "runs gpbackup and gprestore with plugin, single-data-file, no-compression, and copy-queue-size"
-#ginkgo $GINKGO_FLAGS --timeout=3h --poll-progress-after=0s end_to_end -- --custom_backup_dir $CUSTOM_BACKUP_DIR --ginkgo.focus "Will not hang if gpbackup and gprestore runs with single-data-file and the helper goes down at its start"
+#ginkgo $GINKGO_FLAGS --timeout=3h --poll-progress-after=0s end_to_end -- --custom_backup_dir $CUSTOM_BACKUP_DIR --ginkgo.focus "Will not hang if gpbackup and gprestore runs with single-data-file and the helper goes down at its start" --ginkgo.focus "Will not hang if gprestore runs with cluster resize and the helper goes down on one of the tables"
+ginkgo $GINKGO_FLAGS --timeout=3h --poll-progress-after=0s end_to_end -- --custom_backup_dir $CUSTOM_BACKUP_DIR --ginkgo.focus "Will not hang if gpbackup and gprestore runs with single-data-file and the helper goes down at its start"
 #ginkgo $GINKGO_FLAGS --timeout=3h --poll-progress-after=0s end_to_end -- --custom_backup_dir $CUSTOM_BACKUP_DIR --ginkgo.focus "Will not hang if gprestore runs with cluster resize and the helper goes down on one of the tables"
+#ginkgo $GINKGO_FLAGS --timeout=5s --poll-progress-after=0s integration -- --ginkgo.focus "Generates error file when backup agent interrupted"
 #ginkgo $GINKGO_FLAGS --timeout=3h --poll-progress-after=0s integration -- --ginkgo.focus "prints column level privileges"
 #ginkgo $GINKGO_FLAGS --timeout=3h --poll-progress-after=0s integration -- --ginkgo.focus "returns table attribute information for a heap table"
 #ginkgo $GINKGO_FLAGS --timeout=3h --poll-progress-after=0s integration -- --ginkgo.focus "GetAttributeStatistics"
