@@ -1,15 +1,20 @@
-#!/bin/sh -eux
+#!/bin/bash -eux
 
 (
-source scl_source enable llvm-toolset-11.0
 cd "$HOME/src/gpdb$GP_MAJOR"
-git apply "$(dirname "$0")/format.diff"
+if [[ "$GP_MAJOR" == "6c" ]]; then
+    source scl_source enable llvm-toolset-11.0
+    git apply "$(dirname "$0")/format.diff"
+fi
 #export CLANG_FORMAT=clang-format-11
 #export CLANG_FORMAT=clang-format
 #src/tools/fmt gen
 #src/tools/fmt chk
-src/tools/fmt fmt
-git apply "$(dirname "$0")/format-revert.diff"
+#src/tools/fmt fmt
+CLANG_FORMAT=clang-format-11 src/tools/fmt fmt
+if [[ "$GP_MAJOR" == "6c" ]]; then
+    git apply "$(dirname "$0")/format-revert.diff"
+fi
 ) 2>&1 | tee "$HOME/format.log"
 
 #CLANG_FORMAT=clang-format-11 src/tools/fmt fmt

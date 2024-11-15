@@ -17,6 +17,8 @@ cd "$HOME/src/gpbackup"
 #go mod slices
 make -j"$(nproc)" depend
 make -j"$(nproc)" build
+make -j"$(nproc)" "$GOPATH/bin/ginkgo"
+#make -j"$(nproc)" unit
 make -j"$(nproc)" install
 mkdir -p "$HOME/go/src/github.com/greenplum-db"
 ln -fs "../../../../src/gpbackup" "$HOME/go/src/github.com/greenplum-db/"
