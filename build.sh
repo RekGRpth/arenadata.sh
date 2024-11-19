@@ -23,7 +23,8 @@ if [[ "$GP_MAJOR" == "6u" ]]; then
 fi
 #cd "$HOME/src/gpdb$GP_MAJOR/gpcontrib/gp_internal_tools"
 #make -j"$(nproc)" install
-#gpconfig -c gp_log_stack_trace_lines -v true --skipvalidation
+gpconfig -c gp_log_stack_trace_lines -v true --skipvalidation
+gpconfig -c log_duration -v on --skipvalidation
 #gpconfig -c gp_log_stack_trace_lines -v true --skipvalidation
 gpstop -afr
 ) 2>&1 | tee "$HOME/build.log"

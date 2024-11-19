@@ -21,7 +21,7 @@ elif [[ "$GP_MAJOR" == "7c" || "$GP_MAJOR" == "7u" ]]; then
     BLDWRAP_POSTGRES_CONF_ADDONS="shared_preload_libraries='dummy_seclabel'"
 fi
 cd "$HOME/src/gpdb$GP_MAJOR"
-#export BLDWRAP_POSTGRES_CONF_ADDONS="$BLDWRAP_POSTGRES_CONF_ADDONS"
+export BLDWRAP_POSTGRES_CONF_ADDONS="$BLDWRAP_POSTGRES_CONF_ADDONS"
 #export BLDWRAP_POSTGRES_CONF_ADDONS="gp_log_stack_trace_lines=false"
 #export BLDWRAP_POSTGRES_CONF_ADDONS="gp_keep_all_xlog=true"
 #export BLDWRAP_POSTGRES_CONF_ADDONS="wal_recycle=off"
