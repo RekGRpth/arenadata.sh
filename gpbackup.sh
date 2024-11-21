@@ -20,8 +20,8 @@ make -j"$(nproc)" build
 make -j"$(nproc)" "$GOPATH/bin/ginkgo"
 #make -j"$(nproc)" unit
 make -j"$(nproc)" install
-mkdir -p "$HOME/go/src/github.com/greenplum-db"
-ln -fs "../../../../src/gpbackup" "$HOME/go/src/github.com/greenplum-db/"
+#mkdir -p "$HOME/go/src/github.com/greenplum-db"
+#ln -fs "../../../../src/gpbackup" "$HOME/go/src/github.com/greenplum-db/"
 #cd "$HOME/src/gpdb$GP_MAJOR/contrib/dummy_seclabel"
 #make -j"$(nproc)" install
 #gpconfig -c shared_preload_libraries -v dummy_seclabel
