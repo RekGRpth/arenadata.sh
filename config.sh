@@ -3,6 +3,7 @@
 (
 #export CFLAGS="-O0 -g3"
 cd "$HOME/src/gpdb$GP_MAJOR"
+git submodule update --init --recursive
 CONFIGURE_FLAGS=
 if [[ "$GP_MAJOR" == "5c" ]]; then
     sudo rpm -i --replacepkgs https://ci.arenadata.io/artifactory/ADB/6.7.1_arenadata4/centos/7/community/x86_64/sigar-1.6.5-163.el7.x86_64.rpm
@@ -28,6 +29,7 @@ fi
     --enable-debug-extensions \
     --enable-depend \
     --enable-gpcloud \
+    --enable-gpfdist \
     --enable-gpperfmon \
     --enable-ic-proxy \
     --enable-mapreduce \

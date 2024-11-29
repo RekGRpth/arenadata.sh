@@ -2,7 +2,7 @@
 
 (
 #export PGOPTIONS="-c optimizer=on -c optimizer_enable_table_alias=off"
-export PGOPTIONS="-c optimizer=off"
+#export PGOPTIONS="-c optimizer=off"
 cd "$HOME/src/gpdb$GP_MAJOR/src/test/regress"
 make -j$(nproc) clean
 make -j$(nproc) install
