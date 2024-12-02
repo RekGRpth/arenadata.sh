@@ -1,4 +1,4 @@
-#!/bin/sh -eux
+#!/bin/bash -eux
 
 (
 #export PGOPTIONS="-c optimizer=on -c optimizer_enable_table_alias=off"
@@ -6,9 +6,9 @@ export PGOPTIONS="-c optimizer=off"
 cd "$HOME/src/gpdb$GP_MAJOR/src/test/regress"
 make -j$(nproc) clean
 make -j$(nproc) install
-if [ "$GP_MAJOR" -eq "6" ]; then
+if [[ "$GP_MAJOR" == "6c" || "$GP_MAJOR" == "6u" ]]; then
     make -j$(nproc) file_monitor
-elif [ "$GP_MAJOR" -eq "7" ]; then
+elif [[ "$GP_MAJOR" == "7c" || "$GP_MAJOR" == "7u" ]]; then
     pushd "$HOME/src/gpdb$GP_MAJOR/contrib/spi"
     make -j$(nproc) install
     popd
@@ -17,6 +17,8 @@ ln -fs "$HOME/src/gpdb$GP_MAJOR/src/test/regress/regress.so" "$GPHOME/lib/postgr
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file bfv_catalog bfv_olap bfv_statistic bfv_index bfv_partition_plans bfv_aggregate bfv_partition DML_over_joins gporca
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file appendonly
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 create_type create_table int8 int4 copy with
+./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 create_type create_table int8 int4 point polygon circle copy create_misc create_index with rowtypes
+#./pg_regress --load-extension=gp_inject_fault --init-file=init_file rowtypes
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file uaocs_compaction/outdatedindex
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file sirv_functions appendonly alter_distpol_dropped vacuum_gp sreh
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file appendonly
@@ -28,7 +30,7 @@ ln -fs "$HOME/src/gpdb$GP_MAJOR/src/test/regress/regress.so" "$GPHOME/lib/postgr
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file rpt
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file bfv_dml_rpt
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file segspace
-./pg_regress --load-extension=gp_inject_fault --init-file=init_file alter_table_ao alter_table_aocs
+#./pg_regress --load-extension=gp_inject_fault --init-file=init_file alter_table_ao alter_table_aocs
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file aux_ao_rels_stat
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file expand_table_ao expand_table_aoco
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file expand_table_ao expand_table_aoco alter_table_ao alter_table_aocs
@@ -86,6 +88,7 @@ ln -fs "$HOME/src/gpdb$GP_MAJOR/src/test/regress/regress.so" "$GPHOME/lib/postgr
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file with_clause
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 create_type create_table int4 int8 float8 varchar char text point polygon circle copy create_aggregate create_misc create_index aggregates
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file with
+#./pg_regress --load-extension=gp_inject_fault --init-file=init_file with rowtypes
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 create_type create_table int8 int4 copy bitmapscan bitmapscan_ao join_gp
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 create_type create_table int8 int4 point polygon circle copy create_misc create_index bitmapscan bitmapscan_ao join_gp
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 create_type create_table int8 int4 point polygon circle copy create_misc join_gp
