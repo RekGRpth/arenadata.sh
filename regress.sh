@@ -2,7 +2,7 @@
 
 (
 #export PGOPTIONS="-c optimizer=on -c optimizer_enable_table_alias=off"
-export PGOPTIONS="-c optimizer=off"
+#export PGOPTIONS="-c optimizer=off"
 cd "$HOME/src/gpdb$GP_MAJOR/src/test/regress"
 make -j$(nproc) clean
 make -j$(nproc) install
@@ -14,10 +14,12 @@ elif [[ "$GP_MAJOR" == "7c" || "$GP_MAJOR" == "7u" ]]; then
     popd
 fi
 ln -fs "$HOME/src/gpdb$GP_MAJOR/src/test/regress/regress.so" "$GPHOME/lib/postgresql/regress.so"
+mkdir -p "$HOME/src/gpdb$GP_MAJOR/src/test/regress/testtablespace_default_tablespace"
+mkdir -p "$HOME/src/gpdb$GP_MAJOR/src/test/regress/testtablespace_database_tablespace"
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file bfv_catalog bfv_olap bfv_statistic bfv_index bfv_partition_plans bfv_aggregate bfv_partition DML_over_joins gporca
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file appendonly
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 create_type create_table int8 int4 copy with
-./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 create_type create_table int8 int4 point polygon circle copy create_misc create_index with rowtypes
+#./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 create_type create_table int8 int4 point polygon circle copy create_misc create_index with rowtypes
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file rowtypes
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file uaocs_compaction/outdatedindex
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file sirv_functions appendonly alter_distpol_dropped vacuum_gp sreh
@@ -80,6 +82,8 @@ ln -fs "$HOME/src/gpdb$GP_MAJOR/src/test/regress/regress.so" "$GPHOME/lib/postgr
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file update_gp
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file bfv_dml gangsize gp_unique_rowid gporca partition_pruning qp_subquery update_gp
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file createdb gp_tablespace_with_faults gp_tablespace temp_tablespaces default_tablespace
+./pg_regress --load-extension=gp_inject_fault --init-file=init_file default_tablespace
+#./pg_regress --load-extension=gp_inject_fault --init-file=init_file gp_tablespace temp_tablespaces default_tablespace
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file temp_tablespaces
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file dispatch
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file gpcopy

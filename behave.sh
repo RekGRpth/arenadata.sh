@@ -71,12 +71,13 @@ export MASTER_DATA_DIRECTORY="$DATADIRS/master/gpseg-1"
 #behave test/behave/mgmt_utils --tags=gpstop -n 'gpstop gpstop should not print "Failed to kill processes for segment" when locale is different from English'
 #behave test/behave/mgmt_utils --tags=gpexpand -n 'gpexpand should skip already expanded/broken tables when redistributing'
 #behave test/behave/mgmt_utils --tags=gpexpand --name='gpexpand should skip already expanded/broken tables when redistributing' --verbose
-behave test/behave/mgmt_utils --tags=gpexpand --name='after resuming a duration interrupted redistribution, tables are restored' --verbose
+#behave test/behave/mgmt_utils --tags=gpexpand --name='after resuming a duration interrupted redistribution, tables are restored' --verbose
 #behave test/behave/mgmt_utils --tags=gpperfmon -n "install gpperfmon" -n "run gpperfmon" -n "gpperfmon ignore ALTER TABLE SET DISTRIBUTED BY" -n "gpperfmon does not lose the query text if its text differs from the text in pg_stat_activity"
 #behave test/behave/mgmt_utils --tags=gpperfmon -n "install gpperfmon" -n "run gpperfmon" -n "gpperfmon adds to diskspace_history table"
 #behave test/behave/mgmt_utils --tags=gpperfmon -n "gpperfmon adds to diskspace_history table"
 #behave test/behave/mgmt_utils --tags=gpperfmon -k -n "gpperfmon adds to diskspace_history table"
 #behave test/behave/mgmt_utils --tags=gplogfilter -k -n "invalid begin and end arguments"
+behave test/behave/mgmt_utils --tags=gplogfilter -k
 #arenadata/scripts/run_behave_tests.bash "gpexpand should skip already expanded/broken tables when redistributing"
 #cd "$HOME/src/gpdb$GP_MAJOR"
 #arenadata/scripts/run_behave_tests.bash "gpexpand Avoid overwriting the tar file on coordinator"
