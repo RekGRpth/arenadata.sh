@@ -3,17 +3,19 @@
 (
 #export PGOPTIONS="-c optimizer=off"
 cd "$HOME/src/adbcc/adcc-extension/regress"
+rm -f expected
 if [[ "$GP_MAJOR" == "6c" || "$GP_MAJOR" == "6u" ]]; then
-    ln -fs expected6/ "$HOME/src/adbcc/adcc-extension/regress/expected"
+    ln -fs expected6 expected
 elif [[ "$GP_MAJOR" == "7c" || "$GP_MAJOR" == "7u" ]]; then
-    ln -fs expected7/ "$HOME/src/adbcc/adcc-extension/regress/expected"
+    ln -fs expected7 expected
 fi
-sudo chmod -R 777 /sys/fs/cgroup/{memory,cpu,cpuset}
-sudo mkdir -p /sys/fs/cgroup/{memory,cpu,cpuset}/gpdb
-sudo chmod -R 777 /sys/fs/cgroup/{memory,cpu,cpuset}/gpdb
-sudo chown -R $USER:$GROUP /sys/fs/cgroup/{memory,cpu,cpuset}/gpdb
-gpconfig -c gp_resource_manager -v group
-gpstop -afr
+#sudo chmod -R 777 /sys/fs/cgroup/{memory,cpu,cpuset}
+#sudo mkdir -p /sys/fs/cgroup/{memory,cpu,cpuset}/gpdb
+#sudo chmod -R 777 /sys/fs/cgroup/{memory,cpu,cpuset}/gpdb
+#sudo chown -R $USER:$GROUP /sys/fs/cgroup/{memory,cpu,cpuset}/gpdb
+#gpconfig -c gp_resource_manager -v group
+#gpconfig -r gp_resource_manager
+#gpstop -afr
 #make -j"$(nproc)" installcheck
 #/home/.local$GP_MAJOR/lib/postgresql/pgxs/src/makefiles/../../src/test/regress/pg_regress --load-extension=plpythonu --load-extension=socket --load-extension=gp_inject_fault cdb_dispatch_replace_ccnt
 #/usr/local/lib/postgresql/pgxs/src/makefiles/../../src/test/regress/pg_regress --load-extension=plpythonu --load-extension=socket --load-extension=gp_inject_fault cdb_dispatch_replace_ccnt
