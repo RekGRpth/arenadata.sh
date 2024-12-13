@@ -19,7 +19,7 @@ if [[ "$GP_MAJOR" == "6c" || "$GP_MAJOR" == "6u" ]]; then
 elif [[ "$GP_MAJOR" == "7c" || "$GP_MAJOR" == "7u" ]]; then
     make -C "$HOME/src/gpdb$GP_MAJOR/src/test/modules/dummy_seclabel" -j"$(nproc)" install
     BLDWRAP_POSTGRES_CONF_ADDONS="shared_preload_libraries='dummy_seclabel'"
-#    BLDWRAP_POSTGRES_CONF_ADDONS="shared_preload_libraries='dummy_seclabel,gp_orca'"
+#    BLDWRAP_POSTGRES_CONF_ADDONS="shared_preload_libraries='orca'"
 fi
 cd "$HOME/src/gpdb$GP_MAJOR"
 export BLDWRAP_POSTGRES_CONF_ADDONS="$BLDWRAP_POSTGRES_CONF_ADDONS"
