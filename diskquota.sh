@@ -9,6 +9,7 @@ cd build
 cmake .. -DCMAKE_BUILD_TYPE= -DDISKQUOTA_DDL_CHANGE_CHECK=off
 #cmake --build .
 make -j"$(nproc)" install
+gpconfig -r log_min_messages
 #gpconfig -c shared_preload_libraries -v diskquota-2.2
 gpconfig -c shared_preload_libraries -v "$(../tests/data/current_binary_name)"
 #gpconfig -c diskquota.naptime -v 2147483 --skipvalidation
