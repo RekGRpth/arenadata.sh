@@ -10,7 +10,7 @@ sudo chown -R $USER:$GROUP /sys/fs/cgroup/{memory,cpu,cpuset}/gpdb
 #gpstop -afr
 #gpconfig -c log_min_messages -v debug1;
 #gpstop -u;
-#export PGOPTIONS="-c optimizer=off"
+export PGOPTIONS="-c optimizer=off"
 cd "$HOME/src/adbcc/adcc-extension/isolation2"
 rm -f expected
 if [[ "$GP_MAJOR" == "6c" || "$GP_MAJOR" == "6u" ]]; then
