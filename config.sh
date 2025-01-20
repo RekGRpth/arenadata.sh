@@ -20,9 +20,12 @@ fi
 #source "$HOME/src/gpdb$GP_MAJOR/concourse/scripts/common.bash"
 #export enable_debug_extensions=set
 #    LDFLAGS="-Wl,--enable-new-dtags -Wl,-rpath,\$/../lib" \
+#    CFLAGS="-O0 -ggdb -g3 -fno-omit-frame-pointer -fno-pie -no-pie -Wclobbered" \
+#    CXXFLAGS="-DGPOS_DEBUG -O0 -ggdb -g3 -fno-omit-frame-pointer -fno-pie -no-pie -Wclobbered"
+export CFLAGS="-O0 -ggdb -g3 -fno-omit-frame-pointer -fno-pie -no-pie -Wclobbered"
+#export CFLAGS="-O0 -ggdb -g3 -fno-omit-frame-pointer -fno-pie -no-pie -Wclobbered -DEXTRA_DYNAMIC_MEMORY_DEBUG"
+export CXXFLAGS="-DGPOS_DEBUG -O0 -ggdb -g3 -fno-omit-frame-pointer -fno-pie -no-pie -Wclobbered"
 ./configure \
-    CFLAGS="-O0 -ggdb -g3 -fno-omit-frame-pointer -fno-pie -no-pie -Wclobbered" \
-    CXXFLAGS="-DGPOS_DEBUG -O0 -ggdb -g3 -fno-omit-frame-pointer -fno-pie -no-pie -Wclobbered" \
     --disable-rpath \
     --enable-cassert \
     --enable-debug \
