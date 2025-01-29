@@ -15,5 +15,7 @@ export REGRESS_SHLIB="$top_builddir/src/test/regress/regress.so"
 #prove --verbose -I ../../../src/test/perl/ t/121_streaming_and_archiving.pl
 #prove --verbose -I ../../../src/test/perl/ t/122_streaming_and_archiving.pl
 #prove --verbose -I ../../../src/test/perl/ t/123_streaming_and_archiving.pl
-prove --verbose -I ../../../src/test/perl/ t/123_streaming_and_archiving_with_archive_mode_always.pl
+#prove --verbose -I ../../../src/test/perl/ t/020_archive_status.pl
+prove --verbose -I ../../../src/test/perl/ t/044_change_recovery_target.pl
+#prove --verbose -I ../../../src/test/perl/ t/123_streaming_and_archiving_with_archive_mode_always.pl
 ) 2>&1 | tee "$HOME/recovery.log"
