@@ -11,7 +11,8 @@ cd "$HOME/src/adbcc/adcc-extension/test/socket"
 make -j"$(nproc)" clean
 make -j"$(nproc)"
 make -j"$(nproc)" install
-gpconfig -c shared_preload_libraries -v 'gpadcc'
+#gpconfig -c shared_preload_libraries -v 'gpadcc'
+gpconfig -c shared_preload_libraries -v "$(psql -At -c "SELECT array_to_string(array_append(string_to_array(current_setting('shared_preload_libraries'), ','), 'gpadcc'), ',')" postgres)"
 gpconfig -c gp_enable_query_metrics -v on
 psql -d postgres -c "CREATE EXTENSION IF NOT EXISTS gpadcc"
 gpstop -afr

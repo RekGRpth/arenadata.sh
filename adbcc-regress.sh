@@ -1,7 +1,7 @@
 #!/bin/bash -eux
 
 (
-export PGOPTIONS="-c optimizer=off"
+#export PGOPTIONS="-c optimizer=off"
 cd "$HOME/src/adbcc/adcc-extension/regress"
 rm -f expected
 if [[ "$GP_MAJOR" == "6c" || "$GP_MAJOR" == "6u" ]]; then
@@ -32,8 +32,9 @@ sudo chown -R $USER:$GROUP /sys/fs/cgroup/{memory,cpu,cpuset}/gpdb
 #"$HOME/src/gpdb$GP_MAJOR/src/test/regress/pg_regress" --load-extension=plpythonu --load-extension=socket create_extension bfv_interconnect
 #"$HOME/src/gpdb$GP_MAJOR/src/test/regress/pg_regress" --load-extension=plpythonu --load-extension=socket create_extension bfv_interconnect cdb_dispatch_ccnt errors errors_resgroup inner_queries misc
 #"$HOME/src/gpdb$GP_MAJOR/src/test/regress/pg_regress" --load-extension=plpython3u --load-extension=socket create_extension socket spill_snapshot
-"$HOME/src/gpdb$GP_MAJOR/src/test/regress/pg_regress" --load-extension=plpython3u --load-extension=socket create_extension spill_snapshot
+#"$HOME/src/gpdb$GP_MAJOR/src/test/regress/pg_regress" --load-extension=plpython3u --load-extension=socket create_extension spill_snapshot
 #"$HOME/src/gpdb$GP_MAJOR/src/test/regress/pg_regress" --load-extension=plpython3u --load-extension=socket create_extension failure_in_txn failure_in_txn_2 failure_in_txn_gc failure_ssid failure_ssid_gc deparse_context
 #"$HOME/src/gpdb$GP_MAJOR/src/test/regress/pg_regress" --load-extension=plpythonu --load-extension=socket create_extension failure_in_txn failure_in_txn_2 failure_in_txn_resgroup errors errors_resgroup
 #"$HOME/src/gpdb$GP_MAJOR/src/test/regress/pg_regress" --load-extension=plpythonu --load-extension=socket create_extension failure_in_txn failure_in_txn_2 errors
+"$HOME/src/gpdb$GP_MAJOR/src/test/regress/pg_regress" --load-extension=plpython3u --load-extension=socket create_extension explain errors
 ) 2>&1 | tee "$HOME/adbcc-regress.log"
