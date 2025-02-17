@@ -3,7 +3,7 @@
 (
 #export PGOPTIONS="-c optimizer=on -c optimizer_enable_table_alias=off"
 #export PGOPTIONS="-c optimizer=on -c jit=on -c jit_above_cost=0 -c optimizer_jit_above_cost=0 -c gp_explain_jit=off"
-#export PGOPTIONS="-c optimizer=off"
+export PGOPTIONS="-c optimizer=off"
 cd "$HOME/src/gpdb$GP_MAJOR/src/test/regress"
 make -j$(nproc) clean
 make -j$(nproc) install
@@ -30,12 +30,13 @@ mkdir -p "$HOME/src/gpdb$GP_MAJOR/src/test/regress/testtablespace_database_table
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file appendonly
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file qp_dropped_cols
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file external_table
-#./pg_regress --load-extension=gp_inject_fault --init-file=init_file gp_create_table
+./pg_regress --load-extension=gp_inject_fault --init-file=init_file gp_create_table
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file select_parallel
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file updatable_views union olap_window_seq
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 create_type create_table int4 int8 float8 varchar char text copy union olap_window_seq
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file bfv_olap olap_setup olap_window_seq
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file rpt
+#./pg_regress --load-extension=gp_inject_fault --init-file=init_file bfv_catalog
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file notin
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file bfv_joins bfv_planner rpt insert_conflict
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file bfv_dml_rpt
