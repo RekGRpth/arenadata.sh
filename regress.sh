@@ -7,6 +7,7 @@ export PGOPTIONS="-c optimizer=off"
 cd "$HOME/src/gpdb$GP_MAJOR/src/test/regress"
 make -j$(nproc) clean
 make -j$(nproc) install
+make -j$(nproc) twophase_pqexecparams
 if [[ "$GP_MAJOR" == "6c" || "$GP_MAJOR" == "6u" ]]; then
     make -j$(nproc) file_monitor
 elif [[ "$GP_MAJOR" == "7c" || "$GP_MAJOR" == "7u" ]]; then
@@ -47,6 +48,9 @@ mkdir -p "$HOME/src/gpdb$GP_MAJOR/src/test/regress/testtablespace_database_table
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file expand_table_ao expand_table_aoco
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file expand_table_ao expand_table_aoco alter_table_ao alter_table_aocs
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file explain_analyze
+#./pg_regress --load-extension=gp_inject_fault --init-file=init_file analyze incremental_analyze
+#./pg_regress --load-extension=gp_inject_fault --init-file=init_file gp_copy_dtx distributed_transactions qp_targeted_dispatch gp_query_id analyze incremental_analyze
+#./pg_regress --load-extension=gp_inject_fault --init-file=init_file gp_copy_dtx distributed_transactions qp_targeted_dispatch gp_query_id analyze
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file scale_factor
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file bfv_joins bfv_planner explain_format gp_recursive_cte gporca rpt scale_factor
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file explain_format
@@ -88,7 +92,7 @@ mkdir -p "$HOME/src/gpdb$GP_MAJOR/src/test/regress/testtablespace_database_table
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file alter_db_set_tablespace
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file partition
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file gp_query_id
-./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 create_type create_table copy prepare
+#./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 create_type create_table copy prepare
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file gp_tsrf
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file gp_explain
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file update_gp

@@ -4,6 +4,6 @@
 cd "$HOME/src/curl"
 autoreconf -vif
 #./configure --without-gnutls
-./configure
+./configure --with-gnutls
 make -j"$(nproc)"
 ) 2>&1 | tee "$HOME/curl.log"
