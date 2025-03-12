@@ -31,9 +31,10 @@ mkdir -p "$HOME/src/gpdb$GP_MAJOR/src/test/regress/testtablespace_database_table
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file appendonly
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file qp_dropped_cols
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file external_table
-./pg_regress --load-extension=gp_inject_fault --init-file=init_file gp_create_table
+#./pg_regress --load-extension=gp_inject_fault --init-file=init_file gp_create_table
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file select_parallel
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file updatable_views union olap_window_seq
+#./pg_regress --load-extension=gp_inject_fault --init-file=init_file updatable_views
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 create_type create_table int4 int8 float8 varchar char text copy union olap_window_seq
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file bfv_olap olap_setup olap_window_seq
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file rpt
@@ -75,7 +76,8 @@ mkdir -p "$HOME/src/gpdb$GP_MAJOR/src/test/regress/testtablespace_database_table
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file rpt
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file bb_mpph
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file bfv_statistic
-#./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 triggers
+./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 triggers
+#./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 create_type create_table int8 int4 text point polygon circle copy create_misc create_index inherit
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file uao_dml/uao_dml_row uao_dml/uao_dml_column
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file gporca
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 create_type create_table int8 int4 copy plancache

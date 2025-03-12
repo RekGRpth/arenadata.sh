@@ -14,12 +14,14 @@ killall -9 psql || echo $?
 killall -9 postgres || echo $?
 BLDWRAP_POSTGRES_CONF_ADDONS=
 if [[ "$GP_MAJOR" == "6c" || "$GP_MAJOR" == "6u" ]]; then
-    make -C "$HOME/src/gpdb$GP_MAJOR/contrib/dummy_seclabel" -j"$(nproc)" install
-    BLDWRAP_POSTGRES_CONF_ADDONS="shared_preload_libraries=dummy_seclabel"
+    if make -C "$HOME/src/gpdb$GP_MAJOR/contrib/dummy_seclabel" -j"$(nproc)" install; then
+        BLDWRAP_POSTGRES_CONF_ADDONS="shared_preload_libraries=dummy_seclabel"
+    fi
 elif [[ "$GP_MAJOR" == "7c" || "$GP_MAJOR" == "7u" ]]; then
-    make -C "$HOME/src/gpdb$GP_MAJOR/src/test/modules/dummy_seclabel" -j"$(nproc)" install
-    BLDWRAP_POSTGRES_CONF_ADDONS="shared_preload_libraries='dummy_seclabel'"
-#    BLDWRAP_POSTGRES_CONF_ADDONS="shared_preload_libraries='orca'"
+    if make -C "$HOME/src/gpdb$GP_MAJOR/src/test/modules/dummy_seclabel" -j"$(nproc)" install; then
+        BLDWRAP_POSTGRES_CONF_ADDONS="shared_preload_libraries='dummy_seclabel'"
+#        BLDWRAP_POSTGRES_CONF_ADDONS="shared_preload_libraries='orca'"
+    fi
 fi
 cd "$HOME/src/gpdb$GP_MAJOR"
 export BLDWRAP_POSTGRES_CONF_ADDONS="$BLDWRAP_POSTGRES_CONF_ADDONS"

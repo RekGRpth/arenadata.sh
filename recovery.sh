@@ -23,6 +23,7 @@ export TESTLOGDIR="$TESTDATADIR/log"
 #prove --verbose -I ../../../src/test/perl/ t/004_timeline_switch.pl
 #prove --verbose -I ../../../src/test/perl/ t/010_logical_decoding_timelines.pl
 #prove --verbose -I ../../../src/test/perl/ t/101_restore_point_and_startup_pause.pl
-prove --verbose -I ../../../src/test/perl/ t/050_check_recovery_backup.pl
+#prove --verbose -I ../../../src/test/perl/ t/050_check_recovery_backup.pl
+prove --verbose -I ../../../src/test/perl/ t/037_invalid_database.pl
 #prove --verbose -I ../../../src/test/perl/ t/123_streaming_and_archiving_with_archive_mode_always.pl
 ) 2>&1 | tee "$HOME/recovery.log"
