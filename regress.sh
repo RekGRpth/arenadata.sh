@@ -20,6 +20,8 @@ mkdir -p "$HOME/src/gpdb$GP_MAJOR/src/test/regress/testtablespace_default_tables
 mkdir -p "$HOME/src/gpdb$GP_MAJOR/src/test/regress/testtablespace_database_tablespace"
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file bfv_catalog bfv_olap bfv_statistic bfv_index bfv_partition_plans bfv_aggregate bfv_partition DML_over_joins gporca
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file appendonly
+#./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 create_type create_table
+./pg_regress --load-extension=gp_inject_fault --init-file=init_file timetz
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 create_type create_table int8 int4 copy with
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 create_type create_table int8 int4 text copy create_index subselect
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 create_type create_table int8 int4 text point polygon circle copy create_misc create_index subselect
@@ -76,7 +78,7 @@ mkdir -p "$HOME/src/gpdb$GP_MAJOR/src/test/regress/testtablespace_database_table
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file rpt
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file bb_mpph
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file bfv_statistic
-./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 triggers
+#./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 triggers
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 create_type create_table int8 int4 text point polygon circle copy create_misc create_index inherit
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file uao_dml/uao_dml_row uao_dml/uao_dml_column
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file gporca
