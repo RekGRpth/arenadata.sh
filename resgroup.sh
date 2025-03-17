@@ -1,6 +1,16 @@
-#!/bin/sh -eux
+#!/bin/bash -eux
 
 (
+export PGOPTIONS="-c optimizer=off"
+#sudo chmod -R 777 /sys/fs/cgroup/{memory,cpu,cpuset}
+#sudo mkdir -p /sys/fs/cgroup/{memory,cpu,cpuset}/gpdb
+#sudo chmod -R 777 /sys/fs/cgroup/{memory,cpu,cpuset}/gpdb
+#sudo chown -R $USER:$GROUP /sys/fs/cgroup/{memory,cpu,cpuset}/gpdb
+#gpconfig -c gp_resource_manager -v group
+#gpconfig -r gp_resource_manager
+#gpstop -afr
+cd "$HOME/src/gpdb$GP_MAJOR/src/test/regress"
+make -j$(nproc) install
 cd "$HOME/src/gpdb$GP_MAJOR/src/test/isolation2"
 make -j$(nproc) install
 #./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_parallel_retrieve_cursor --inputdir=. --dbname=isolation2parallelretrcursor --load-extension=gp_inject_fault --schedule=./parallel_retrieve_cursor_schedule
@@ -57,12 +67,20 @@ sudo chmod -R 777 /sys/fs/cgroup/{memory,cpu,cpuset}
 sudo mkdir -p /sys/fs/cgroup/{memory,cpu,cpuset}/gpdb
 sudo chmod -R 777 /sys/fs/cgroup/{memory,cpu,cpuset}/gpdb
 sudo chown -R $USER:$GROUP /sys/fs/cgroup/{memory,cpu,cpuset}/gpdb
+#gpconfig -c gp_resource_manager -v group
+#gpconfig -r gp_resource_manager
+#gpstop -afr
 #./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_resgroup --load-extension=gp_inject_fault --dbname=isolation2resgrouptest resgroup/enable_resgroup_validate resgroup/enable_resgroup resgroup/resgroup_views resgroup/resgroup_cpu_rate_limit resgroup/resgroup_memory_limit
 #./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_resgroup --load-extension=gp_inject_fault --dbname=isolation2resgrouptest resgroup/enable_resgroup_validate resgroup/enable_resgroup resgroup/resgroup_views resgroup/resgroup_memory_limit
+#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_resgroup --dbname=isolation2resgrouptest resgroup/enable_resgroup_validate resgroup/enable_resgroup resgroup/resgroup_views resgroup/resgroup_memory_limit resgroup/disable_resgroup
+./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_resgroup --dbname=isolation2resgrouptest resgroup/enable_resgroup_validate resgroup/enable_resgroup resgroup/resgroup_oom resgroup/disable_resgroup
+#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_resgroup --load-extension=gp_inject_fault --dbname=isolation2resgrouptest resgroup/resgroup_views resgroup/resgroup_memory_limit
 #./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_resgroup --load-extension=gp_inject_fault --dbname=isolation2resgrouptest resgroup/resgroup_auxiliary_tools_v1 resgroup/resgroup_bypass_catalog resgroup/resgroup_views resgroup/resgroup_memory_limit
 #./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_resgroup --load-extension=gp_inject_fault --dbname=isolation2resgrouptest resgroup/resgroup_auxiliary_tools_v1 resgroup/resgroup_views resgroup/resgroup_memory_limit
 #./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_resgroup --dbname=isolation2resgrouptest resgroup/enable_resgroup_validate resgroup/enable_resgroup resgroup/resgroup_views_seg_down resgroup/disable_resgroup
-./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_resgroup --dbname=isolation2resgrouptest resgroup/resgroup_auxiliary_tools_v1 resgroup/resgroup_views_seg_down resgroup/resgroup_disable_resgroup
+#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_resgroup --dbname=isolation2resgrouptest resgroup/resgroup_auxiliary_tools_v1 resgroup/resgroup_views_seg_down resgroup/resgroup_disable_resgroup
+#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_resgroup --dbname=isolation2resgrouptest resgroup/resgroup_oom resgroup/resgroup_disable_resgroup
+#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_resgroup --dbname=isolation2resgrouptest resgroup/enable_resgroup_validate
 #./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_resgroup --dbname=isolation2resgrouptest resgroup/enable_resgroup_validate resgroup/enable_resgroup resgroup/resgroup_memory_limit resgroup/resgroup_memory_runaway resgroup/disable_resgroup
 #./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_resgroup --dbname=isolation2resgrouptest resgroup/resgroup_views_seg_down
 #./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_resgroup --load-extension=gp_inject_fault --dbname=isolation2resgrouptest resgroup/resgroup_bypass_catalog resgroup/resgroup_views resgroup/resgroup_memory_limit
