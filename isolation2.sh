@@ -3,7 +3,7 @@
 (
 #export PGOPTIONS="-c optimizer=off"
 cd "$HOME/src/gpdb$GP_MAJOR/src/test/isolation2"
-make -j$(nproc) clean
+#make -j$(nproc) clean
 make -j$(nproc) install
 #./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_parallel_retrieve_cursor --inputdir=. --dbname=isolation2parallelretrcursor --load-extension=gp_inject_fault --schedule=./parallel_retrieve_cursor_schedule
 #./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 setup cached_plan gpdispatch checkpoint_dtx_info lockmodes prepare_limit pg_rewind_fail_missing_xlog prepared_xact_deadlock_pg_rewind ao_partition_lock query_gp_partitions_view dml_on_root_locks_all_parts select_dropped_table update_hash_col_utilitymode execute_on_utilitymode uao_crash_compaction_column
@@ -55,7 +55,9 @@ make -j$(nproc) install
 #./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault orphan_temp_table
 #./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault segwalrep/max_slot_wal_keep_size
 #./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault segwalrep/max_slot_wal_keep_size1
-./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault sync_guc
+#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault sync_guc
+#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault ao_same_trans_truncate_crash
+./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault fsync_ao
 #./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault pg_rewind_fail_missing_xlog || cat regression.diffs
 #./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault workfile_mgr_test workfile_gp_toolkit
 #./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault workfile_gp_toolkit
