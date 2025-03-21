@@ -26,6 +26,7 @@ export TESTLOGDIR="$TESTDATADIR/log"
 #prove --verbose -I ../../../src/test/perl/ t/050_check_recovery_backup.pl
 #prove --verbose -I ../../../src/test/perl/ t/037_invalid_database.pl
 prove --verbose -I ../../../src/test/perl/ t/039_end_of_wal.pl
+#prove --verbose -I ../../../src/test/perl/ t/039_end_of_wal.1.pl
 #prove --verbose -I ../../../src/test/perl/ t/031_recovery_conflict.pl
 #prove --verbose -I ../../../src/test/perl/ t/013_crash_restart.pl
 #prove --verbose -I ../../../src/test/perl/ t/123_streaming_and_archiving_with_archive_mode_always.pl
