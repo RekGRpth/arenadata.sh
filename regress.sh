@@ -5,7 +5,7 @@
 #export PGOPTIONS="-c optimizer=on -c jit=on -c jit_above_cost=0 -c optimizer_jit_above_cost=0 -c gp_explain_jit=off"
 #export PGOPTIONS="-c optimizer=off"
 cd "$HOME/src/gpdb$GP_MAJOR/src/test/regress"
-make -j$(nproc) clean
+#make -j$(nproc) clean
 make -j$(nproc) install
 make -j$(nproc) twophase_pqexecparams
 if [[ "$GP_MAJOR" == "6c" || "$GP_MAJOR" == "6u" ]]; then
