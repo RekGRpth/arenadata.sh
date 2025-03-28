@@ -2,6 +2,8 @@
 
 (
 export PGOPTIONS="-c optimizer=off"
+cd "$HOME/src/gpdb$GP_MAJOR/src/test/regress"
+make -j$(nproc) install
 cd "$HOME/src/gpdb$GP_MAJOR/src/test/isolation2"
 #make -j$(nproc) clean
 make -j$(nproc) install
