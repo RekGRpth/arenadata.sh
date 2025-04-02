@@ -24,6 +24,7 @@ export TESTLOGDIR="$TESTDATADIR/log"
 #prove --verbose -I ../../../src/test/perl/ t/010_logical_decoding_timelines.pl
 #prove --verbose -I ../../../src/test/perl/ t/101_restore_point_and_startup_pause.pl
 #prove --verbose -I ../../../src/test/perl/ t/050_check_recovery_backup.pl
+export with_ldap=yes
 prove --verbose -I ../../../src/test/perl/ t/001_auth.pl
 #prove --verbose -I ../../../src/test/perl/ t/039_end_of_wal.pl
 #prove --verbose -I ../../../src/test/perl/ t/039_end_of_wal.1.pl
