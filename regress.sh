@@ -26,7 +26,8 @@ mkdir -p "$HOME/src/gpdb$GP_MAJOR/src/test/regress/testtablespace_database_table
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 create_type create_table int8 int4 copy jsonb
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file domain
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file generated
-./pg_regress --load-extension=gp_inject_fault --init-file=init_file constraints
+#./pg_regress --load-extension=gp_inject_fault --init-file=init_file constraints
+./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_am brin_interface alter_distribution_policy alter_table_set alter_table_ao alter_table_repack uao_ddl/alter_table_reloptions_row uao_ddl/alter_table_reloptions_column
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file rowsecurity
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file appendonly
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 create_type create_table

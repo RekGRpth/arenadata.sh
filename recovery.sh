@@ -24,7 +24,10 @@ export TESTLOGDIR="$TESTDATADIR/log"
 #prove --verbose -I ../../../src/test/perl/ t/010_logical_decoding_timelines.pl
 #prove --verbose -I ../../../src/test/perl/ t/101_restore_point_and_startup_pause.pl
 #prove --verbose -I ../../../src/test/perl/ t/050_check_recovery_backup.pl
-prove --verbose -I ../../../src/test/perl/ t/037_invalid_database.pl
+#prove --verbose -I ../../../src/test/perl/ t/037_invalid_database.pl
+#prove --verbose -I ../../../src/test/perl/ t/002_archiving.pl
+prove --verbose -I ../../../src/test/perl/ t/009_twophase.pl
+#prove --verbose -I ../../../src/test/perl/ t/012_subtransactions.pl
 #prove --verbose -I ../../../src/test/perl/ t/039_end_of_wal.pl
 #prove --verbose -I ../../../src/test/perl/ t/039_end_of_wal.1.pl
 #prove --verbose -I ../../../src/test/perl/ t/031_recovery_conflict.pl
