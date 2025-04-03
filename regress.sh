@@ -85,7 +85,7 @@ mkdir -p "$HOME/src/gpdb$GP_MAJOR/src/test/regress/testtablespace_database_table
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file qp_correlated_query
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file gp_unique_rowid
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file dispatch
-./pg_regress --load-extension=gp_inject_fault --init-file=init_file horology
+#./pg_regress --load-extension=gp_inject_fault --init-file=init_file horology
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file database
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file tablespace
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file qp_functions
@@ -111,6 +111,7 @@ mkdir -p "$HOME/src/gpdb$GP_MAJOR/src/test/regress/testtablespace_database_table
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 create_type create_table int8 int4 copy create_misc rangefuncs_cdb gp_dqa subselect_gp subselect_gp2
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 create_type create_table int8 int4 copy create_misc brin gin gist spgist privileges init_privs security_label collate matview lock replica_identity rowsecurity object_address tablesample groupingsets drop_operator password identity generated join_hash create_table_like alter_generic alter_operator misc select_parallel
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 create_type create_table int8 int4 copy create_misc gin gist spgist privileges init_privs collate matview lock replica_identity rowsecurity object_address tablesample drop_operator password identity generated join_hash
+./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 create_type create_table int8 int4 copy create_misc gin gist spgist privileges init_privs collate matview
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file join_hash
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file bfv_dml
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file gangsize
