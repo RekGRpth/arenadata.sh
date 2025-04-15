@@ -2,6 +2,8 @@
 
 (
 export PGOPTIONS="-c optimizer=off"
+#ls -d @cgroup_mnt_point@/cpu/gpdb/*/;
+#ls -d @cgroup_mnt_point@/cpuacct/gpdb/*/;
 #sudo chmod -R 777 /sys/fs/cgroup/{memory,cpu,cpuset}
 #sudo mkdir -p /sys/fs/cgroup/{memory,cpu,cpuset}/gpdb
 #sudo chmod -R 777 /sys/fs/cgroup/{memory,cpu,cpuset}/gpdb

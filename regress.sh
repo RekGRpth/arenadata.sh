@@ -92,7 +92,8 @@ mkdir -p "$HOME/src/gpdb$GP_MAJOR/src/test/regress/testtablespace_database_table
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file --schedule=./greenplum_schedule.test2
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file qp_correlated_query
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file gp_unique_rowid
-./pg_regress --load-extension=gp_inject_fault --init-file=init_file dispatch
+#./pg_regress --load-extension=gp_inject_fault --init-file=init_file dispatch
+./pg_regress --load-extension=gp_inject_fault --init-file=init_file fts_error
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file horology
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file database
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file tablespace
