@@ -29,7 +29,7 @@ export GINKGO_FLAGS="-r --keep-going --randomize-suites --randomize-all --no-col
 #export TEST_GPDB_VERSION="$GP_MAJOR.999.0"
 if [[ "$GP_MAJOR" == "6c" || "$GP_MAJOR" == "6u" ]]; then
     export TEST_GPDB_VERSION="6.999.0"
-elif [[ "$GP_MAJOR" == "7c" || "$GP_MAJOR" == "7u" ]]; then
+elif [[ "$GP_MAJOR" == "7c" || "$GP_MAJOR" == "7u" || "$GP_MAJOR" == "8u" ]]; then
     export TEST_GPDB_VERSION="7.999.0"
 fi
 #export GINKGO_FLAGS="-r --keep-going --randomize-suites --randomize-all --no-color -vv"

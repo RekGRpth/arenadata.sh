@@ -9,7 +9,7 @@ make -j"$(nproc)" USE_PGXS=1 install
 if [[ "$GP_MAJOR" == "6c" || "$GP_MAJOR" == "6u" ]]; then
     gpconfig -c max_worker_processes -v 100 --masteronly
     gpconfig -c pg_task.json -v "'[{\"data\":\"gpadmin\",\"user\":\"gpadmin\"}]'" --masteronly --skipvalidation
-elif [[ "$GP_MAJOR" == "7c" || "$GP_MAJOR" == "7u" ]]; then
+elif [[ "$GP_MAJOR" == "7c" || "$GP_MAJOR" == "7u" || "$GP_MAJOR" == "8u" ]]; then
     gpconfig -c max_worker_processes -v 100 --coordinatoronly
     gpconfig -c pg_task.json -v "'[{\"data\":\"gpadmin\",\"user\":\"gpadmin\"}]'" --coordinatoronly --skipvalidation
 fi
