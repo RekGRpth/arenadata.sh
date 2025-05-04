@@ -21,6 +21,7 @@ fi
 ln -fs "$HOME/src/gpdb$GP_MAJOR/src/test/regress/regress.so" "$GPHOME/lib/postgresql/regress.so"
 mkdir -p "$HOME/src/gpdb$GP_MAJOR/src/test/regress/testtablespace_default_tablespace"
 mkdir -p "$HOME/src/gpdb$GP_MAJOR/src/test/regress/testtablespace_database_tablespace"
+#./pg_regress --load-extension=gp_inject_fault --init-file=init_file bfv_catalog bfv_olap bfv_statistic bfv_index bfv_partition_plans bfv_aggregate bfv_partition table_statistics
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file bfv_catalog bfv_olap bfv_statistic bfv_index bfv_partition_plans bfv_aggregate bfv_partition DML_over_joins gporca
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 create_type create_table int8 int4 copy privileges
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 create_type create_table int8 int4 copy tsearch
@@ -34,6 +35,7 @@ mkdir -p "$HOME/src/gpdb$GP_MAJOR/src/test/regress/testtablespace_database_table
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 create_type create_table int8 int4 copy plpgsql
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 create_type create_table int8 int4 copy rangefuncs
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file constraints
+#./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 create_type create_table create_function_2 int8 int4 text point polygon circle copy create_misc create_index create_am
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_am brin_interface alter_distribution_policy alter_table_set alter_table_ao alter_table_repack uao_ddl/alter_table_reloptions_row uao_ddl/alter_table_reloptions_column
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file rowsecurity
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file appendonly
@@ -61,8 +63,13 @@ mkdir -p "$HOME/src/gpdb$GP_MAJOR/src/test/regress/testtablespace_database_table
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file updatable_views
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_schema
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file subscription
+./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 create_type create_table int4 int8 float8 varchar char text copy union window qp_with_clause
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 create_type create_table int4 int8 float8 varchar char text copy union olap_window_seq
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file bfv_olap olap_setup olap_window_seq
+#./pg_regress --load-extension=gp_inject_fault --init-file=init_file psql_gp_commands
+#./pg_regress --load-extension=gp_inject_fault --init-file=init_file pg_lsn
+#./pg_regress --load-extension=gp_inject_fault --init-file=init_file rangetypes
+#./pg_regress --load-extension=gp_inject_fault --init-file=init_file pg_resetwal
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file rpt
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file bfv_catalog
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file notin
@@ -150,7 +157,7 @@ mkdir -p "$HOME/src/gpdb$GP_MAJOR/src/test/regress/testtablespace_database_table
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file bfv_dml gangsize gp_unique_rowid gporca partition_pruning qp_subquery update_gp
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file createdb gp_tablespace_with_faults gp_tablespace temp_tablespaces default_tablespace
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file default_tablespace
-./pg_regress --load-extension=gp_inject_fault --init-file=init_file gp_tablespace temp_tablespaces default_tablespace
+#./pg_regress --load-extension=gp_inject_fault --init-file=init_file gp_tablespace temp_tablespaces default_tablespace
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file temp_tablespaces
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file dispatch
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file gpcopy
