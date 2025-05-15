@@ -24,7 +24,8 @@ export TESTLOGDIR="$TESTDATADIR/log"
 #prove --verbose -I ../../../src/test/perl/ t/050_dropdb.pl
 #prove --verbose -I ../../../src/test/perl/ t/091_reindexdb_all.pl
 #prove --verbose -I ../../../src/test/perl/ t/101_vacuumdb_all.pl
-prove --verbose -I ../../../src/test/perl/ t/080_pg_isready.pl
+#prove --verbose -I ../../../src/test/perl/ t/080_pg_isready.pl
+prove --verbose -I ../../../src/test/perl/ t/090_reindexdb.pl
 #prove --verbose -I ../../../src/test/perl/ t/020_pg_receivewal.pl
 #prove --verbose -I ../../../src/test/perl/ t/010_pg_basebackup.pl
 #prove --verbose -I ../../../src/test/perl/ t/123_streaming_and_archiving_with_archive_mode_always.pl
