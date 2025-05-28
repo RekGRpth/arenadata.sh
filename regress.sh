@@ -1,7 +1,7 @@
 #!/bin/bash -eux
 
 (
-#export PGOPTIONS="-c optimizer=off"
+export PGOPTIONS="-c optimizer=off"
 #export PGOPTIONS="-c optimizer_enable_table_alias=off"
 #export PGOPTIONS="-c optimizer=on -c optimizer_enable_table_alias=off"
 #export PGOPTIONS="-c optimizer=on -c jit=on -c jit_above_cost=0 -c optimizer_jit_above_cost=0 -c gp_explain_jit=off"
@@ -27,11 +27,11 @@ mkdir -p "$HOME/src/gpdb$GP_MAJOR/src/test/regress/testtablespace_database_table
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file bfv_catalog bfv_olap bfv_statistic bfv_index bfv_partition_plans bfv_aggregate
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file bfv_catalog bfv_olap bfv_statistic bfv_index bfv_partition_plans bfv_aggregate bfv_partition table_statistics
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file bfv_catalog bfv_olap bfv_statistic bfv_index bfv_partition_plans bfv_aggregate bfv_partition DML_over_joins gporca
-#./pg_regress --load-extension=gp_inject_fault --init-file=init_file qp_functions_in_contexts_setup qp_functions_in_from
+./pg_regress --load-extension=gp_inject_fault --init-file=init_file qp_functions_in_contexts_setup qp_functions_in_from
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 create_type create_table int8 int4 copy privileges
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 create_type create_table int8 int4 copy tsearch
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 create_type create_table int8 int4 copy json jsonb
-#./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 create_type create_table int8 int4 copy json jsonb rangefuncs
+./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 create_type create_table int8 int4 copy json jsonb rangefuncs
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file workfile/hashjoin_spill
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file stats_ext
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file qp_dml_joins
@@ -65,7 +65,7 @@ mkdir -p "$HOME/src/gpdb$GP_MAJOR/src/test/regress/testtablespace_database_table
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file namespace
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 create_type create_table int8 int4 copy with
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 create_type create_table int8 int4 text copy create_index subselect
-./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 create_type create_table int8 int4 text point polygon circle copy create_misc create_index subselect
+#./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 create_type create_table int8 int4 text point polygon circle copy create_misc create_index subselect
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 create_type create_table int8 int4 text point polygon circle copy create_misc create_index alter_table
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 create_type create_table int8 int4 point polygon circle copy create_misc create_index with rowtypes
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 create_type create_table int2 int4 int8 float8 varchar char text point polygon circle copy create_aggregate create_misc create_index index_including subselect union case inherit join
