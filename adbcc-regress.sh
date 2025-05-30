@@ -1,7 +1,7 @@
 #!/bin/bash -eux
 
 (
-#export PGOPTIONS="-c optimizer=off"
+export PGOPTIONS="-c optimizer=off"
 cd "$HOME/src/adbcc/adcc-extension/regress"
 rm -f expected
 if [[ "$GP_MAJOR" == "6c" || "$GP_MAJOR" == "6u" ]]; then
