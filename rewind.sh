@@ -11,7 +11,8 @@ export PG_REGRESS="$top_builddir/src/test/regress/pg_regress"
 export REGRESS_SHLIB="$top_builddir/src/test/regress/regress.so"
 export TESTDATADIR="$TESTDIR/tmp_check"
 export TESTLOGDIR="$TESTDATADIR/log"
-prove --verbose -I ../../../src/test/perl/ t/003_extrafiles.pl
+prove --verbose -I ../../../src/test/perl/ t/001_basic.pl
+#prove --verbose -I ../../../src/test/perl/ t/003_extrafiles.pl
 exit
 #make -j$(nproc) clean
 #make -j$(nproc) install
