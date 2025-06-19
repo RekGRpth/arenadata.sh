@@ -12,7 +12,7 @@ export REGRESS_SHLIB="$top_builddir/src/test/regress/regress.so"
 export TESTDATADIR="$TESTDIR/tmp_check"
 export TESTLOGDIR="$TESTDATADIR/log"
 export with_openssl=yes
-./configure_ssl.sh || echo $?
+#./configure_ssl.sh || echo $?
 #prove -I ../../../src/test/perl/ t/101_non_standby_recovery.pl
 #prove --verbose -I ../../../src/test/perl/ t/139_archive_mode_always.pl
 #prove --verbose -I ../../../src/test/perl/ t/140_archive_mode_always.pl
@@ -34,5 +34,5 @@ prove --verbose -I ../../../src/test/perl/ t/002_scram.pl
 #prove --verbose -I ../../../src/test/perl/ t/031_recovery_conflict.pl
 #prove --verbose -I ../../../src/test/perl/ t/013_crash_restart.pl
 #prove --verbose -I ../../../src/test/perl/ t/123_streaming_and_archiving_with_archive_mode_always.pl
-./clear_ssl.sh || echo $?
+#./clear_ssl.sh || echo $?
 ) 2>&1 | tee "$HOME/ssl.log"
