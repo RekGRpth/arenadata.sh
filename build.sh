@@ -21,6 +21,17 @@ if [[ "$GP_MAJOR" == "6u" ]]; then
         #popd
     fi
 fi
+pushd "$HOME/src/gpdb$GP_MAJOR/src/test/regress"
+make -j$(nproc) twophase_pqexecparams
+make -j$(nproc) tablespace-setup
+if [[ "$GP_MAJOR" == "6c" || "$GP_MAJOR" == "6u" ]]; then
+    make -j$(nproc) file_monitor
+elif [[ "$GP_MAJOR" == "7c" || "$GP_MAJOR" == "7u" || "$GP_MAJOR" == "8u" ]]; then
+    pushd "$HOME/src/gpdb$GP_MAJOR/contrib/spi"
+    make -j$(nproc) install
+    popd
+fi
+popd
 #cd "$HOME/src/gpdb$GP_MAJOR/gpcontrib/gp_internal_tools"
 #make -j"$(nproc)" install
 #gpconfig -c gp_log_stack_trace_lines -v true --skipvalidation
