@@ -1,7 +1,7 @@
 #!/bin/bash -eux
 
 (
-#export PGOPTIONS="-c optimizer=off"
+export PGOPTIONS="-c optimizer=off"
 #export PGOPTIONS="-c optimizer_enable_table_alias=off"
 #export PGOPTIONS="-c optimizer=on -c optimizer_enable_table_alias=off"
 #export PGOPTIONS="-c optimizer=on -c jit=on -c jit_above_cost=0 -c optimizer_jit_above_cost=0 -c gp_explain_jit=off"
@@ -27,6 +27,7 @@ mkdir -p "$HOME/src/gpdb$GP_MAJOR/src/test/regress/testtablespace_database_table
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file bfv_catalog bfv_olap bfv_statistic bfv_index bfv_partition_plans bfv_aggregate
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file bfv_catalog bfv_olap bfv_statistic bfv_index bfv_partition_plans bfv_aggregate bfv_partition table_statistics
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file bfv_catalog bfv_olap bfv_statistic bfv_index bfv_partition_plans bfv_aggregate bfv_partition DML_over_joins gporca
+#./pg_regress --load-extension=gp_inject_fault --init-file=init_file bfv_catalog bfv_olap bfv_statistic bfv_index bfv_partition_plans bfv_aggregate bfv_partition
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file qp_functions_in_contexts_setup qp_functions_in_from
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 create_type create_table int8 int4 copy privileges
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 create_type create_table int8 int4 copy tsearch
@@ -37,6 +38,7 @@ mkdir -p "$HOME/src/gpdb$GP_MAJOR/src/test/regress/testtablespace_database_table
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 create_type create_table int8 int4 copy cluster
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 create_type create_table create_function_2 int8 int4 text point polygon circle copy create_misc create_index create_index_spgist
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 create_type create_table int8 int4 copy btree_index
+#./pg_regress --load-extension=gp_inject_fault --init-file=init_file dependency
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file dpe
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file qp_orca_fallback
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file catcache
@@ -187,11 +189,14 @@ mkdir -p "$HOME/src/gpdb$GP_MAJOR/src/test/regress/testtablespace_database_table
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file gangsize
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file gp_unique_rowid
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file gporca
-#./pg_regress --load-extension=gp_inject_fault --init-file=init_file qp_functions_idf
+./pg_regress --load-extension=gp_inject_fault --init-file=init_file qp_functions_idf
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file qp_left_anti_semi_join
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file qp_subquery
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file DML_over_joins
-./pg_regress --load-extension=gp_inject_fault --init-file=init_file alter_db_set_tablespace
+#./pg_regress --load-extension=gp_inject_fault --init-file=init_file alter_db_set_tablespace
+#./pg_regress --load-extension=gp_inject_fault --init-file=init_file gpsd alter_db_set_tablespace
+#./pg_regress --load-extension=gp_inject_fault --init-file=init_file enable_autovacuum session_reset fts_error alter_db_set_tablespace
+#./pg_regress --load-extension=gp_inject_fault --init-file=init_file expand_table_regression temp_relation alter_db_set_tablespace oid_wraparound
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file partition1
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file partition
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file gp_query_id
