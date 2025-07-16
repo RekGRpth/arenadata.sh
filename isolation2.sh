@@ -4,10 +4,10 @@
 export PGOPTIONS="-c optimizer=off"
 cd "$HOME/src/gpdb$GP_MAJOR/src/test/regress"
 #make -j$(nproc) clean
-make -j$(nproc) install
+#make -j$(nproc) install
 cd "$HOME/src/gpdb$GP_MAJOR/src/test/isolation2"
 #make -j$(nproc) clean
-make -j$(nproc) install
+#make -j$(nproc) install
 #make -j$(nproc) installcheck -i
 #exit
 #./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_parallel_retrieve_cursor --inputdir=. --dbname=isolation2parallelretrcursor --load-extension=gp_inject_fault --schedule=./parallel_retrieve_cursor_schedule
@@ -56,8 +56,8 @@ make -j$(nproc) install
 #./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault frozen_insert_crash
 #./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault reindex/vacuum_while_reindex_ao_bitmap
 #./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault gdd/prepare intra-grant-inplace gdd/end
-./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault dependency
-#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault intra-grant-inplace-db
+#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault dependency
+./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault intra-grant-inplace-db
 #./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault frozen_insert_crash reindex/vacuum_while_reindex_ao_bitmap
 #./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault --schedule=./isolation2_schedule_reindex
 #./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault --schedule=./isolation2_schedule

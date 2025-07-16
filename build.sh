@@ -21,6 +21,12 @@ if [[ "$GP_MAJOR" == "6u" ]]; then
         #popd
     fi
 fi
+cd "$HOME/src/gpdb$GP_MAJOR/src/test/regress"
+make -j$(nproc) install
+cd "$HOME/src/gpdb$GP_MAJOR/src/test/isolation2"
+make -j$(nproc) install
+cd "$HOME/src/gpdb$GP_MAJOR/src/test/isolation"
+make -j$(nproc) install
 pushd "$HOME/src/gpdb$GP_MAJOR/src/test/regress"
 make -j$(nproc) twophase_pqexecparams
 make -j$(nproc) tablespace-setup

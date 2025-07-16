@@ -189,11 +189,12 @@ mkdir -p "$HOME/src/gpdb$GP_MAJOR/src/test/regress/testtablespace_database_table
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file gangsize
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file gp_unique_rowid
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file gporca
-./pg_regress --load-extension=gp_inject_fault --init-file=init_file qp_functions_idf
+#./pg_regress --load-extension=gp_inject_fault --init-file=init_file qp_functions_idf
+#./pg_regress --load-extension=gp_inject_fault --init-file=init_file qp_functions_idf opr_sanity
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file qp_left_anti_semi_join
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file qp_subquery
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file DML_over_joins
-#./pg_regress --load-extension=gp_inject_fault --init-file=init_file alter_db_set_tablespace
+./pg_regress --load-extension=gp_inject_fault --init-file=init_file alter_db_set_tablespace
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file gpsd alter_db_set_tablespace
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file enable_autovacuum session_reset fts_error alter_db_set_tablespace
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file expand_table_regression temp_relation alter_db_set_tablespace oid_wraparound
