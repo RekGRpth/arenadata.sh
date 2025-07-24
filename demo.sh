@@ -24,6 +24,10 @@ elif [[ "$GP_MAJOR" == "7c" || "$GP_MAJOR" == "7u" || "$GP_MAJOR" == "8u" ]]; th
     fi
 fi
 cd "$HOME/src/gpdb$GP_MAJOR"
+if [[ "$GP_MAJOR" == "9u" ]]; then
+    export WITH_MIRRORS=false
+    export WITH_STANDBY=false
+fi
 export BLDWRAP_POSTGRES_CONF_ADDONS="$BLDWRAP_POSTGRES_CONF_ADDONS"
 #export BLDWRAP_POSTGRES_CONF_ADDONS="gp_log_stack_trace_lines=false"
 #export BLDWRAP_POSTGRES_CONF_ADDONS="gp_keep_all_xlog=true"
