@@ -1,11 +1,14 @@
-#!/bin/sh -eux
+#!/bin/bash -eux
 
-(
+exec 2>&1 &> >(tee "$HOME/isolation2.log")
+
+pushd "$HOME/src/gpdb$GP_MAJOR/src/test/isolation2"
+
 export PGOPTIONS="-c optimizer=off"
-cd "$HOME/src/gpdb$GP_MAJOR/src/test/regress"
+#cd "$HOME/src/gpdb$GP_MAJOR/src/test/regress"
 #make -j$(nproc) clean
 #make -j$(nproc) install
-cd "$HOME/src/gpdb$GP_MAJOR/src/test/isolation2"
+#cd "$HOME/src/gpdb$GP_MAJOR/src/test/isolation2"
 #make -j$(nproc) clean
 #make -j$(nproc) install
 #make -j$(nproc) installcheck -i
@@ -23,7 +26,7 @@ cd "$HOME/src/gpdb$GP_MAJOR/src/test/isolation2"
 #./pg_isolation2_regress --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 setup uao_crash_compaction_column gdd/prepare gdd/planner_insert_while_vacuum_drop vacuum_drop_phase_ao uao/vacuum_cleanup_row uao/insert_should_not_use_awaiting_drop_row reorganize_after_ao_vacuum_skip_drop truncate_after_ao_vacuum_skip_drop mark_all_aoseg_await_drop uao/vacuum_cleanup_column uao/insert_should_not_use_awaiting_drop_column add_column_after_vacuum_skip_drop_column vacuum_after_vacuum_skip_drop_column
 #./pg_isolation2_regress --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 setup uao/insert_should_not_use_awaiting_drop_row uao/insert_should_not_use_awaiting_drop_column
 #./pg_isolation2_regress --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 setup gdd/prepare uao_crash_compaction_column gdd/planner_insert_while_vacuum_drop vacuum_drop_phase_ao uao/vacuum_cleanup_row mark_all_aoseg_await_drop uao/vacuum_cleanup_column add_column_after_vacuum_skip_drop_column vacuum_after_vacuum_skip_drop_column
-#./pg_isolation2_regress --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 setup add_column_after_vacuum_skip_drop_column
+./pg_isolation2_regress --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 setup add_column_after_vacuum_skip_drop_column
 #./pg_isolation2_regress --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 setup gdd/prepare gdd/planner_insert_while_vacuum_drop
 #./pg_isolation2_regress --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 setup uao/insert_while_vacuum_drop_column uao/insert_while_vacuum_drop_row
 #./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 ao
@@ -55,7 +58,13 @@ cd "$HOME/src/gpdb$GP_MAJOR/src/test/isolation2"
 #./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault prevent_ao_wal
 #./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault frozen_insert_crash
 #./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault reindex/vacuum_while_reindex_ao_bitmap
-./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault gdd/prepare intra-grant-inplace gdd/end
+#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault uao/compaction_full_stats_column
+#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault uao/alter_while_vacuum_row uao/alter_while_vacuum_column
+#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault distributed_snapshot
+#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault bitmap_index_ao_sparse
+#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault drop_rename
+#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault starve_case
+#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault gdd/prepare intra-grant-inplace gdd/end
 #./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault dependency
 #./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault intra-grant-inplace-db
 #./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault frozen_insert_crash reindex/vacuum_while_reindex_ao_bitmap
@@ -98,4 +107,5 @@ cd "$HOME/src/gpdb$GP_MAJOR/src/test/isolation2"
 #make -j$(nproc) installcheck -i
 #test -f regression.diffs && cat regression.diffs
 #) || cat "$HOME/src/gpdb$GP_MAJOR/src/test/isolation2/regression.diffs" 2>&1 | tee "$HOME/isolation2.log"
-) 2>&1 | tee "$HOME/isolation2.log"
+#) 2>&1 | tee "$HOME/isolation2.log"
+popd

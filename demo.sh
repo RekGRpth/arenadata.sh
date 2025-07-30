@@ -1,6 +1,8 @@
 #!/bin/bash -eux
 
-(
+exec 2>&1 &> >(tee "$HOME/demo.log")
+
+#(
 #test -f "$HOME/data$GP_MAJOR/qddir/demoDataDir-1/postmaster.pid" && test -f "/tmp/.s.PGSQL.${GP_MAJOR}432" &&  
 gpstop -af || echo $?
 rm -rf /tmp/.s.PGSQL.* "$HOME/.ssh/known_hosts"
@@ -23,7 +25,32 @@ elif [[ "$GP_MAJOR" == "7c" || "$GP_MAJOR" == "7u" || "$GP_MAJOR" == "8u" ]]; th
 #        BLDWRAP_POSTGRES_CONF_ADDONS="shared_preload_libraries='orca'"
     fi
 fi
-cd "$HOME/src/gpdb$GP_MAJOR"
+pushd "$HOME/src/gpdb$GP_MAJOR/src/test/regress"
+    make -j$(nproc) clean
+    make -j$(nproc) install
+popd
+pushd "$HOME/src/gpdb$GP_MAJOR/src/test/isolation"
+    make -j$(nproc) clean
+    make -j$(nproc) install
+popd
+if [[ "$GP_MAJOR" != "9u" ]]; then
+    pushd "$HOME/src/gpdb$GP_MAJOR/src/test/isolation2"
+        make -j$(nproc) clean
+        make -j$(nproc) install
+    popd
+    pushd "$HOME/src/gpdb$GP_MAJOR/src/test/regress"
+        make -j$(nproc) twophase_pqexecparams
+        make -j$(nproc) tablespace-setup
+        if [[ "$GP_MAJOR" == "6c" || "$GP_MAJOR" == "6u" ]]; then
+            make -j$(nproc) file_monitor
+        elif [[ "$GP_MAJOR" == "7c" || "$GP_MAJOR" == "7u" || "$GP_MAJOR" == "8u" ]]; then
+            pushd "$HOME/src/gpdb$GP_MAJOR/contrib/spi"
+            make -j$(nproc) install
+            popd
+        fi
+    popd
+fi
+pushd "$HOME/src/gpdb$GP_MAJOR"
 if [[ "$GP_MAJOR" == "9u" ]]; then
     export WITH_MIRRORS=false
     export WITH_STANDBY=false
@@ -35,5 +62,6 @@ export BLDWRAP_POSTGRES_CONF_ADDONS="$BLDWRAP_POSTGRES_CONF_ADDONS"
 #export BLDWRAP_POSTGRES_CONF_ADDONS="wal_debug=on"
 make create-demo-cluster
 createdb --owner="$USER" "$USER"
-) 2>&1 | tee "$HOME/demo.log"
+#) 2>&1 | tee "$HOME/demo.log"
 #source $HOME/src/gpdb$GP_MAJOR/gpAux/gpdemo/gpdemo-env.sh
+popd

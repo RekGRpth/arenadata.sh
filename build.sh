@@ -21,28 +21,6 @@ pushd "$HOME/src/gpdb$GP_MAJOR"
             #popd
         fi
     fi
-    pushd "$HOME/src/gpdb$GP_MAJOR/src/test/regress"
-        make -j$(nproc) install
-    popd
-    pushd "$HOME/src/gpdb$GP_MAJOR/src/test/isolation"
-        make -j$(nproc) install
-    popd
-    if [[ "$GP_MAJOR" != "9u" ]]; then
-        pushd "$HOME/src/gpdb$GP_MAJOR/src/test/isolation2"
-            make -j$(nproc) install
-        popd
-        pushd "$HOME/src/gpdb$GP_MAJOR/src/test/regress"
-            make -j$(nproc) twophase_pqexecparams
-            make -j$(nproc) tablespace-setup
-            if [[ "$GP_MAJOR" == "6c" || "$GP_MAJOR" == "6u" ]]; then
-                make -j$(nproc) file_monitor
-            elif [[ "$GP_MAJOR" == "7c" || "$GP_MAJOR" == "7u" || "$GP_MAJOR" == "8u" ]]; then
-                pushd "$HOME/src/gpdb$GP_MAJOR/contrib/spi"
-                make -j$(nproc) install
-                popd
-            fi
-        popd
-    fi
 popd
 #cd "$HOME/src/gpdb$GP_MAJOR/gpcontrib/gp_internal_tools"
 #make -j"$(nproc)" install
