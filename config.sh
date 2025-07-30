@@ -1,8 +1,10 @@
 #!/bin/bash -eux
 
-(
+exec 2>&1 &> >(tee "$HOME/config.log")
+
+#(
 #export CFLAGS="-O0 -g3"
-cd "$HOME/src/gpdb$GP_MAJOR"
+pushd "$HOME/src/gpdb$GP_MAJOR"
 git submodule update --init --recursive
 CONFIGURE_FLAGS=
 if [[ "$GP_MAJOR" == "5c" ]]; then
@@ -27,6 +29,7 @@ export CFLAGS="-O0 -ggdb -g3 -fno-omit-frame-pointer -Wclobbered"
 #export CFLAGS="-O0 -ggdb -g3 -fno-omit-frame-pointer -fno-pie -no-pie -Wclobbered -DEXTRA_DYNAMIC_MEMORY_DEBUG"
 #export CXXFLAGS="-DGPOS_DEBUG -O0 -ggdb -g3 -fno-omit-frame-pointer -fno-pie -no-pie -Wclobbered"
 export CXXFLAGS="-DGPOS_DEBUG -O0 -ggdb -g3 -fno-omit-frame-pointer -Wclobbered"
+#CONFIGURE_FLAGS="$CONFIGURE_FLAGS --with-wal-segsize=1"
 ./configure \
     --disable-rpath \
     --enable-cassert \
@@ -55,5 +58,6 @@ export CXXFLAGS="-DGPOS_DEBUG -O0 -ggdb -g3 -fno-omit-frame-pointer -Wclobbered"
     --with-pythonsrc-ext \
     --with-uuid=e2fs \
     $CONFIGURE_FLAGS
-) 2>&1 | tee "$HOME/config.log"
+#) 2>&1 | tee "$HOME/config.log"
 #    --with-wal-segsize=1 \
+popd
