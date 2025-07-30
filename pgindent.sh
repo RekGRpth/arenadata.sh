@@ -1,7 +1,7 @@
 #!/bin/bash -eux
 
 (
-if [[ "$GP_MAJOR" == "6c" || "$GP_MAJOR" == "6u" ]]; then
+if [[ "$GP_MAJOR" == "6c" || "$GP_MAJOR" == "6" ]]; then
     cd "$HOME/src/gpdb$GP_MAJOR/src/tools/entab"
     make -j"$(nproc)"
     install -s entab "$BINDIR"
@@ -13,7 +13,7 @@ if [[ "$GP_MAJOR" == "6c" || "$GP_MAJOR" == "6u" ]]; then
     make -j"$(nproc)" -C pg_bsd_indent
     install -s pg_bsd_indent/pg_bsd_indent "$BINDIR"
     rm -r pg_bsd_indent* || echo $?
-elif [[ "$GP_MAJOR" == "7c" || "$GP_MAJOR" == "7u" || "$GP_MAJOR" == "8u" ]]; then
+elif [[ "$GP_MAJOR" == "7c" || "$GP_MAJOR" == "7" || "$GP_MAJOR" == "8" ]]; then
     cd "$HOME/src/pg_bsd_indent"
 #    make -j"$(nproc)" clean
     make -j"$(nproc)" install

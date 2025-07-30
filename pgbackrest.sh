@@ -9,16 +9,25 @@ pushd "$HOME/src/pgbackrest/src"
 #make -j"$(nproc)" clean
 #exit
 make -j"$(nproc)" install
-#rm -rf "$HOME/.data/pgbackrest"
-if [ ! -d "$HOME/.data/pgbackrest" ]; then
+#rm -rf "$DATADIRS/pgbackrest"
+if [ ! -d "$DATADIRS/pgbackrest" ]; then
     gpconfig -c archive_mode -v on
-    gpconfig -c archive_command -v "'PGOPTIONS=\"-c gp_session_role=utility\" pgbackrest --stanza=seg%c --config=\"$HOME/pgbackrest.conf\" archive-push %p'" --skipvalidation
+    gpconfig -c archive_command --skipvalidation \
+        -v "'PGOPTIONS=\"-c gp_session_role=utility\" pgbackrest --fork=GPDB --stanza=seg%c --pg1-path=\"$DATADIRS/dbfast1/demoDataDir%c\" archive-push %p'" \
+        -m "'PGOPTIONS=\"-c gp_session_role=utility\" pgbackrest --fork=GPDB --stanza=seg%c --pg1-path=\"$DATADIRS/qddir/demoDataDir%c\" archive-push %p'"
     gpstop -afr
-    mkdir -p "$HOME/.data/pgbackrest"
-    PGOPTIONS="-c gp_session_role=utility" pgbackrest stanza-create --stanza=seg-1 --config="$HOME/pgbackrest.conf"
-    PGOPTIONS="-c gp_session_role=utility" pgbackrest stanza-create --stanza=seg0 --config="$HOME/pgbackrest.conf"
-    PGOPTIONS="-c gp_session_role=utility" pgbackrest stanza-create --stanza=seg1 --config="$HOME/pgbackrest.conf"
-    PGOPTIONS="-c gp_session_role=utility" pgbackrest stanza-create --stanza=seg2 --config="$HOME/pgbackrest.conf"
+    mkdir -p "$DATADIRS/pgbackrest"
+    sudo rm -rf /var/log/pgbackrest
+    sudo rm -rf /var/lib/pgbackrest
+    sudo ln -fs "$DATADIRS/pgbackrest" /var/log/pgbackrest
+    sudo ln -fs "$DATADIRS/pgbackrest" /var/lib/pgbackrest
+    PGOPTIONS="-c gp_session_role=utility" pgbackrest stanza-create --fork=GPDB --stanza=seg-1 --pg1-port="${GP_MAJOR}000" --pg1-path="$DATADIRS/qddir/demoDataDir-1"
+    for (( i=1; i<=$NUM_PRIMARY_MIRROR_PAIRS; i++ )); do
+        PGOPTIONS="-c gp_session_role=utility" pgbackrest stanza-create --fork=GPDB --stanza="seg$((i-1))" --pg1-port="${GP_MAJOR}00$((i+1))" --pg1-path="$DATADIRS/dbfast$i/demoDataDir$((i-1))"
+    done
+#    PGOPTIONS="-c gp_session_role=utility" pgbackrest stanza-create --fork=GPDB --stanza=seg0 --pg1-port="${GP_MAJOR}002" --pg1-path="$DATADIRS/dbfast1/demoDataDir0"
+#    PGOPTIONS="-c gp_session_role=utility" pgbackrest stanza-create --fork=GPDB --stanza=seg1 --pg1-port="${GP_MAJOR}003" --pg1-path="$DATADIRS/dbfast2/demoDataDir1"
+#    PGOPTIONS="-c gp_session_role=utility" pgbackrest stanza-create --fork=GPDB --stanza=seg2 --pg1-port="${GP_MAJOR}004" --pg1-path="$DATADIRS/dbfast3/demoDataDir2"
 fi
 #) 2>&1 | tee "$HOME/pgbackrest.log"
 #PGOPTIONS="-c gp_session_role=utility" pgbackrest stanza-upgrade --stanza=seg-1 --config=/home/pgbackrest.conf

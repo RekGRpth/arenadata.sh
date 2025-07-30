@@ -13,9 +13,9 @@ sudo chown -R $USER:$GROUP /sys/fs/cgroup/{memory,cpu,cpuset}/gpdb
 export PGOPTIONS="-c optimizer=off"
 cd "$HOME/src/adbcc/adcc-extension/isolation2"
 rm -f expected
-if [[ "$GP_MAJOR" == "6c" || "$GP_MAJOR" == "6u" ]]; then
+if [[ "$GP_MAJOR" == "6c" || "$GP_MAJOR" == "6" ]]; then
     ln -fs expected6 expected
-elif [[ "$GP_MAJOR" == "7c" || "$GP_MAJOR" == "7u" || "$GP_MAJOR" == "8u" ]]; then
+elif [[ "$GP_MAJOR" == "7c" || "$GP_MAJOR" == "7" || "$GP_MAJOR" == "8" ]]; then
     ln -fs expected7 expected
 fi
 ISOLATION2_ROOT="$HOME/src/gpdb$GP_MAJOR/src/test/isolation2" make installcheck

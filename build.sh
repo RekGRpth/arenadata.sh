@@ -11,7 +11,7 @@ exec 2>&1 &> >(tee "$HOME/build.log")
 pushd "$HOME/src/gpdb$GP_MAJOR"
     #make -j"$(nproc)" clean
     make -j"$(nproc)" install
-    if [[ "$GP_MAJOR" == "6u" ]]; then
+    if [[ "$GP_MAJOR" == "6" ]]; then
         if [ -n "${PYTHON3:-}" ]; then
             export PYTHON="$PYTHON3"
             make -C src/pl/plpython clean

@@ -15,11 +15,11 @@ rm -rf /tmp/.s.PGSQL.* "$HOME/.ssh/known_hosts"
 killall -9 psql || echo $?
 killall -9 postgres || echo $?
 BLDWRAP_POSTGRES_CONF_ADDONS=
-if [[ "$GP_MAJOR" == "6c" || "$GP_MAJOR" == "6u" ]]; then
+if [[ "$GP_MAJOR" == "6c" || "$GP_MAJOR" == "6" ]]; then
     if make -C "$HOME/src/gpdb$GP_MAJOR/contrib/dummy_seclabel" -j"$(nproc)" install; then
         BLDWRAP_POSTGRES_CONF_ADDONS="shared_preload_libraries=dummy_seclabel"
     fi
-elif [[ "$GP_MAJOR" == "7c" || "$GP_MAJOR" == "7u" || "$GP_MAJOR" == "8u" ]]; then
+elif [[ "$GP_MAJOR" == "7c" || "$GP_MAJOR" == "7" || "$GP_MAJOR" == "8" ]]; then
     if make -C "$HOME/src/gpdb$GP_MAJOR/src/test/modules/dummy_seclabel" -j"$(nproc)" install; then
         BLDWRAP_POSTGRES_CONF_ADDONS="shared_preload_libraries='dummy_seclabel'"
 #        BLDWRAP_POSTGRES_CONF_ADDONS="shared_preload_libraries='orca'"
@@ -33,7 +33,7 @@ pushd "$HOME/src/gpdb$GP_MAJOR/src/test/isolation"
     make -j$(nproc) clean
     make -j$(nproc) install
 popd
-if [[ "$GP_MAJOR" != "9u" ]]; then
+if [[ "$GP_MAJOR" != "9" ]]; then
     pushd "$HOME/src/gpdb$GP_MAJOR/src/test/isolation2"
         make -j$(nproc) clean
         make -j$(nproc) install
@@ -41,9 +41,9 @@ if [[ "$GP_MAJOR" != "9u" ]]; then
     pushd "$HOME/src/gpdb$GP_MAJOR/src/test/regress"
         make -j$(nproc) twophase_pqexecparams
         make -j$(nproc) tablespace-setup
-        if [[ "$GP_MAJOR" == "6c" || "$GP_MAJOR" == "6u" ]]; then
+        if [[ "$GP_MAJOR" == "6c" || "$GP_MAJOR" == "6" ]]; then
             make -j$(nproc) file_monitor
-        elif [[ "$GP_MAJOR" == "7c" || "$GP_MAJOR" == "7u" || "$GP_MAJOR" == "8u" ]]; then
+        elif [[ "$GP_MAJOR" == "7c" || "$GP_MAJOR" == "7" || "$GP_MAJOR" == "8" ]]; then
             pushd "$HOME/src/gpdb$GP_MAJOR/contrib/spi"
             make -j$(nproc) install
             popd
@@ -51,7 +51,7 @@ if [[ "$GP_MAJOR" != "9u" ]]; then
     popd
 fi
 pushd "$HOME/src/gpdb$GP_MAJOR"
-if [[ "$GP_MAJOR" == "9u" ]]; then
+if [[ "$GP_MAJOR" == "9" ]]; then
     export WITH_MIRRORS=false
     export WITH_STANDBY=false
 fi
