@@ -4,7 +4,7 @@ exec 2>&1 &> >(tee "$HOME/demo.log")
 
 #(
 #test -f "$HOME/data$GP_MAJOR/qddir/demoDataDir-1/postmaster.pid" && test -f "/tmp/.s.PGSQL.${GP_MAJOR}432" &&  
-gpstop -af || echo $?
+#gpstop -af || echo $?
 rm -rf /tmp/.s.PGSQL.* "$HOME/.ssh/known_hosts"
 #rm -rf "$HOME/data/*"
 #rm -rf "$HOME/data$GP_MAJOR/*"
@@ -13,6 +13,7 @@ rm -rf /tmp/.s.PGSQL.* "$HOME/.ssh/known_hosts"
 #mkdir -p "$HOME/data$GP_MAJOR"
 #sudo mount -o bind "/tmpfs/data$GP_MAJOR" "$HOME/data$GP_MAJOR"
 killall -9 psql || echo $?
+killall -9 sleep || echo $?
 killall -9 postgres || echo $?
 BLDWRAP_POSTGRES_CONF_ADDONS=
 if [[ "$GP_MAJOR" == "6c" || "$GP_MAJOR" == "6" ]]; then
