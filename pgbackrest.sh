@@ -9,21 +9,36 @@ pushd "$HOME/src/pgbackrest/src"
 #make -j"$(nproc)" clean
 #exit
 make -j"$(nproc)" install
-#rm -rf "$DATADIRS/pgbackrest"
+rm -rf "$DATADIRS/pgbackrest"
 if [ ! -d "$DATADIRS/pgbackrest" ]; then
     gpconfig -c archive_mode -v on
-    gpconfig -c archive_command --skipvalidation \
-        -v "'PGOPTIONS=\"-c gp_session_role=utility\" pgbackrest --fork=GPDB --stanza=seg%c --pg1-path=\"$DATADIRS/dbfast1/demoDataDir%c\" archive-push %p'" \
-        -m "'PGOPTIONS=\"-c gp_session_role=utility\" pgbackrest --fork=GPDB --stanza=seg%c --pg1-path=\"$DATADIRS/qddir/demoDataDir%c\" archive-push %p'"
+    gpconfig -c archive_command --skipvalidation -v "'PGOPTIONS=\"-c gp_session_role=utility\" pgbackrest --stanza=seg%c archive-push %p'"
     gpstop -afr
     mkdir -p "$DATADIRS/pgbackrest"
     sudo rm -rf /var/log/pgbackrest
     sudo rm -rf /var/lib/pgbackrest
+    sudo rm -rf /etc/pgbackrest/pgbackrest.conf
     sudo ln -fs "$DATADIRS/pgbackrest" /var/log/pgbackrest
     sudo ln -fs "$DATADIRS/pgbackrest" /var/lib/pgbackrest
-    PGOPTIONS="-c gp_session_role=utility" pgbackrest stanza-create --fork=GPDB --stanza=seg-1 --pg1-port="${GP_MAJOR}000" --pg1-path="$DATADIRS/qddir/demoDataDir-1"
+    sudo mkdir -p /etc/pgbackrest
+    sudo ln -fs "$DATADIRS/pgbackrest/pgbackrest.conf" /etc/pgbackrest/pgbackrest.conf
+    cat >"$DATADIRS/pgbackrest/pgbackrest.conf" <<EOF
+[global]
+fork=GPDB
+log-level-console=info
+log-level-file=debug
+[seg-1]
+pg1-path=$DATADIRS/qddir/demoDataDir-1
+pg1-port=${GP_MAJOR}000
+EOF
+    PGOPTIONS="-c gp_session_role=utility" pgbackrest stanza-create --stanza=seg-1
     for (( i=1; i<=$NUM_PRIMARY_MIRROR_PAIRS; i++ )); do
-        PGOPTIONS="-c gp_session_role=utility" pgbackrest stanza-create --fork=GPDB --stanza="seg$((i-1))" --pg1-port="${GP_MAJOR}00$((i+1))" --pg1-path="$DATADIRS/dbfast$i/demoDataDir$((i-1))"
+        cat >>"$DATADIRS/pgbackrest/pgbackrest.conf" <<EOF
+[seg$((i-1))]
+pg1-path=$DATADIRS/dbfast$i/demoDataDir$((i-1))
+pg1-port=${GP_MAJOR}00$((i+1))
+EOF
+        PGOPTIONS="-c gp_session_role=utility" pgbackrest stanza-create --stanza="seg$((i-1))"
     done
 #    PGOPTIONS="-c gp_session_role=utility" pgbackrest stanza-create --fork=GPDB --stanza=seg0 --pg1-port="${GP_MAJOR}002" --pg1-path="$DATADIRS/dbfast1/demoDataDir0"
 #    PGOPTIONS="-c gp_session_role=utility" pgbackrest stanza-create --fork=GPDB --stanza=seg1 --pg1-port="${GP_MAJOR}003" --pg1-path="$DATADIRS/dbfast2/demoDataDir1"
