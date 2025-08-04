@@ -6,10 +6,10 @@ pushd "$HOME/src/pgbackrest/src"
 ./configure --enable-test
 #./configure --enable-test --prefix="$HOME/.local$GP_MAJOR"
 #./configure --prefix="$HOME/.local$GP_MAJOR"
-#make -j"$(nproc)" clean
+make -j"$(nproc)" clean
 #exit
 make -j"$(nproc)" install
-rm -rf "$DATADIRS/pgbackrest"
+#rm -rf "$DATADIRS/pgbackrest"
 if [ ! -d "$DATADIRS/pgbackrest" ]; then
     gpconfig -c archive_mode -v on
     gpconfig -c archive_command --skipvalidation -v "'PGOPTIONS=\"-c gp_session_role=utility\" pgbackrest --stanza=seg%c archive-push %p'"

@@ -1,8 +1,9 @@
-#!/bin/sh -eux
+#!/bin/bash -eux
 
-(
+exec 2>&1 &> >(tee "$HOME/recovery.log")
+
 export TESTDIR="$HOME/src/gpdb$GP_MAJOR/src/test/recovery"
-cd "$TESTDIR"
+pushd "$TESTDIR"
 rm -rf tmp_check tmp_check_copy
 #make -j$(nproc) installcheck -i
 #exit
@@ -27,7 +28,10 @@ export TESTLOGDIR="$TESTDATADIR/log"
 #prove --verbose -I ../../../src/test/perl/ t/037_invalid_database.pl
 #prove --verbose -I ../../../src/test/perl/ t/002_archiving.pl
 #prove --verbose -I ../../../src/test/perl/ t/009_twophase.pl
-prove --verbose -I ../../../src/test/perl/ t/017_shm.pl
+#prove --verbose -I ../../../src/test/perl/ t/017_shm.pl
+prove --verbose -I ../../../src/test/perl/ t/020_archive_status.pl
+#prove --verbose -I ../../../src/test/perl/ t/020_archive_status_my.pl
+#prove --verbose -I ../../../src/test/perl/ t/020_archive_status_always.pl
 #prove --verbose -I ../../../src/test/perl/ t/031_recovery_conflict.pl
 #prove --verbose -I ../../../src/test/perl/ t/012_subtransactions.pl
 #prove --verbose -I ../../../src/test/perl/ t/039_end_of_wal.pl
@@ -35,4 +39,5 @@ prove --verbose -I ../../../src/test/perl/ t/017_shm.pl
 #prove --verbose -I ../../../src/test/perl/ t/031_recovery_conflict.pl
 #prove --verbose -I ../../../src/test/perl/ t/013_crash_restart.pl
 #prove --verbose -I ../../../src/test/perl/ t/123_streaming_and_archiving_with_archive_mode_always.pl
-) 2>&1 | tee "$HOME/recovery.log"
+#) 2>&1 | tee "$HOME/recovery.log"
+popd
