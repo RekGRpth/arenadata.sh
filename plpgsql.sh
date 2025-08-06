@@ -1,6 +1,11 @@
-#!/bin/sh -eux
+#!/bin/bash -eux
 
-(
-cd "$HOME/src/gpdb$GP_MAJOR/src/pl/plpgsql"
+exec 2>&1 &> >(tee "$HOME/plpgsql.log")
+
+export PGOPTIONS="-c optimizer=off"
+
+#(
+pushd "$HOME/src/gpdb$GP_MAJOR/src/pl/plpgsql"
 make -j"$(nproc)" installcheck
-) 2>&1 | tee "$HOME/plpgsql.log"
+popd
+#) 2>&1 | tee "$HOME/plpgsql.log"
