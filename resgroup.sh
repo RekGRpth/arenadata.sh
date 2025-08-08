@@ -1,6 +1,8 @@
 #!/bin/bash -eux
 
-(
+exec 2>&1 &> >(tee "$HOME/resgroup.log")
+
+#(
 export PGOPTIONS="-c optimizer=off"
 #ls -d @cgroup_mnt_point@/cpu/gpdb/*/;
 #ls -d @cgroup_mnt_point@/cpuacct/gpdb/*/;
@@ -11,10 +13,10 @@ export PGOPTIONS="-c optimizer=off"
 #gpconfig -c gp_resource_manager -v group
 #gpconfig -r gp_resource_manager
 #gpstop -afr
-cd "$HOME/src/gpdb$GP_MAJOR/src/test/regress"
-make -j$(nproc) install
-cd "$HOME/src/gpdb$GP_MAJOR/src/test/isolation2"
-make -j$(nproc) install
+#cd "$HOME/src/gpdb$GP_MAJOR/src/test/regress"
+#make -j$(nproc) install
+pushd "$HOME/src/gpdb$GP_MAJOR/src/test/isolation2"
+#make -j$(nproc) install
 #./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_parallel_retrieve_cursor --inputdir=. --dbname=isolation2parallelretrcursor --load-extension=gp_inject_fault --schedule=./parallel_retrieve_cursor_schedule
 #./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 setup cached_plan gpdispatch checkpoint_dtx_info lockmodes prepare_limit pg_rewind_fail_missing_xlog prepared_xact_deadlock_pg_rewind ao_partition_lock query_gp_partitions_view dml_on_root_locks_all_parts select_dropped_table update_hash_col_utilitymode execute_on_utilitymode uao_crash_compaction_column
 #./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 resgroup/resgroup_memory_limit
@@ -75,8 +77,8 @@ sudo chown -R $USER:$GROUP /sys/fs/cgroup/{memory,cpu,cpuset}/gpdb
 #./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_resgroup --load-extension=gp_inject_fault --dbname=isolation2resgrouptest resgroup/enable_resgroup_validate resgroup/enable_resgroup resgroup/resgroup_views resgroup/resgroup_cpu_rate_limit resgroup/resgroup_memory_limit
 #./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_resgroup --load-extension=gp_inject_fault --dbname=isolation2resgrouptest resgroup/enable_resgroup_validate resgroup/enable_resgroup resgroup/resgroup_views resgroup/resgroup_memory_limit
 #./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_resgroup --dbname=isolation2resgrouptest resgroup/enable_resgroup_validate resgroup/enable_resgroup resgroup/resgroup_views resgroup/resgroup_memory_limit resgroup/disable_resgroup
-#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_resgroup --dbname=isolation2resgrouptest resgroup/enable_resgroup_validate resgroup/enable_resgroup resgroup/resgroup_oom resgroup/disable_resgroup
-./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_resgroup --dbname=isolation2resgrouptest resgroup/enable_resgroup_validate resgroup/enable_resgroup resgroup/resgroup_seg_down_2pc resgroup/disable_resgroup
+./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_resgroup --dbname=isolation2resgrouptest resgroup/enable_resgroup_validate resgroup/enable_resgroup resgroup/resgroup_oom resgroup/disable_resgroup
+#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_resgroup --dbname=isolation2resgrouptest resgroup/enable_resgroup_validate resgroup/enable_resgroup resgroup/resgroup_seg_down_2pc resgroup/disable_resgroup
 #./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_resgroup --load-extension=gp_inject_fault --dbname=isolation2resgrouptest resgroup/resgroup_views resgroup/resgroup_memory_limit
 #./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_resgroup --load-extension=gp_inject_fault --dbname=isolation2resgrouptest resgroup/resgroup_auxiliary_tools_v1 resgroup/resgroup_bypass_catalog resgroup/resgroup_views resgroup/resgroup_memory_limit
 #./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_resgroup --load-extension=gp_inject_fault --dbname=isolation2resgrouptest resgroup/resgroup_auxiliary_tools_v1 resgroup/resgroup_views resgroup/resgroup_memory_limit
@@ -98,4 +100,5 @@ sudo chown -R $USER:$GROUP /sys/fs/cgroup/{memory,cpu,cpuset}/gpdb
 #./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault pg_terminate_backendMY
 #make -j$(nproc) installcheck -i
 #test -f regression.diffs && cat regression.diffs
-) 2>&1 | tee "$HOME/resgroup.log"
+#) 2>&1 | tee "$HOME/resgroup.log"
+popd

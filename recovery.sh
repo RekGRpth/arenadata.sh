@@ -29,7 +29,8 @@ export TESTLOGDIR="$TESTDATADIR/log"
 #prove --verbose -I ../../../src/test/perl/ t/002_archiving.pl
 #prove --verbose -I ../../../src/test/perl/ t/009_twophase.pl
 #prove --verbose -I ../../../src/test/perl/ t/017_shm.pl
-prove --verbose -I ../../../src/test/perl/ t/020_archive_status.pl
+#prove --verbose -I ../../../src/test/perl/ t/020_archive_status.pl
+prove --verbose -I ../../../src/test/perl/ t/020_archive_status_org.pl
 #prove --verbose -I ../../../src/test/perl/ t/020_archive_status_my.pl
 #prove --verbose -I ../../../src/test/perl/ t/020_archive_status_always.pl
 #prove --verbose -I ../../../src/test/perl/ t/031_recovery_conflict.pl
