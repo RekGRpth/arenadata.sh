@@ -1,6 +1,8 @@
 #!/bin/bash -eux
 
-(
+exec 2>&1 &> >(tee "$HOME/gpbackup-test.log")
+
+#(
 killall cat || echo $?
 killall gpbackup_helper || echo $?
 rm -rf "$HOME/gpAdminLogs/"*.log
@@ -13,7 +15,7 @@ dropuser --if-exists testrole
 rm "$DATADIRS"/*/*/gpbackup_* || echo $?
 #cd "$HOME/src/gpdb$GP_MAJOR/contrib/dummy_seclabel"
 #make -j"$(nproc)" install
-cd "$HOME/src/gpbackup"
+pushd "$HOME/src/gpbackup"
 #gpconfig -c shared_preload_libraries -v dummy_seclabel
 #gpstop -afr
 #make -j"$(nproc)" test
@@ -46,7 +48,7 @@ fi
 #ginkgo $GINKGO_FLAGS --timeout=3h --poll-progress-after=0s end_to_end -- --custom_backup_dir $CUSTOM_BACKUP_DIR --ginkgo.focus "runs gprestore with jobs flag and postdata has metadata"
 #ginkgo $GINKGO_FLAGS --timeout=3h --poll-progress-after=0s end_to_end -- --custom_backup_dir $CUSTOM_BACKUP_DIR --ginkgo.focus "Restore to a different-sized cluster"
 #ginkgo $GINKGO_FLAGS --timeout=3h --poll-progress-after=0s end_to_end -- --custom_backup_dir $CUSTOM_BACKUP_DIR --ginkgo.focus "Can backup and concurrent restores of same backup with helpers"
-ginkgo $GINKGO_FLAGS --timeout=3h --poll-progress-after=0s end_to_end -- --custom_backup_dir $CUSTOM_BACKUP_DIR --ginkgo.focus "Ensures that concurrent restores from the same backup will not interfere with each other's helpers"
+#ginkgo $GINKGO_FLAGS --timeout=3h --poll-progress-after=0s end_to_end -- --custom_backup_dir $CUSTOM_BACKUP_DIR --ginkgo.focus "Ensures that concurrent restores from the same backup will not interfere with each other's helpers"
 #ginkgo $GINKGO_FLAGS --timeout=3h --poll-progress-after=0s end_to_end -- --custom_backup_dir $CUSTOM_BACKUP_DIR --ginkgo.focus "Can backup a 7-segment cluster and restore to current cluster with single data file and filter with copy-queue-size"
 #ginkgo $GINKGO_FLAGS --timeout=3h --poll-progress-after=0s end_to_end -- --custom_backup_dir $CUSTOM_BACKUP_DIR --ginkgo.focus "Can backup a 7-segment cluster and restore to current cluster with jobs"
 #ginkgo $GINKGO_FLAGS --timeout=3h --poll-progress-after=0s end_to_end -- --custom_backup_dir $CUSTOM_BACKUP_DIR --ginkgo.focus "Signal handler tests"
@@ -159,7 +161,8 @@ ginkgo $GINKGO_FLAGS --timeout=3h --poll-progress-after=0s end_to_end -- --custo
 #ginkgo $GINKGO_FLAGS --timeout=3h --poll-progress-after=0s integration -- --ginkgo.focus "gpbackup_helper will not error out when plugin writes something to stderr" --ginkgo.focus "gpbackup_helper will error out if plugin exits early"
 #ginkgo $GINKGO_FLAGS --timeout=1m --poll-progress-after=0s integration -- --ginkgo.focus "Skips batches if skip file is discovered with"
 #ginkgo $GINKGO_FLAGS --timeout=3h --poll-progress-after=0s helper -- --ginkgo.focus "Check subset flag"
-#ginkgo $GINKGO_FLAGS --timeout=3h --poll-progress-after=0s helper -- --ginkgo.focus "doRestoreAgent Mocked unit tests"
+ginkgo $GINKGO_FLAGS --timeout=3h --poll-progress-after=0s helper -- --ginkgo.focus "doRestoreAgent Mocked unit tests"
+ginkgo $GINKGO_FLAGS --timeout=3h --poll-progress-after=0s helper -- --ginkgo.focus "RestoreReader tests"
 #ginkgo $GINKGO_FLAGS --timeout=3h --poll-progress-after=0s integration -- --ginkgo.focus "gpbackup_helper will error out if plugin exits early"
 #ginkgo $GINKGO_FLAGS --timeout=3h --poll-progress-after=0s integration -- --ginkgo.focus "gpbackup_helper will error out if plugin exits early with cluster resize"
 #ginkgo $GINKGO_FLAGS --timeout=10m --poll-progress-after=0s integration -- --ginkgo.focus "gpbackup_helper end to end integration tests"
@@ -213,4 +216,5 @@ ginkgo $GINKGO_FLAGS --timeout=3h --poll-progress-after=0s end_to_end -- --custo
 #ginkgo $GINKGO_FLAGS --timeout=1m --poll-progress-after=0s integration -- --ginkgo.focus "runs restore gpbackup_helper with zstd compression with plugin"
 #ginkgo $GINKGO_FLAGS --timeout=3h --poll-progress-after=0s end_to_end -- --custom_backup_dir $CUSTOM_BACKUP_DIR --ginkgo.focus "Exclude subpartitions for given root partition in leaf-partition-data mode" --ginkgo.focus "End to End incremental tests Incremental restore No DDL no partitioning Include/Exclude schemas and tables"
 #make depend build install integration end_to_end
-) 2>&1 | tee "$HOME/gpbackup-test.log"
+#) 2>&1 | tee "$HOME/gpbackup-test.log"
+popd

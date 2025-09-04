@@ -1,13 +1,15 @@
-#!/bin/sh -eux
+#!/bin/bash -eux
 
-(
+exec 2>&1 &> >(tee "$HOME/gpbackup-unit.log")
+
+#(
 #dropuser testrole || echo $?
 dropdb --if-exists restoredb
 dropuser --if-exists testrole
 rm "$DATADIRS"/*/*/gpbackup_* || echo $?
 #cd "$HOME/src/gpdb$GP_MAJOR/contrib/dummy_seclabel"
 #make -j"$(nproc)" install
-cd "$HOME/src/gpbackup"
+pushd "$HOME/src/gpbackup"
 #gpconfig -c shared_preload_libraries -v dummy_seclabel
 #gpstop -afr
 #make -j"$(nproc)" test
@@ -64,4 +66,5 @@ ginkgo $GINKGO_FLAGS --timeout=3h --poll-progress-after=0s integration -- --gink
 #ginkgo $GINKGO_FLAGS backup/ filepath/ history/ helper/ options/ report/ restore/ toc/ utils/ testutils/
 #ginkgo $GINKGO_FLAGS --timeout=3h --poll-progress-after=0s backup -- --ginkgo.focus "PrintCreateMaterializedViewStatement"
 #ginkgo $GINKGO_FLAGS --timeout=3h --poll-progress-after=0s backup -- --ginkgo.focus "can print a view with privileges, an owner, and a comment"
-) 2>&1 | tee "$HOME/gpbackup-unit.log"
+#) 2>&1 | tee "$HOME/gpbackup-unit.log"
+popd

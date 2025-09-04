@@ -30,6 +30,7 @@ export CFLAGS="-O0 -ggdb -g3 -fno-omit-frame-pointer -Wclobbered"
 #export CXXFLAGS="-DGPOS_DEBUG -O0 -ggdb -g3 -fno-omit-frame-pointer -fno-pie -no-pie -Wclobbered"
 export CXXFLAGS="-DGPOS_DEBUG -O0 -ggdb -g3 -fno-omit-frame-pointer -Wclobbered"
 #CONFIGURE_FLAGS="$CONFIGURE_FLAGS --with-wal-segsize=1"
+#export CFLAGS="$CFLAGS -DCLOBBER_CACHE_ALWAYS"
 ./configure \
     --disable-rpath \
     --enable-cassert \

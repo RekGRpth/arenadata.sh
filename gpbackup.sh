@@ -1,10 +1,12 @@
-#!/bin/sh -eux
+#!/bin/bash -eux
 
-(
+exec 2>&1 &> >(tee "$HOME/gpbackup.log")
+
+#(
 killall cat || echo $?
 killall gpbackup_helper || echo $?
 killall timeout || echo $?
-cd "$HOME/src/gpbackup"
+pushd "$HOME/src/gpbackup"
 #make -j"$(nproc)" clean
 #go mod download
 #go mod tidy
@@ -27,5 +29,6 @@ make -j"$(nproc)" install
 #gpconfig -c shared_preload_libraries -v dummy_seclabel
 #gpstop -afr
 find "$DATADIRS" -name "gpbackup_*_script*" -o -name "gpbackup_*_pipe*" -o -name "gpbackup_*_skip_*" -o -name "gpbackup_*_oid*" -o -name "gpbackup_*_error*" | while read name; do rm "$name"; done
-) 2>&1 | tee "$HOME/gpbackup.log"
+#) 2>&1 | tee "$HOME/gpbackup.log"
 #PATH=~/docker/gpdb/.opt/go/bin:$PATH GOPATH=~/docker/gpdb/.go go get github.com/itchyny/json2yaml
+popd
