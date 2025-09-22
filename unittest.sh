@@ -1,6 +1,12 @@
 #!/bin/bash -eux
 
 exec 2>&1 &> >(tee "$HOME/unittest.log")
+pushd "$HOME/src/gpdb$GP_MAJOR/src/backend/access/appendonly"
+make CFLAGS=-DUNITTEST -s unittest-check
+popd
+exit
+
+exec 2>&1 &> >(tee "$HOME/unittest.log")
 pushd "$HOME/src/gpdb$GP_MAJOR/src/backend/utils/sort"
 make CFLAGS=-DUNITTEST -s unittest-check
 popd

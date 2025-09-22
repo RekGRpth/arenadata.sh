@@ -26,7 +26,7 @@ export PGOPTIONS="-c optimizer=off"
 #./pg_isolation2_regress --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 setup uao_crash_compaction_column gdd/prepare gdd/planner_insert_while_vacuum_drop vacuum_drop_phase_ao uao/vacuum_cleanup_row uao/insert_should_not_use_awaiting_drop_row reorganize_after_ao_vacuum_skip_drop truncate_after_ao_vacuum_skip_drop mark_all_aoseg_await_drop uao/vacuum_cleanup_column uao/insert_should_not_use_awaiting_drop_column add_column_after_vacuum_skip_drop_column vacuum_after_vacuum_skip_drop_column
 #./pg_isolation2_regress --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 setup uao/insert_should_not_use_awaiting_drop_row uao/insert_should_not_use_awaiting_drop_column
 #./pg_isolation2_regress --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 setup gdd/prepare uao_crash_compaction_column gdd/planner_insert_while_vacuum_drop vacuum_drop_phase_ao uao/vacuum_cleanup_row mark_all_aoseg_await_drop uao/vacuum_cleanup_column add_column_after_vacuum_skip_drop_column vacuum_after_vacuum_skip_drop_column
-./pg_isolation2_regress --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 setup add_column_after_vacuum_skip_drop_column
+#./pg_isolation2_regress --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 setup add_column_after_vacuum_skip_drop_column
 #./pg_isolation2_regress --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 setup gdd/prepare gdd/planner_insert_while_vacuum_drop
 #./pg_isolation2_regress --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 setup uao/insert_while_vacuum_drop_column uao/insert_while_vacuum_drop_row
 #./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 ao
@@ -47,6 +47,12 @@ export PGOPTIONS="-c optimizer=off"
 #./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 setup uao/vacuum_while_max_concurrency_column uao/vacuum_while_max_concurrency_row uao/vacuum_while_max_concurrencyMY_column uao/vacuum_while_max_concurrencyMY_row
 #./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 setup uao/vacuum_while_max_concurrencyMY_column uao/vacuum_while_max_concurrencyMY_row
 #./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 setup uao/vacuum_while_max_concurrency_column uao/vacuum_while_max_concurrency_row
+#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 setup uao/vacuum_while_max_concurrency_column
+#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 setup uao/vacuum_while_max_concurrency_my_column
+#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 setup uao/vacuum_aoseg_repair_column
+#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 setup uao/vacuum_aoseg_repair_my_column
+#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 setup uao/vacuum_self_function_column
+./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 setup uao/insert_policy_7X_column
 #./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault idle_gang_cleaner idle_gang_cleanerMY
 #./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault idle_gang_cleanerMY
 #./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault orphaned_gang_cleaner
