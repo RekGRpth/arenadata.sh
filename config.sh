@@ -39,7 +39,6 @@ export CXXFLAGS="-DGPOS_DEBUG -O0 -ggdb -g3 -fno-omit-frame-pointer -Wclobbered"
     --enable-depend \
     --enable-gpcloud \
     --enable-gpfdist \
-    --enable-gpperfmon \
     --enable-ic-proxy \
     --enable-mapreduce \
     --enable-orafce \
@@ -61,4 +60,5 @@ export CXXFLAGS="-DGPOS_DEBUG -O0 -ggdb -g3 -fno-omit-frame-pointer -Wclobbered"
     $CONFIGURE_FLAGS
 #) 2>&1 | tee "$HOME/config.log"
 #    --with-wal-segsize=1 \
+#    --enable-gpperfmon \
 popd
