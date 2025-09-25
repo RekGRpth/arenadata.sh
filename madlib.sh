@@ -14,17 +14,19 @@ dropdb madlib || echo $?
 createdb madlib || echo $?
 
 pushd "$HOME/src/madlib"
-./configure
-make -j$(nproc) -C build EP_boost
-make -j$(nproc) -C build EP_eigen
-make -j$(nproc) -C build install
-make -j$(nproc) -C build extension-install
+./configure -Wno-dev
+make -j$(nproc) EP_boost
+make -j$(nproc) EP_eigen
+make -j$(nproc) install
+rm -rf "$HOME/src/madlib/build/src/ports/greenplum/6/extension" "$HOME/src/madlib/build/src/ports/greenplum/7/extension"
+make -j$(nproc) extension-install
 psql -d madlib -c "create extension if not exists  plpython3u"
 psql -d madlib -c "create schema if not exists madlib"
 psql -d madlib -c "create extension if not exists madlib schema madlib"
 rm -rf "$DATADIRS/madlib"
 mkdir -p "$DATADIRS/madlib"
 #/usr/local/madlib/bin/madpack -p greenplum -v -c /madlib -d "$DATADIRS/madlib" -l install
+exit
 /usr/local/madlib/bin/madpack -p greenplum -v -c /madlib -d "$DATADIRS/madlib" -l install-check
 /usr/local/madlib/bin/madpack -p greenplum -v -c /madlib -d "$DATADIRS/madlib" -l dev-check
 /usr/local/madlib/bin/madpack -p greenplum -v -c /madlib -d "$DATADIRS/madlib" -l unit-test
