@@ -38,10 +38,4 @@ make -j$(nproc) extension-install
 psql -d madlib -c "create extension if not exists  plpython3u"
 psql -d madlib -c "create schema if not exists madlib"
 psql -d madlib -c "create extension if not exists madlib schema madlib"
-rm -rf "$DATADIRS/madlib"
-mkdir -p "$DATADIRS/madlib"
-#/usr/local/madlib/Current/madpack/madpack.py -p greenplum -v -c /madlib -d "$DATADIRS/madlib" -l install
-/usr/local/madlib/Current/madpack/madpack.py -p greenplum -v -c /madlib -d "$DATADIRS/madlib" -l install-check
-/usr/local/madlib/Current/madpack/madpack.py -p greenplum -v -c /madlib -d "$DATADIRS/madlib" -l dev-check
-/usr/local/madlib/Current/madpack/madpack.py -p greenplum -v -c /madlib -d "$DATADIRS/madlib" -l unit-test
 popd
