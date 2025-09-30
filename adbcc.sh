@@ -1,16 +1,20 @@
-#!/bin/sh -eux
+#!/bin/bash -eux
 
-(
-cd "$HOME/src/adbcc"
+exec 2>&1 &> >(tee "$HOME/adbcc.log")
+
+pushd "$HOME/src/adbcc"
 git submodule update --init --recursive
-cd "$HOME/src/adbcc/adcc-extension"
+popd
+pushd "$HOME/src/adbcc/adcc-extension"
 make -j"$(nproc)" clean
 make -j"$(nproc)"
 make -j"$(nproc)" install
-cd "$HOME/src/adbcc/adcc-extension/test/socket"
+popd
+pushd "$HOME/src/adbcc/adcc-extension/test/socket"
 make -j"$(nproc)" clean
 make -j"$(nproc)"
 make -j"$(nproc)" install
+popd
 #gpconfig -c shared_preload_libraries -v 'gpadcc'
 gpconfig -c shared_preload_libraries -v "$(psql -At -c "SELECT array_to_string(array_append(string_to_array(current_setting('shared_preload_libraries'), ','), 'gpadcc'), ',')" postgres)"
 gpconfig -c gp_enable_query_metrics -v on
@@ -20,4 +24,5 @@ gpstop -afr
 gpconfig -c adcc.monitor_inner_queries -v on
 gpconfig -c adcc.monitor_utility_inner_queries -v on
 gpstop -u
-) 2>&1 | tee "$HOME/adbcc.log"
+#) 2>&1 | tee "$HOME/adbcc.log"
+#popd

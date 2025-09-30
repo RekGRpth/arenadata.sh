@@ -45,7 +45,8 @@ mkdir -p "$HOME/src/gpdb$GP_MAJOR/src/test/regress/testtablespace_database_table
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 create_type create_table int8 int4 copy btree_index
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 create_type create_table int8 int4 copy tidscan
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file orca_static_pruning
-./pg_regress --load-extension=gp_inject_fault --init-file=init_file createdb function_extensions
+#./pg_regress --load-extension=gp_inject_fault --init-file=init_file createdb function_extensions
+./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 create_type create_table int8 int4 copy resource_queue
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file enum
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file autovacuum-template0-segment
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file dependency
