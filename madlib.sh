@@ -28,14 +28,13 @@ pip3 install \
 dropdb madlib || echo $?
 createdb madlib || echo $?
 
+rm -rf "$HOME/src/madlib/build/src/ports/greenplum/6/extension" "$HOME/src/madlib/build/src/ports/greenplum/7/extension"
+
 pushd "$HOME/src/madlib"
 ./configure -Wno-dev
-make -j$(nproc) EP_boost
-make -j$(nproc) EP_eigen
-make -j$(nproc) install
-rm -rf "$HOME/src/madlib/build/src/ports/greenplum/6/extension" "$HOME/src/madlib/build/src/ports/greenplum/7/extension"
 make -j$(nproc) extension-install
+popd
+
 psql -d madlib -c "create extension if not exists  plpython3u"
 psql -d madlib -c "create schema if not exists madlib"
 psql -d madlib -c "create extension if not exists madlib schema madlib"
-popd
