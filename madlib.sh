@@ -15,7 +15,7 @@ pip3 install \
 dropdb madlib || echo $?
 createdb madlib || echo $?
 
-rm -rf "$HOME/src/madlib/build/src/ports/greenplum/6/extension" "$HOME/src/madlib/build/src/ports/greenplum/7/extension"
+rm -rf "$HOME/src/madlib/build/src/ports/green*/6/extension" "$HOME/src/madlib/build/src/ports/green*/7/extension"
 
 pushd "$HOME/src/madlib"
 ./configure -Wno-dev
