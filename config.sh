@@ -26,9 +26,11 @@ fi
 #    CXXFLAGS="-DGPOS_DEBUG -O0 -ggdb -g3 -fno-omit-frame-pointer -fno-pie -no-pie -Wclobbered"
 #export CFLAGS="-O0 -ggdb -g3 -fno-omit-frame-pointer -fno-pie -no-pie -Wclobbered"
 export CFLAGS="-O0 -ggdb -g3 -fno-omit-frame-pointer -Wclobbered"
+#export CFLAGS="-O3 -ggdb -g3 -fno-omit-frame-pointer"
 #export CFLAGS="-O0 -ggdb -g3 -fno-omit-frame-pointer -fno-pie -no-pie -Wclobbered -DEXTRA_DYNAMIC_MEMORY_DEBUG"
 #export CXXFLAGS="-DGPOS_DEBUG -O0 -ggdb -g3 -fno-omit-frame-pointer -fno-pie -no-pie -Wclobbered"
 export CXXFLAGS="-DGPOS_DEBUG -O0 -ggdb -g3 -fno-omit-frame-pointer -Wclobbered"
+#export CXXFLAGS="-DGPOS_DEBUG -O3 -ggdb -g3 -fno-omit-frame-pointer"
 #CONFIGURE_FLAGS="$CONFIGURE_FLAGS --with-wal-segsize=1"
 #export CFLAGS="$CFLAGS -DCLOBBER_CACHE_ALWAYS"
 ./configure \

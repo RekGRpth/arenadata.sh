@@ -1,7 +1,8 @@
-#!/bin/sh -eux
+#!/bin/bash -eux
 
-(
-cd "$HOME/src/diskquota"
+exec 2>&1 &> >(tee "$HOME/diskquota.log")
+
+pushd "$HOME/src/diskquota"
 rm -rf build
 mkdir -p build
 cd build
@@ -18,4 +19,5 @@ gpconfig -c shared_preload_libraries -v "$(psql -At -c "SELECT array_to_string(a
 #gpconfig -c diskquota.max_active_tables -v 1048576 --skipvalidation
 createdb diskquota || echo $?
 gpstop -afr
-) 2>&1 | tee "$HOME/diskquota.log"
+#) 2>&1 | tee "$HOME/diskquota.log"
+popd

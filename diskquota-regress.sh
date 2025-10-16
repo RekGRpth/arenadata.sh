@@ -1,15 +1,19 @@
-#!/bin/sh -eux
+#!/bin/bash -eux
 
-(
+exec 2>&1 &> >(tee "$HOME/diskquota-regress.log")
+
+#(
 createdb contrib_regression || echo $?
 psql regression -c "drop extension diskquota" || echo $?
-cd "$HOME/src/gpdb$GP_MAJOR/src/test/regress"
+pushd "$HOME/src/gpdb$GP_MAJOR/src/test/regress"
 make -j$(nproc) install
-cd "$HOME/src/diskquota/build"
+popd
+pushd "$HOME/src/diskquota/build"
 cmake --build . --target "tests/regress/sql/test_primary_failure.sql"
 ln -fs "../../../build/tests/regress/sql/test_primary_failure.sql" "../tests/regress/sql/test_primary_failure.sql"
+popd
 #cd "$HOME/src/diskquota/tests/regress"
-cd "$HOME/src/diskquota/tests"
+pushd "$HOME/src/diskquota/tests"
 #rm -rf build
 #mkdir -p build
 #cd build
@@ -40,4 +44,5 @@ cd "$HOME/src/diskquota/tests"
 #gpstop -afr
 #cd "$HOME/src/diskquota/build"
 #cmake --build . --target installcheck
-) 2>&1 | tee "$HOME/diskquota-regress.log"
+#) 2>&1 | tee "$HOME/diskquota-regress.log"
+popd
