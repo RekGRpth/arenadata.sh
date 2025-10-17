@@ -2,11 +2,7 @@
 
 exec 2>&1 &> >(tee "$HOME/madlib$GP_MAJOR.log")
 
-if ! which pip3; then
-    curl https://bootstrap.pypa.io/pip/get-pip.py -o get-pip.py; \
-    python3 get-pip.py; \
-    rm get-pip.py; \
-fi
+which pip3 || curl https://bootstrap.pypa.io/pip/get-pip.py | python3
 
 pip3 install \
     pyxb-x==1.2.6.1 \

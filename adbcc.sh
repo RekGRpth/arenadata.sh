@@ -2,6 +2,12 @@
 
 exec 2>&1 &> >(tee "$HOME/adbcc.log")
 
+if [[ "$GP_MAJOR" == "6" ]]; then
+    pip2 install --no-cache-dir \
+        grpcio-tools \
+        protobuf
+fi
+
 pushd "$HOME/src/adbcc"
 git submodule update --init --recursive
 #popd
