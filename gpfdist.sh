@@ -3,10 +3,10 @@
 (
 #export PGOPTIONS="-c optimizer=on -c optimizer_enable_table_alias=off"
 #export PGOPTIONS="-c optimizer=off"
-cd "$HOME/src/gpdb$GP_MAJOR/src/test/regress"
+cd "$HOME/gpdb_src/src/test/regress"
 make -j$(nproc) clean
 make -j$(nproc) install
-cd "$HOME/src/gpdb$GP_MAJOR/src/bin/gpfdist/regress"
+cd "$HOME/gpdb_src/src/bin/gpfdist/regress"
 make -j$(nproc) clean
 make -j$(nproc) install
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file alter_table_ao alter_table_aocs

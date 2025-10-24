@@ -2,13 +2,13 @@
 
 exec 2>&1 &> >(tee "$HOME/isolation2.log")
 
-pushd "$HOME/src/gpdb$GP_MAJOR/src/test/isolation2"
+pushd "$HOME/gpdb_src/src/test/isolation2"
 
 export PGOPTIONS="-c optimizer=off"
-#cd "$HOME/src/gpdb$GP_MAJOR/src/test/regress"
+#cd "$HOME/gpdb_src/src/test/regress"
 #make -j$(nproc) clean
 #make -j$(nproc) install
-#cd "$HOME/src/gpdb$GP_MAJOR/src/test/isolation2"
+#cd "$HOME/gpdb_src/src/test/isolation2"
 #make -j$(nproc) clean
 #make -j$(nproc) install
 #make -j$(nproc) installcheck -i
@@ -116,6 +116,6 @@ export PGOPTIONS="-c optimizer=off"
 #./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault segwalrep/fts_unblock_primary segwalrep/recoverseg_from_file
 #make -j$(nproc) installcheck -i
 #test -f regression.diffs && cat regression.diffs
-#) || cat "$HOME/src/gpdb$GP_MAJOR/src/test/isolation2/regression.diffs" 2>&1 | tee "$HOME/isolation2.log"
+#) || cat "$HOME/gpdb_src/src/test/isolation2/regression.diffs" 2>&1 | tee "$HOME/isolation2.log"
 #) 2>&1 | tee "$HOME/isolation2.log"
 popd

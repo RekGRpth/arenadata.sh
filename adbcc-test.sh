@@ -11,7 +11,7 @@ sudo chown -R $USER:$GROUP /sys/fs/cgroup/{memory,cpu,cpuset}/gpdb
 #gpconfig -r gp_resource_manager
 #gpstop -afr
 pushd "$HOME/src/adbcc/adcc-extension"
-export ISOLATION2_ROOT="$HOME/src/gpdb$GP_MAJOR/src/test/isolation2"
+export ISOLATION2_ROOT="$HOME/gpdb_src/src/test/isolation2"
 export PGOPTIONS="-c optimizer=off"
 export PGOPTIONS="-c optimizer_enable_table_alias=off"
 make installcheck installcheck-isolation2

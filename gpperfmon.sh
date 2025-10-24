@@ -1,7 +1,7 @@
 #!/bin/sh -eux
 
 (
-cd "$HOME/src/gpdb$GP_MAJOR/gpAux/gpperfmon"
+cd "$HOME/gpdb_src/gpAux/gpperfmon"
 make -j$(nproc) clean
 rm /usr/local/bin/gpmmon /usr/local/bin/gpsmon
 dropdb --if-exists gpperfmon

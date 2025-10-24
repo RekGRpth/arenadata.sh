@@ -7,7 +7,7 @@ exec 2>&1 &> >(tee "$HOME/gpbackup-unit.log")
 dropdb --if-exists restoredb
 dropuser --if-exists testrole
 rm "$DATADIRS"/*/*/gpbackup_* || echo $?
-#cd "$HOME/src/gpdb$GP_MAJOR/contrib/dummy_seclabel"
+#cd "$HOME/gpdb_src/contrib/dummy_seclabel"
 #make -j"$(nproc)" install
 pushd "$HOME/src/gpbackup"
 #gpconfig -c shared_preload_libraries -v dummy_seclabel

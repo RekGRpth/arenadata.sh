@@ -2,9 +2,9 @@
 
 (
 #export CFLAGS="-O0 -g3"
-cd "$HOME/src/gpdb$GP_MAJOR"
+cd "$HOME/gpdb_src"
 ln -fs add_libs/gporca orca_src
-cd "$HOME/src/gpdb$GP_MAJOR/add_libs/gporca"
+cd "$HOME/gpdb_src/add_libs/gporca"
 #make -j"$(nproc)" clean
 #cmake -D CMAKE_INSTALL_PREFIX="$HOME/.local$GP_MAJOR" .
 cmake -D CMAKE_INSTALL_PREFIX="$GPHOME" .

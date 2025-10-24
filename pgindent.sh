@@ -2,7 +2,7 @@
 
 (
 if [[ "$GP_MAJOR" == "6c" || "$GP_MAJOR" == "6" ]]; then
-    cd "$HOME/src/gpdb$GP_MAJOR/src/tools/entab"
+    cd "$HOME/gpdb_src/src/tools/entab"
     make -j"$(nproc)"
     install -s entab "$BINDIR"
     rm -f "$BINDIR/detab"
@@ -18,7 +18,7 @@ elif [[ "$GP_MAJOR" == "7c" || "$GP_MAJOR" == "7" || "$GP_MAJOR" == "8" ]]; then
 #    make -j"$(nproc)" clean
     make -j"$(nproc)" install
 fi
-cd "$HOME/src/gpdb$GP_MAJOR/src/tools/pgindent"
+cd "$HOME/gpdb_src/src/tools/pgindent"
 cp -f pgindent "$BINDIR"
 ) 2>&1 | tee "$HOME/pgindent.log"
 

@@ -7,8 +7,8 @@ export PGOPTIONS="-c optimizer=off"
 #export PGOPTIONS="-c optimizer=on -c optimizer_enable_table_alias=off"
 #export PGOPTIONS="-c optimizer=on -c jit=on -c jit_above_cost=0 -c optimizer_jit_above_cost=0 -c gp_explain_jit=off"
 #export PGOPTIONS="-c optimizer=off -c jit=on -c jit_above_cost=0 -c gp_explain_jit=off"
-#cd "$HOME/src/gpdb$GP_MAJOR/src/test/regress"
-pushd "$HOME/src/gpdb$GP_MAJOR/src/test/regress"
+#cd "$HOME/gpdb_src/src/test/regress"
+pushd "$HOME/gpdb_src/src/test/regress"
 #make -j$(nproc) clean
 #make -j$(nproc) install
 #make -j$(nproc) twophase_pqexecparams
@@ -16,15 +16,15 @@ pushd "$HOME/src/gpdb$GP_MAJOR/src/test/regress"
 #if [[ "$GP_MAJOR" == "6c" || "$GP_MAJOR" == "6u" ]]; then
 #    make -j$(nproc) file_monitor
 #elif [[ "$GP_MAJOR" == "7c" || "$GP_MAJOR" == "7u" || "$GP_MAJOR" == "8u" ]]; then
-#    pushd "$HOME/src/gpdb$GP_MAJOR/contrib/spi"
+#    pushd "$HOME/gpdb_src/contrib/spi"
 #    make -j$(nproc) install
 #    popd
 #fi
 #make -j$(nproc) installcheck -i
 #exit
-ln -fs "$HOME/src/gpdb$GP_MAJOR/src/test/regress/regress.so" "$GPHOME/lib/postgresql/regress.so"
-mkdir -p "$HOME/src/gpdb$GP_MAJOR/src/test/regress/testtablespace_default_tablespace"
-mkdir -p "$HOME/src/gpdb$GP_MAJOR/src/test/regress/testtablespace_database_tablespace"
+ln -fs "$HOME/gpdb_src/src/test/regress/regress.so" "$GPHOME/lib/postgresql/regress.so"
+mkdir -p "$HOME/gpdb_src/src/test/regress/testtablespace_default_tablespace"
+mkdir -p "$HOME/gpdb_src/src/test/regress/testtablespace_database_tablespace"
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file bfv_catalog bfv_olap bfv_statistic bfv_index bfv_partition_plans
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file bfv_catalog bfv_olap bfv_statistic bfv_index bfv_partition_plans bfv_aggregate
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file bfv_catalog bfv_olap bfv_statistic bfv_index bfv_partition_plans bfv_aggregate bfv_partition table_statistics

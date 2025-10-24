@@ -1,7 +1,7 @@
 #!/bin/sh -eux
 
 (
-#cd "$HOME/src/gpdb$GP_MAJOR/contrib/dummy_seclabel"
+#cd "$HOME/gpdb_src/contrib/dummy_seclabel"
 #make -j"$(nproc)" install
 cd "$HOME/src/gpbackup"
 #gpconfig -c shared_preload_libraries -v dummy_seclabel

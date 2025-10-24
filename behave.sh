@@ -2,7 +2,7 @@
 
 exec 2>&1 &> >(tee "$HOME/behave.log")
 
-pushd "$HOME/src/gpdb$GP_MAJOR/gpMgmt"
+pushd "$HOME/gpdb_src/gpMgmt"
 behave test/behave/mgmt_utils --tags=gpstart -n 'gpstart succeeds when cluster shutdowned during segment promote'
 popd
 exit
@@ -13,7 +13,7 @@ if [ ! -f /home/gpadmin/sqldump/dump.sql ]; then
     wget -nv https://rt.adsw.io/artifactory/common/dump.sql.xz -O /home/gpadmin/sqldump/dump.sql.xz
     xz -d /home/gpadmin/sqldump/dump.sql.xz
 fi
-#pushd "$HOME/src/gpdb$GP_MAJOR/gpMgmt"
+#pushd "$HOME/gpdb_src/gpMgmt"
 #make -j$(nproc) install
 #gpstop -a || echo $?
 #sudo rm -rf /data/gpdata
@@ -30,7 +30,7 @@ fi
 rm "$HOME/gpAdminLogs/"* || echo $?
 #cd /data/gpdata
 #cd "$HOME"
-#ln -fs "$HOME/src/gpdb$GP_MAJOR/gpMgmt/test" .
+#ln -fs "$HOME/gpdb_src/gpMgmt/test" .
 #gpstop -afr
 dropdb gptest || echo $?
 createdb --owner="$USER" gptest || echo $?
@@ -39,12 +39,12 @@ export PGPORT=15432
 export PORT_BASE=$PGPORT
 #export MASTER_DATA_DIRECTORY=/data/gpdata/coordinator/gpseg-1
 #/home/gpadmin/src/gpdb6u/gpAux/gpdemo/datadirs/qddir/demoDataDir-1
-#export DATADIRS=$HOME/src/gpdb$GP_MAJOR/gpAux/gpdemo/datadirs
+#export DATADIRS=$HOME/gpdb_src/gpAux/gpdemo/datadirs
 #export MASTER_DATA_DIRECTORY=$DATADIRS/qddir/demoDataDir-1
 #export MASTER_DATA_DIRECTORY=/data/gpdata/gpexpand/data/master/gpseg-1
 export DATADIRS=/data/gpdata/gpexpand/data
 export MASTER_DATA_DIRECTORY="$DATADIRS/master/gpseg-1"
-#cd "$HOME/src/gpdb$GP_MAJOR"
+#cd "$HOME/gpdb_src"
 #sudo groupadd --system docker
 #sudo groupmems -a $USER -g docker
 #export IMAGE=behave
@@ -86,13 +86,13 @@ export MASTER_DATA_DIRECTORY="$DATADIRS/master/gpseg-1"
 #behave test/behave/mgmt_utils --tags=gplogfilter -k -n "invalid begin and end arguments"
 behave test/behave/mgmt_utils --tags=gplogfilter -k
 #arenadata/scripts/run_behave_tests.bash "gpexpand should skip already expanded/broken tables when redistributing"
-#cd "$HOME/src/gpdb$GP_MAJOR"
+#cd "$HOME/gpdb_src"
 #arenadata/scripts/run_behave_tests.bash "gpexpand Avoid overwriting the tar file on coordinator"
 #export PEXPECT_LIB="$GPHOME/bin/lib"
-#export TEST_DIR="$HOME/src/gpdb$GP_MAJOR/gpMgmt"
+#export TEST_DIR="$HOME/gpdb_src/gpMgmt"
 #export PYTHONPATH="$PYTHONPATH":"$PEXPECT_LIB":"$TEST_DIR"
-#PYTHONPATH="$PYTHONPATH":"$GPHOME/bin/lib":"$HOME/src/gpdb$GP_MAJOR/gpMgmt" 
-#behave "$HOME/src/gpdb$GP_MAJOR/gpMgmt/test/behave/"* --tags=gpexpand --name='gpexpand should skip already expanded/broken tables when redistributing' --verbose
+#PYTHONPATH="$PYTHONPATH":"$GPHOME/bin/lib":"$HOME/gpdb_src/gpMgmt" 
+#behave "$HOME/gpdb_src/gpMgmt/test/behave/"* --tags=gpexpand --name='gpexpand should skip already expanded/broken tables when redistributing' --verbose
 #behave test/behave/mgmt_utils --tags=gpexpand --name='gpexpand should skip already expanded/broken tables when redistributing' --verbose
 #behave test/behave/mgmt_utils --tags=gpactivatestandby --name='gprecoverseg recoveries failed segment when standby works instead of coordinator' --verbose
 #behave test/behave/mgmt_utils --tags=gpinitstandby --name='gpinitstandby should create pg_hba entry to segment primary' --verbose

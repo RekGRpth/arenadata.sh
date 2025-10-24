@@ -18,7 +18,7 @@ make -j"$(nproc)" install
 make -j"$(nproc)" test
 #mkdir -p "$HOME/go/src/github.com/greenplum-db"
 #ln -fs "../../../../src/gpbackup" "$HOME/go/src/github.com/greenplum-db/"
-#cd "$HOME/src/gpdb$GP_MAJOR/contrib/dummy_seclabel"
+#cd "$HOME/gpdb_src/contrib/dummy_seclabel"
 #make -j"$(nproc)" install
 #gpconfig -c shared_preload_libraries -v dummy_seclabel
 #gpstop -afr

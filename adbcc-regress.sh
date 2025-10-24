@@ -23,19 +23,19 @@ sudo chown -R $USER:$GROUP /sys/fs/cgroup/{memory,cpu,cpuset}/gpdb
 #/usr/local/lib/postgresql/pgxs/src/makefiles/../../src/test/regress/pg_regress --load-extension=plpythonu --load-extension=socket --load-extension=gp_inject_fault errors
 #/usr/local/lib/postgresql/pgxs/src/makefiles/../../src/test/regress/pg_regress --load-extension=plpythonu --load-extension=gp_inject_fault errors
 #/usr/local/lib/postgresql/pgxs/src/makefiles/../../src/test/regress/pg_regress --load-extension=plpythonu --load-extension=socket --load-extension=gp_inject_fault node_status
-#"$HOME/src/gpdb$GP_MAJOR/src/test/isolation2/pg_isolation2_regress" --load-extension=plpythonu --load-extension=gp_inject_fault node_metric
+#"$HOME/gpdb_src/src/test/isolation2/pg_isolation2_regress" --load-extension=plpythonu --load-extension=gp_inject_fault node_metric
 #/usr/local/lib/postgresql/pgxs/src/makefiles/../../src/test/regress/pg_regress --load-extension=plpythonu --load-extension=socket create_extension socket node_status
-#"$HOME/src/gpdb$GP_MAJOR/src/test/regress/pg_regress" --load-extension=plpythonu --load-extension=socket create_extension socket node_status
-#"$HOME/src/gpdb$GP_MAJOR/src/test/regress/pg_regress" --load-extension=plpythonu --load-extension=socket create_extension node_slice
-#"$HOME/src/gpdb$GP_MAJOR/src/test/regress/pg_regress" --load-extension=plpythonu --load-extension=socket create_extension cdb_dispatch_replace_ccnt
-#"$HOME/src/gpdb$GP_MAJOR/src/test/regress/pg_regress" --load-extension=plpythonu --load-extension=socket create_extension zstd_compression
-#"$HOME/src/gpdb$GP_MAJOR/src/test/regress/pg_regress" --load-extension=plpython3u --load-extension=socket create_extension ccnt_threshold
-#"$HOME/src/gpdb$GP_MAJOR/src/test/regress/pg_regress" --load-extension=plpythonu --load-extension=socket create_extension bfv_interconnect
-#"$HOME/src/gpdb$GP_MAJOR/src/test/regress/pg_regress" --load-extension=plpythonu --load-extension=socket create_extension bfv_interconnect cdb_dispatch_ccnt errors errors_resgroup inner_queries misc
-#"$HOME/src/gpdb$GP_MAJOR/src/test/regress/pg_regress" --load-extension=plpython3u --load-extension=socket create_extension socket spill_snapshot
-#"$HOME/src/gpdb$GP_MAJOR/src/test/regress/pg_regress" --load-extension=plpython3u --load-extension=socket create_extension spill_snapshot
-#"$HOME/src/gpdb$GP_MAJOR/src/test/regress/pg_regress" --load-extension=plpython3u --load-extension=socket create_extension failure_in_txn failure_in_txn_2 failure_in_txn_gc failure_ssid failure_ssid_gc deparse_context
-#"$HOME/src/gpdb$GP_MAJOR/src/test/regress/pg_regress" --load-extension=plpythonu --load-extension=socket create_extension failure_in_txn failure_in_txn_2 failure_in_txn_resgroup errors errors_resgroup
-#"$HOME/src/gpdb$GP_MAJOR/src/test/regress/pg_regress" --load-extension=plpythonu --load-extension=socket create_extension failure_in_txn failure_in_txn_2 errors
-"$HOME/src/gpdb$GP_MAJOR/src/test/regress/pg_regress" --load-extension=plpython3u --load-extension=socket create_extension explain errors
+#"$HOME/gpdb_src/src/test/regress/pg_regress" --load-extension=plpythonu --load-extension=socket create_extension socket node_status
+#"$HOME/gpdb_src/src/test/regress/pg_regress" --load-extension=plpythonu --load-extension=socket create_extension node_slice
+#"$HOME/gpdb_src/src/test/regress/pg_regress" --load-extension=plpythonu --load-extension=socket create_extension cdb_dispatch_replace_ccnt
+#"$HOME/gpdb_src/src/test/regress/pg_regress" --load-extension=plpythonu --load-extension=socket create_extension zstd_compression
+#"$HOME/gpdb_src/src/test/regress/pg_regress" --load-extension=plpython3u --load-extension=socket create_extension ccnt_threshold
+#"$HOME/gpdb_src/src/test/regress/pg_regress" --load-extension=plpythonu --load-extension=socket create_extension bfv_interconnect
+#"$HOME/gpdb_src/src/test/regress/pg_regress" --load-extension=plpythonu --load-extension=socket create_extension bfv_interconnect cdb_dispatch_ccnt errors errors_resgroup inner_queries misc
+#"$HOME/gpdb_src/src/test/regress/pg_regress" --load-extension=plpython3u --load-extension=socket create_extension socket spill_snapshot
+#"$HOME/gpdb_src/src/test/regress/pg_regress" --load-extension=plpython3u --load-extension=socket create_extension spill_snapshot
+#"$HOME/gpdb_src/src/test/regress/pg_regress" --load-extension=plpython3u --load-extension=socket create_extension failure_in_txn failure_in_txn_2 failure_in_txn_gc failure_ssid failure_ssid_gc deparse_context
+#"$HOME/gpdb_src/src/test/regress/pg_regress" --load-extension=plpythonu --load-extension=socket create_extension failure_in_txn failure_in_txn_2 failure_in_txn_resgroup errors errors_resgroup
+#"$HOME/gpdb_src/src/test/regress/pg_regress" --load-extension=plpythonu --load-extension=socket create_extension failure_in_txn failure_in_txn_2 errors
+"$HOME/gpdb_src/src/test/regress/pg_regress" --load-extension=plpython3u --load-extension=socket create_extension explain errors
 ) 2>&1 | tee "$HOME/adbcc-regress.log"

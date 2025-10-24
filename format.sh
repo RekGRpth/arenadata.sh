@@ -1,7 +1,7 @@
 #!/bin/bash -eux
 
 (
-cd "$HOME/src/gpdb$GP_MAJOR"
+cd "$HOME/gpdb_src"
 if [[ "$GP_MAJOR" == "6c" ]]; then
     source scl_source enable llvm-toolset-11.0
     git apply "$(dirname "$0")/format.diff"

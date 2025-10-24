@@ -3,7 +3,7 @@
 (
 #export PGOPTIONS="-c optimizer=on"
 export PGOPTIONS="-c optimizer=off"
-cd "$HOME/src/gpdb$GP_MAJOR/src/test/isolation"
+cd "$HOME/gpdb_src/src/test/isolation"
 #make -j$(nproc) installcheck -i
 #exit
 #make -j$(nproc) clean

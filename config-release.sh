@@ -4,7 +4,7 @@ exec 2>&1 &> >(tee "$HOME/config.log")
 #export CFLAGS="-O0 -g3"
 #(
 #export CFLAGS="-O0 -g3"
-pushd "$HOME/src/gpdb$GP_MAJOR"
+pushd "$HOME/gpdb_src"
 git submodule update --init --recursive
 CONFIGURE_FLAGS=
 if [[ "$GP_MAJOR" == "5c" ]]; then
@@ -19,7 +19,7 @@ if [[ "$GP_MAJOR" == "5c" ]]; then
 #    sudo rpm -i --replacepkgs http://downloads.adsw.io/ADB/6.22.0_arenadata38/centos/7/community/x86_64/sigar-headers-1.6.5-1056.git2932df5.el7.x86_64.rpm
 fi
 #export CONFIGURE_FLAGS="--enable-debug-extensions --with-gssapi --enable-cassert --enable-debug --enable-depend"
-#source "$HOME/src/gpdb$GP_MAJOR/concourse/scripts/common.bash"
+#source "$HOME/gpdb_src/concourse/scripts/common.bash"
 #export enable_debug_extensions=set
 #    LDFLAGS="-Wl,--enable-new-dtags -Wl,-rpath,\$/../lib" \
 #    CFLAGS="-O0 -ggdb -g3 -fno-omit-frame-pointer -fno-pie -no-pie -Wclobbered" \
