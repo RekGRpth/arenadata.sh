@@ -6,6 +6,7 @@ exec 2>&1 &> >(tee "$HOME/demo.log")
 #test -f "$HOME/data$GP_MAJOR/qddir/demoDataDir-1/postmaster.pid" && test -f "/tmp/.s.PGSQL.${GP_MAJOR}432" &&  
 #gpstop -af || echo $?
 rm -rf /tmp/.s.PGSQL.* "$HOME/.ssh/known_hosts"
+rm -rf "$HOME/gpAdminLogs/"*.log
 #rm -rf "$HOME/data/*"
 #rm -rf "$HOME/data$GP_MAJOR/*"
 #rm -rf "$HOME/data$GP_MAJOR"
@@ -51,6 +52,9 @@ if [[ "$GP_MAJOR" != "9" ]]; then
         fi
     popd
 fi
+pushd "$HOME/src/gpdb$GP_MAJOR/gpMgmt"
+    make -j$(nproc) install
+popd
 pushd "$HOME/src/gpdb$GP_MAJOR"
 if [[ "$GP_MAJOR" == "9" ]]; then
     export WITH_MIRRORS=false

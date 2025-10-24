@@ -1,13 +1,20 @@
-#!/bin/sh -eux
+#!/bin/bash -eux
 
-(
+exec 2>&1 &> >(tee "$HOME/behave.log")
+
+pushd "$HOME/src/gpdb$GP_MAJOR/gpMgmt"
+behave test/behave/mgmt_utils --tags=gpstart -n 'gpstart succeeds when cluster shutdowned during segment promote'
+popd
+exit
+
+#(
 if [ ! -f /home/gpadmin/sqldump/dump.sql ]; then
     mkdir -p /home/gpadmin/sqldump
     wget -nv https://rt.adsw.io/artifactory/common/dump.sql.xz -O /home/gpadmin/sqldump/dump.sql.xz
     xz -d /home/gpadmin/sqldump/dump.sql.xz
 fi
-cd "$HOME/src/gpdb$GP_MAJOR/gpMgmt"
-make -j$(nproc) install
+#pushd "$HOME/src/gpdb$GP_MAJOR/gpMgmt"
+#make -j$(nproc) install
 #gpstop -a || echo $?
 #sudo rm -rf /data/gpdata
 sudo mkdir -p /data/gpdata
@@ -91,4 +98,4 @@ behave test/behave/mgmt_utils --tags=gplogfilter -k
 #behave test/behave/mgmt_utils --tags=gpinitstandby --name='gpinitstandby should create pg_hba entry to segment primary' --verbose
 #behave test/behave/mgmt_utils --tags=gpinitstandby --name='gpinitstandby should create pg_hba standby entry to segment primary and mirror' --verbose
 #behave test/behave/mgmt_utils --tags=gpactivatestandby --name='gpstate after running gpactivatestandby works' --verbose
-) 2>&1 | tee "$HOME/behave.log"
+#) 2>&1 | tee "$HOME/behave.log"
