@@ -25,6 +25,7 @@ pushd "$HOME/gpdb_src/src/test/regress"
 ln -fs "$HOME/gpdb_src/src/test/regress/regress.so" "$GPHOME/lib/postgresql/regress.so"
 mkdir -p "$HOME/gpdb_src/src/test/regress/testtablespace_default_tablespace"
 mkdir -p "$HOME/gpdb_src/src/test/regress/testtablespace_database_tablespace"
+./pg_regress --load-extension=gp_inject_fault --init-file=init_file external_table create_function_1 triggers create_type create_table int8 int4 copy create_misc rangefuncs rangefuncs_cdb gp_dqa subselect_gp subselect_gp2 subselect_gp_indexes
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file bfv_catalog bfv_olap bfv_statistic bfv_index bfv_partition_plans
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file bfv_catalog bfv_olap bfv_statistic bfv_index bfv_partition_plans bfv_aggregate
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file bfv_catalog bfv_olap bfv_statistic bfv_index bfv_partition_plans bfv_aggregate bfv_partition table_statistics
@@ -47,6 +48,7 @@ mkdir -p "$HOME/gpdb_src/src/test/regress/testtablespace_database_tablespace"
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file orca_static_pruning
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file createdb function_extensions
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 create_type create_table int8 int4 copy resource_queue
+#./pg_regress --load-extension=gp_inject_fault --init-file=init_file qp_functions_in_contexts_setup qp_functions_in_select
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file enum
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file matfuncscan
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file autovacuum-template0-segment
@@ -192,7 +194,7 @@ mkdir -p "$HOME/gpdb_src/src/test/regress/testtablespace_database_tablespace"
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file uao_dml/uao_dml_row uao_dml/uao_dml_column
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 create_type create_table int8 int4 copy plancache
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file not_out_of_shmem_exit_slots
-./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 triggers create_type create_table int8 int4 copy create_misc rangefuncs_cdb gp_dqa subselect_gp subselect_gp2
+#./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 triggers create_type create_table int8 int4 copy create_misc rangefuncs_cdb gp_dqa subselect_gp subselect_gp2
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 create_type create_table int8 int4 copy create_misc rangefuncs_cdb gp_dqa subselect_gp subselect_gp2
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 create_type create_table int8 int4 copy create_misc create_index brin gin gist spgist privileges init_privs security_label
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 create_type create_table int8 int4 copy create_misc brin gin gist spgist privileges init_privs security_label collate matview lock replica_identity rowsecurity object_address tablesample groupingsets drop_operator password identity
@@ -221,6 +223,7 @@ mkdir -p "$HOME/gpdb_src/src/test/regress/testtablespace_database_tablespace"
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file DML_over_joins
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file alter_db_set_tablespace
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file gpsd alter_db_set_tablespace
+#./pg_regress --load-extension=gp_inject_fault --init-file=init_file gpsd
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file enable_autovacuum session_reset fts_error alter_db_set_tablespace
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file expand_table_regression temp_relation alter_db_set_tablespace oid_wraparound
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file partition1

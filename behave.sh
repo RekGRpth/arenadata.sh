@@ -3,7 +3,7 @@
 exec 2>&1 &> >(tee "$HOME/behave.log")
 
 pushd "$HOME/gpdb_src/gpMgmt"
-behave test/behave/mgmt_utils --tags=gpstart -n 'gpstart succeeds when cluster shutdowned during segment promote'
+behave test/behave/mgmt_utils --tags=gpstart -n 'gpstart succeeds when cluster shut down during segment promotion'
 popd
 exit
 
