@@ -5,6 +5,7 @@ exec 2>&1 &> >(tee "$HOME/config.log")
 #(
 #export CFLAGS="-O0 -g3"
 pushd "$HOME/gpdb_src"
+rm -f VERSION
 git submodule update --init --recursive
 CONFIGURE_FLAGS=
 if [[ "$GP_MAJOR" == "5c" ]]; then

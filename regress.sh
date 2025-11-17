@@ -25,7 +25,9 @@ pushd "$HOME/gpdb_src/src/test/regress"
 ln -fs "$HOME/gpdb_src/src/test/regress/regress.so" "$GPHOME/lib/postgresql/regress.so"
 mkdir -p "$HOME/gpdb_src/src/test/regress/testtablespace_default_tablespace"
 mkdir -p "$HOME/gpdb_src/src/test/regress/testtablespace_database_tablespace"
-./pg_regress --load-extension=gp_inject_fault --init-file=init_file external_table create_function_1 triggers create_type create_table int8 int4 copy create_misc rangefuncs rangefuncs_cdb gp_dqa subselect_gp subselect_gp2 subselect_gp_indexes
+#./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 constraints triggers updatable_views vacuum
+#./pg_regress --load-extension=gp_inject_fault --init-file=init_file alter_table_aocs2 partition1 partition appendonly
+#./pg_regress --load-extension=gp_inject_fault --init-file=init_file external_table create_function_1 triggers create_type create_table int8 int4 copy create_misc rangefuncs rangefuncs_cdb gp_dqa subselect_gp subselect_gp2 subselect_gp_indexes
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file bfv_catalog bfv_olap bfv_statistic bfv_index bfv_partition_plans
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file bfv_catalog bfv_olap bfv_statistic bfv_index bfv_partition_plans bfv_aggregate
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file bfv_catalog bfv_olap bfv_statistic bfv_index bfv_partition_plans bfv_aggregate bfv_partition table_statistics
@@ -49,7 +51,16 @@ mkdir -p "$HOME/gpdb_src/src/test/regress/testtablespace_database_tablespace"
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file createdb function_extensions
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 create_type create_table int8 int4 copy resource_queue
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file qp_functions_in_contexts_setup qp_functions_in_select
+#./pg_regress --load-extension=gp_inject_fault --init-file=init_file namespace_gp
+./pg_regress --load-extension=gp_inject_fault --init-file=init_file portals_updatable
+#./pg_regress --load-extension=gp_inject_fault --init-file=init_file triggers_gp
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file enum
+#./pg_regress --load-extension=gp_inject_fault --init-file=init_file uao_ddl/alter_ao_table_constraint_column
+#./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 create_type create_table int8 int4 copy errors
+#./pg_regress --load-extension=gp_inject_fault --init-file=init_file bfv_legacy
+#./pg_regress --load-extension=gp_inject_fault --init-file=init_file column_compression AOCO_Compression
+#./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 create_type create_table int8 int4 copy explain explain_format
+#./pg_regress --load-extension=gp_inject_fault --init-file=init_file guc_gp
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file matfuncscan
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file autovacuum-template0-segment
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file dependency
@@ -79,6 +90,7 @@ mkdir -p "$HOME/gpdb_src/src/test/regress/testtablespace_database_tablespace"
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 create_type create_table create_function_2 int8 int4 text point polygon circle copy create_misc create_index misc select_parallel
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 create_type create_table create_function_2 int8 int4 text point polygon circle copy create_misc create_index
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file generated
+#./pg_regress --load-extension=gp_inject_fault --init-file=init_file generated domain
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 create_type create_table int8 int4 copy plpgsql
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 create_type create_table int8 int4 copy rangefuncs
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file constraints
@@ -115,6 +127,7 @@ mkdir -p "$HOME/gpdb_src/src/test/regress/testtablespace_database_tablespace"
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file updatable_views union olap_window_seq
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file updatable_views
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file updatable_views gist
+#./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 create_type create_table int8 int4 point polygon circle copy create_misc create_index brin gin
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file updatable_views create_function_1 create_type create_table int8 int4 copy create_misc create_index brin gin gist
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_schema
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file subscription
@@ -239,6 +252,7 @@ mkdir -p "$HOME/gpdb_src/src/test/regress/testtablespace_database_tablespace"
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file gp_tablespace temp_tablespaces default_tablespace
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file temp_tablespaces
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file gpcopy
+#./pg_regress --load-extension=gp_inject_fault --init-file=init_file test_setup gp_constraints gpcopy alter_table_ao catcache qp_dml_joins qp_union_intersect uao_ddl/alter_ao_table_setdefault_row uao_ddl/alter_ao_table_constraint_row uao_ddl/alter_ao_table_setdefault_column
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file copy2
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file with_clause
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 create_type create_table int4 int8 float8 varchar char text point polygon circle copy create_aggregate create_misc create_index aggregates

@@ -1,6 +1,12 @@
 #!/bin/bash -eux
 
 exec 2>&1 &> >(tee "$HOME/unittest.log")
+
+cd "$HOME/gpdb_src"
+make GPROOT=/usr/local -j"$(nproc)" -s unittest-check
+exit
+
+exec 2>&1 &> >(tee "$HOME/unittest.log")
 pushd "$HOME/gpdb_src/src/backend/access/appendonly"
 make CFLAGS=-DUNITTEST -s unittest-check
 popd
