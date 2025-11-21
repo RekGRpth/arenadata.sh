@@ -34,6 +34,7 @@ popd
 pushd "$HOME/gpdb_src/src/test/isolation"
     make -j$(nproc) clean
     make -j$(nproc) install
+    make -j$(nproc) install pg_isolation_regress gpstringsubs.pl gpdiff.pl isolationtester
 popd
 if [[ "$GP_MAJOR" != "9" ]]; then
     pushd "$HOME/gpdb_src/src/test/isolation2"
