@@ -16,7 +16,8 @@ exec 2>&1 &> >(tee "$HOME/behave.log")
 
 pushd "$HOME/gpdb_src/gpMgmt"
 #behave test/behave/mgmt_utils --tags=gpstart -n 'gpstart succeeds when cluster shut down during segment promotion'
-behave test/behave/mgmt_utils --tags=gpactivatestandby -n 'gpactivatestandby -f forces standby coordinator to start'
+behave test/behave/mgmt_utils --tags=gpcheckcat
+#behave test/behave/mgmt_utils --tags=gpactivatestandby -n 'gpactivatestandby -f forces standby coordinator to start'
 #behave test/behave/mgmt_utils --tags=gpinitstandby -n 'gpinitstandby should create pg_hba entry to segment primary'
 popd
 exit

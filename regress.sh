@@ -3,7 +3,7 @@
 exec 2>&1 &> >(tee "$HOME/regress.log")
 
 #export PGOPTIONS="-c optimizer=off"
-export PGOPTIONS="-c optimizer_enable_table_alias=off"
+#export PGOPTIONS="-c optimizer_enable_table_alias=off"
 #export PGOPTIONS="-c optimizer=on -c optimizer_enable_table_alias=off"
 #export PGOPTIONS="-c optimizer=on -c jit=on -c jit_above_cost=0 -c optimizer_jit_above_cost=0 -c gp_explain_jit=off"
 #export PGOPTIONS="-c optimizer=off -c jit=on -c jit_above_cost=0 -c gp_explain_jit=off"
@@ -28,7 +28,7 @@ mkdir -p "$HOME/gpdb_src/src/test/regress/testtablespace_database_tablespace"
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 constraints triggers updatable_views vacuum
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file alter_table_aocs2 partition1 partition appendonly
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 triggers create_type create_table int8 int4 copy create_misc rangefuncs_cdb gp_dqa subselect_gp subselect_gp2
-./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 triggers create_type create_table int8 int4 copy create_misc rangefuncs_cdb gp_dqa dispatch subselect_gp subselect_gp2
+#./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 triggers create_type create_table int8 int4 copy create_misc rangefuncs_cdb gp_dqa dispatch subselect_gp subselect_gp2
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file --schedule=greengage_schedule_my
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file external_table create_function_1 triggers create_type create_table int8 int4 copy create_misc rangefuncs rangefuncs_cdb gp_dqa subselect_gp subselect_gp2 subselect_gp_indexes
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file bfv_catalog bfv_olap bfv_statistic bfv_index bfv_partition_plans
@@ -54,6 +54,10 @@ mkdir -p "$HOME/gpdb_src/src/test/regress/testtablespace_database_tablespace"
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file createdb function_extensions
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 create_type create_table int8 int4 copy resource_queue
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file qp_functions_in_contexts_setup qp_functions_in_select
+#./pg_regress --load-extension=gp_inject_fault --init-file=init_file plpgsql_cache
+#./pg_regress --load-extension=gp_inject_fault --init-file=init_file dml_in_udf
+#./pg_regress --load-extension=gp_inject_fault --init-file=init_file gp_index
+#./pg_regress --load-extension=gp_inject_fault --init-file=init_file dispatch
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file vacuum_full_ao
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file namespace_gp
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file portals_updatable
@@ -76,7 +80,7 @@ mkdir -p "$HOME/gpdb_src/src/test/regress/testtablespace_database_tablespace"
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file gporca
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file replication_slots
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file tuplesort
-#./pg_regress --load-extension=gp_inject_fault --init-file=init_file direct_dispatch
+./pg_regress --load-extension=gp_inject_fault --init-file=init_file direct_dispatch
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file timestamp
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file fts_recovery_in_progress
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file stats_ext
