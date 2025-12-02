@@ -8,16 +8,23 @@ pushd "$HOME/gpdb_src"
 rm -f VERSION
 git submodule update --init --recursive
 CONFIGURE_FLAGS=
-if [[ "$GP_MAJOR" == "5c" ]]; then
-    sudo rpm -i --replacepkgs https://ci.arenadata.io/artifactory/ADB/6.7.1_arenadata4/centos/7/community/x86_64/sigar-1.6.5-163.el7.x86_64.rpm
-    sudo rpm -i --replacepkgs https://ci.arenadata.io/artifactory/ADB/6.7.1_arenadata4/centos/7/community/x86_64/sigar-headers-1.6.5-163.el7.x86_64.rpm
+#if [[ "$GP_MAJOR" == "5c" ]]; then
+#    sudo rpm -i --replacepkgs https://ci.arenadata.io/artifactory/ADB/6.7.1_arenadata4/centos/7/community/x86_64/sigar-1.6.5-163.el7.x86_64.rpm
+#    sudo rpm -i --replacepkgs https://ci.arenadata.io/artifactory/ADB/6.7.1_arenadata4/centos/7/community/x86_64/sigar-headers-1.6.5-163.el7.x86_64.rpm
 #    CONFIGURE_FLAGS="--with-gssapi --enable-debug --enable-depend --enable-cassert --with-libraries=bin_orca/lib --with-includes=bin_orca/include"
 #    CONFIGURE_FLAGS="--with-libraries=$HOME/.local$GP_MAJOR/lib"
-    CONFIGURE_FLAGS="--with-libraries=$GPHOME/lib --with-includes=$GPHOME/include"
-    export LD_LIBRARY_PATH="$GPHOME/lib"
-#elif [ "$GP_MAJOR" -eq "6" ]; then
+#    CONFIGURE_FLAGS="--with-libraries=$GPHOME/lib --with-includes=$GPHOME/include"
+#    export LD_LIBRARY_PATH="$GPHOME/lib"
+if [ "$GP_MAJOR" -eq "6" ]; then
 #    sudo rpm -i --replacepkgs https://downloads.adsw.io/ADB/6.22.0_arenadata38/centos/7/community/x86_64/sigar-1.6.5-1056.git2932df5.el7.x86_64.rpm
 #    sudo rpm -i --replacepkgs http://downloads.adsw.io/ADB/6.22.0_arenadata38/centos/7/community/x86_64/sigar-headers-1.6.5-1056.git2932df5.el7.x86_64.rpm
+    sigar=https://downloads.adsw.io/ADB/6.27.1_arenadata56/ubuntu/22.04/community/x86_64/packages/sigar_1.6.5-3304%2Bgite8961a6_all.deb
+    sigar_headers=https://downloads.adsw.io/ADB/6.27.1_arenadata56/ubuntu/22.04/community/x86_64/packages/sigar-headers_1.6.5-3304%2Bgite8961a6_all.deb
+    pushd /tmp
+    wget "$sigar" "$sigar_headers"
+    sudo apt install -y ./*.deb
+    rm ./*.deb
+    popd
 fi
 #export CONFIGURE_FLAGS="--enable-debug-extensions --with-gssapi --enable-cassert --enable-debug --enable-depend"
 #source "$HOME/gpdb_src/concourse/scripts/common.bash"
@@ -46,8 +53,9 @@ export CXXFLAGS="-DGPOS_DEBUG -O0 -ggdb -g3 -fno-omit-frame-pointer -Wclobbered"
     --enable-mapreduce \
     --enable-orafce \
     --enable-orca \
+    --enable-gpperfmon \
     --enable-tap-tests \
-    --prefix=$GPHOME \
+    --prefix="$GPHOME" \
     --with-gssapi \
     --with-gssapi \
     --with-ldap \
