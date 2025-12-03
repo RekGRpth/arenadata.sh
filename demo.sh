@@ -16,6 +16,8 @@ rm -rf "$HOME/gpAdminLogs/"*.log
 killall -9 psql || echo $?
 killall -9 sleep || echo $?
 killall -9 postgres || echo $?
+killall -9 gpmmon || echo $?
+killall -9 gpsmon || echo $?
 BLDWRAP_POSTGRES_CONF_ADDONS=
 if [[ "$GP_MAJOR" == "6c" || "$GP_MAJOR" == "6" ]]; then
     if make -C "$HOME/gpdb_src/contrib/dummy_seclabel" -j"$(nproc)" install; then

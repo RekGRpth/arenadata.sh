@@ -3,9 +3,11 @@
 exec 2>&1 &> >(tee "$HOME/adbcc.log")
 
 if [[ "$GP_MAJOR" == "6" ]]; then
-    pip2 install --no-cache-dir \
+    pip install --no-cache-dir \
         grpcio-tools \
         protobuf
+    pip3 install --no-cache-dir \
+        protobuf==3.20.0
 fi
 
 pushd "$HOME/src/adbcc"

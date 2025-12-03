@@ -9,6 +9,8 @@ psql regression -c "drop extension diskquota" || echo $?
 #make -j$(nproc) install
 #popd
 pushd "$HOME/src/diskquota/build"
+cmake --build . --target installcheck
+exit
 cmake --build . --target "tests/regress/sql/test_primary_failure.sql"
 ln -fs "../../../build/tests/regress/sql/test_primary_failure.sql" "../tests/regress/sql/test_primary_failure.sql"
 popd

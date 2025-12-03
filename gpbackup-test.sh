@@ -34,6 +34,8 @@ if [[ "$GP_MAJOR" == "6c" || "$GP_MAJOR" == "6" ]]; then
 elif [[ "$GP_MAJOR" == "7c" || "$GP_MAJOR" == "7" || "$GP_MAJOR" == "8" ]]; then
     export TEST_GPDB_VERSION="7.999.0"
 fi
+make depend build install integration end_to_end
+exit
 #export GINKGO_FLAGS="-r --keep-going --randomize-suites --randomize-all --no-color -vv"
 #export GINKGO_FLAGS="-r --keep-going --no-color --v"
 #export GINKGO_FLAGS="-r --keep-going --no-color -vv"

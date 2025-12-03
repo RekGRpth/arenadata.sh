@@ -1,7 +1,12 @@
-#!/bin/sh -eux
+#!/bin/bash -eux
 
-(
-cd "$HOME/src/pxf"
+exec 2>&1 &> >(tee "$HOME/pxf.log")
+
+#mkdir -p "$PXF_BASE/conf"
+#mkdir -p "$PXF_BASE/logs"
+#mkdir -p "$PXF_BASE/run"
+#(
+pushd "$HOME/src/pxf"
 #go mod init
 #go mod init github.com/golang/dep/cmd/dep
 #go mod init github.com/onsi/ginkgo/ginkgo
@@ -17,4 +22,5 @@ make -j"$(nproc)" install
 git apply "$(dirname "$0")/notest-revert.diff"
 #mkdir -p "$PXF_BASE"
 pxf restart
-) 2>&1 | tee "$HOME/pxf.log"
+#) 2>&1 | tee "$HOME/pxf.log"
+popd

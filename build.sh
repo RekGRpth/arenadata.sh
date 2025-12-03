@@ -8,6 +8,8 @@ exec 2>&1 &> >(tee "$HOME/build.log")
 #    make pygresql
 #    #make psutil
 #fi
+killall -9 gpmmon || echo $?
+killall -9 gpsmon || echo $?
 pushd "$HOME/gpdb_src"
     #make -j"$(nproc)" clean
     make -j"$(nproc)" install

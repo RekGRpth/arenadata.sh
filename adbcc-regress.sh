@@ -1,8 +1,10 @@
 #!/bin/bash -eux
 
-(
+exec 2>&1 &> >(tee "$HOME/adbcc-regress.log")
+
+#(
 export PGOPTIONS="-c optimizer=off"
-cd "$HOME/src/adbcc/adcc-extension/regress"
+pushd "$HOME/src/adbcc/adcc-extension/regress"
 rm -f expected
 if [[ "$GP_MAJOR" == "6c" || "$GP_MAJOR" == "6" ]]; then
     ln -fs expected6 expected
@@ -26,7 +28,7 @@ sudo chown -R $USER:$GROUP /sys/fs/cgroup/{memory,cpu,cpuset}/gpdb
 #"$HOME/gpdb_src/src/test/isolation2/pg_isolation2_regress" --load-extension=plpythonu --load-extension=gp_inject_fault node_metric
 #/usr/local/lib/postgresql/pgxs/src/makefiles/../../src/test/regress/pg_regress --load-extension=plpythonu --load-extension=socket create_extension socket node_status
 #"$HOME/gpdb_src/src/test/regress/pg_regress" --load-extension=plpythonu --load-extension=socket create_extension socket node_status
-#"$HOME/gpdb_src/src/test/regress/pg_regress" --load-extension=plpythonu --load-extension=socket create_extension node_slice
+"$HOME/gpdb_src/src/test/regress/pg_regress" --load-extension=plpython3u --load-extension=socket create_extension node_slice
 #"$HOME/gpdb_src/src/test/regress/pg_regress" --load-extension=plpythonu --load-extension=socket create_extension cdb_dispatch_replace_ccnt
 #"$HOME/gpdb_src/src/test/regress/pg_regress" --load-extension=plpythonu --load-extension=socket create_extension zstd_compression
 #"$HOME/gpdb_src/src/test/regress/pg_regress" --load-extension=plpython3u --load-extension=socket create_extension ccnt_threshold
@@ -37,5 +39,6 @@ sudo chown -R $USER:$GROUP /sys/fs/cgroup/{memory,cpu,cpuset}/gpdb
 #"$HOME/gpdb_src/src/test/regress/pg_regress" --load-extension=plpython3u --load-extension=socket create_extension failure_in_txn failure_in_txn_2 failure_in_txn_gc failure_ssid failure_ssid_gc deparse_context
 #"$HOME/gpdb_src/src/test/regress/pg_regress" --load-extension=plpythonu --load-extension=socket create_extension failure_in_txn failure_in_txn_2 failure_in_txn_resgroup errors errors_resgroup
 #"$HOME/gpdb_src/src/test/regress/pg_regress" --load-extension=plpythonu --load-extension=socket create_extension failure_in_txn failure_in_txn_2 errors
-"$HOME/gpdb_src/src/test/regress/pg_regress" --load-extension=plpython3u --load-extension=socket create_extension explain errors
-) 2>&1 | tee "$HOME/adbcc-regress.log"
+#"$HOME/gpdb_src/src/test/regress/pg_regress" --load-extension=plpython3u --load-extension=socket create_extension explain errors
+#) 2>&1 | tee "$HOME/adbcc-regress.log"
+popd

@@ -1,9 +1,18 @@
-#!/bin/sh -eux
+#!/bin/bash -eux
 
-(
-#cd "$HOME/src/pxf/external-table"
-#cd "$HOME/src/pxf/fdw"
-cd "$HOME/src/pxf/regression"
+exec 2>&1 &> >(tee "$HOME/pxf-test.log")
+
+#(
+pushd "$HOME/src/pxf/external-table"
+make -j"$(nproc)" install
+make -j"$(nproc)" installcheck
+popd
+pushd "$HOME/src/pxf/fdw"
+make -j"$(nproc)" install
+make -j"$(nproc)" installcheck
+popd
+exit
+pushd "$HOME/src/pxf/regression"
 #make -j"$(nproc)" FDW_FilterPushDownTest
 make -j"$(nproc)" FilterPushDownTest
 #go mod init
@@ -21,4 +30,5 @@ make -j"$(nproc)" FilterPushDownTest
 #git apply "$(dirname "$0")/notest-revert.diff"
 #mkdir -p "$PXF_BASE"
 #pxf restart
-) 2>&1 | tee "$HOME/pxf-test.log"
+#) 2>&1 | tee "$HOME/pxf-test.log"
+popd
