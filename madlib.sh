@@ -6,7 +6,8 @@ which pip3 || curl https://bootstrap.pypa.io/pip/get-pip.py | python3
 
 pip3 install \
     pyxb-x==1.2.6.1 \
-    pyyaml==6.0.1
+    pyyaml
+#    pyyaml==6.0.1
 
 dropdb madlib || echo $?
 createdb madlib || echo $?

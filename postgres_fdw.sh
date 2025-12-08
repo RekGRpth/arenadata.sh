@@ -2,6 +2,8 @@
 
 exec 2>&1 &> >(tee "$HOME/postgres_fdw.log")
 
+export PGOPTIONS="-c optimizer=off"
+
 pushd "$HOME/gpdb_src/contrib/postgres_fdw"
 #make -j"$(nproc)" clean
 #make -j"$(nproc)"

@@ -8,6 +8,8 @@ if [[ "$GP_MAJOR" == "7" || "$GP_MAJOR" == "8" ]]; then
 else
     pushd "$HOME/gpdb_src/gpcontrib/arenadata_toolkit"
 fi
+#"$HOME/gpdb_src/src/test/regress/pg_regress" upgrade_test
+#exit
 make -j$(nproc) clean
 make -j$(nproc) install
 make -j$(nproc) installcheck
