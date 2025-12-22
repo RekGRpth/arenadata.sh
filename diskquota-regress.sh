@@ -2,6 +2,8 @@
 
 exec 2>&1 &> >(tee "$HOME/diskquota-regress.log")
 
+export PGOPTIONS="-c optimizer=off"
+
 #(
 createdb contrib_regression || echo $?
 psql regression -c "drop extension diskquota" || echo $?
@@ -38,9 +40,9 @@ pushd "$HOME/src/diskquota/tests"
 #"$HOME/gpdb_src/src/test/regress/pg_regress" --inputdir="$HOME/src/diskquota/build/tests/regress" --outputdir="$HOME/src/diskquota/build/tests/regress" --load-extension=gp_inject_fault --init-file=init_file config test_create_extension test_plpgsql reset_config
 #"$HOME/gpdb_src/src/test/regress/pg_regress" --inputdir="$HOME/src/diskquota/build/tests/regress" --outputdir="$HOME/src/diskquota/build/tests/regress" --load-extension=gp_inject_fault --init-file=init_file config test_create_extension test_max_monitored_databases reset_config
 #"$HOME/gpdb_src/src/test/regress/pg_regress" --inputdir="$HOME/src/diskquota/build/tests/regress" --outputdir="$HOME/src/diskquota/build/tests/regress" --load-extension=gp_inject_fault --init-file=init_file config test_create_extension test_pause_and_resume reset_config
-#"$HOME/gpdb_src/src/test/regress/pg_regress" --inputdir="$HOME/src/diskquota/build/tests/regress" --outputdir="$HOME/src/diskquota/build/tests/regress" --load-extension=gp_inject_fault --init-file=init_file config test_create_extension test_many_active_tables reset_config
+"$HOME/gpdb_src/src/test/regress/pg_regress" --inputdir="$HOME/src/diskquota/build/tests/regress" --outputdir="$HOME/src/diskquota/build/tests/regress" --load-extension=gp_inject_fault --init-file=init_file config test_create_extension test_many_active_tables reset_config
 #"$HOME/gpdb_src/src/test/regress/pg_regress" --inputdir="$HOME/src/diskquota/build/tests/regress" --outputdir="$HOME/src/diskquota/build/tests/regress" --load-extension=gp_inject_fault --init-file=init_file config test_create_extension test_appendonly reset_config
-"$HOME/gpdb_src/src/test/regress/pg_regress" --inputdir="$HOME/src/diskquota/build/tests/regress" --outputdir="$HOME/src/diskquota/build/tests/regress" --load-extension=gp_inject_fault --init-file=init_file config test_create_extension test_fetch_table_stat test_appendonly reset_config
+#"$HOME/gpdb_src/src/test/regress/pg_regress" --inputdir="$HOME/src/diskquota/build/tests/regress" --outputdir="$HOME/src/diskquota/build/tests/regress" --load-extension=gp_inject_fault --init-file=init_file config test_create_extension test_fetch_table_stat test_appendonly reset_config
 #"$HOME/gpdb_src/src/test/regress/pg_regress" --inputdir="$HOME/src/diskquota/build/tests/regress" --outputdir="$HOME/src/diskquota/build/tests/regress" --load-extension=gp_inject_fault --init-file=init_file config test_create_extension test_clean_rejectmap_after_drop reset_config
 #"$HOME/gpdb_src/src/test/regress/pg_regress" --inputdir="$HOME/src/diskquota/build/tests/regress" --outputdir="$HOME/src/diskquota/build/tests/regress" --load-extension=gp_inject_fault --init-file=init_file config test_create_extension test_rejectmap_mul_db reset_config
 #"$HOME/gpdb_src/src/test/regress/pg_regress" --inputdir="$HOME/src/diskquota/build/tests/regress" --outputdir="$HOME/src/diskquota/build/tests/regress" --load-extension=gp_inject_fault --init-file=init_file config test_create_extension test_clean_config_tables reset_config

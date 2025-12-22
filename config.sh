@@ -72,4 +72,5 @@ export CXXFLAGS="-DGPOS_DEBUG -O0 -ggdb -g3 -fno-omit-frame-pointer -Wclobbered"
 #) 2>&1 | tee "$HOME/config.log"
 #    --with-wal-segsize=1 \
 #    --enable-gpperfmon \
+#    --without-zstd \
 popd

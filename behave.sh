@@ -21,7 +21,8 @@ pushd "$HOME/gpdb_src/gpMgmt"
 #make -f Makefile.behave behave tags=@gpperfmon --tags ~@gpperfmon_queries_history_metrics --verbose
 #behave test/behave/mgmt_utils --tags=@gpperfmon --tags ~@gpperfmon_queries_history_metrics --verbose
 #behave test/behave/mgmt_utils/gpperfmon.feature --tags @gpperfmon --tags ~@gpperfmon_diskspace_history --verbose
-behave test/behave/mgmt_utils/gpperfmon.feature --tags @gpperfmon_diskspace_history --verbose
+#behave test/behave/mgmt_utils/gpperfmon.feature --tags @gpperfmon_diskspace_history --verbose
+behave test/behave/mgmt_utils/gpmovemirrors.feature -n 'gpmovemirrors can move mirrors even if start fails for some mirrors' --verbose
 #behave test/behave/mgmt_utils --tags=gpactivatestandby -n 'gpactivatestandby -f forces standby coordinator to start'
 #behave test/behave/mgmt_utils --tags=gpinitstandby -n 'gpinitstandby should create pg_hba entry to segment primary'
 #make -j$(nproc) behave tags=gpperfmon
