@@ -20,8 +20,8 @@ export TESTLOGDIR="$TESTDATADIR/log"
 #prove --verbose -I ../../../src/test/perl/ t/123_streaming_and_archiving.pl
 #prove --verbose -I ../../../src/test/perl/ t/020_archive_status.pl
 #prove --verbose -I ../../../src/test/perl/ t/010_pg_basebackup.pl t/050_check_replication.pl
-prove --verbose -I ../../../src/test/perl/ t/050_check_recovery_backup.pl
+#prove --verbose -I ../../../src/test/perl/ t/050_check_recovery_backup.pl
 #prove --verbose -I ../../../src/test/perl/ t/020_pg_receivewal.pl
-#prove --verbose -I ../../../src/test/perl/ t/010_pg_basebackup.pl
+prove --verbose -I ../../../src/test/perl/ t/010_pg_basebackup.pl
 #prove --verbose -I ../../../src/test/perl/ t/123_streaming_and_archiving_with_archive_mode_always.pl
 ) 2>&1 | tee "$HOME/basebackup.log"
