@@ -18,7 +18,7 @@ export PGOPTIONS="-c optimizer=off"
 #./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 resgroup/resgroup_memory_limit
 #./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 select_for_update gdd/prepare gdd/concurrent_update
 #./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 ao_select
-./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 uao/vacuum_index_stats_row uao/vacuum_index_stats_column
+#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 uao/vacuum_index_stats_row uao/vacuum_index_stats_column
 #./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 setup ao vacuum_drop_phase_ao uao/alter_while_vacuum_row uao/alter_while_vacuum2_row uao/cursor_before_deletevacuum_row uao/delete_while_vacuum_row uao/insert_while_vacuum_row uao/modcount_vacuum_row uao/select_after_vacuum_row uao/select_after_vacuum_serializable_row uao/select_before_vacuum_row uao/select_while_full_vacuum_row uao/select_while_vacuum_row uao/select_while_vacuum_serializable_row uao/select_while_vacuum_serializable2_row uao/selectinsert_while_vacuum_row uao/selectinsertupdate_while_vacuum_row uao/selectupdate_while_vacuum_row uao/update_while_vacuum_row uao/vacuum_self_serializable_row uao/vacuum_self_serializable2_row uao/vacuum_self_serializable3_row uao/vacuum_while_insert_row uao/vacuum_while_vacuum_row uao/vacuum_cleanup_row uao/vacuum_index_stats_row reorganize_after_ao_vacuum_skip_drop truncate_after_ao_vacuum_skip_drop mark_all_aoseg_await_drop concurrent_vacuum_with_delete
 #./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 setup ao uao/vacuum_cleanup_row uao/update_while_vacuum_row mark_all_aoseg_await_drop
 #./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 setup ao uao/vacuum_cleanup_row uao/vacuum_cleanup_column uao/update_while_vacuum_row mark_all_aoseg_await_drop uao_crash_compaction_column gdd/prepare gdd/planner_insert_while_vacuum_drop
@@ -74,9 +74,13 @@ export PGOPTIONS="-c optimizer=off"
 #./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault uao/compaction_full_stats_column
 #./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault uao/alter_while_vacuum_row uao/alter_while_vacuum_column
 #./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault distributed_snapshot
-#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault bitmap_index_ao_sparse
+./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault bitmap_index_ao_sparse
+#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault resource_queue
+#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault reader_waits_for_lock
 #./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault drop_rename
 #./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault drop_rename_my
+#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault alter_blocks_for_update_and_viceversa
+#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault pg_views_concurrent_drop
 #./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault starve_case
 #./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault gdd/prepare intra-grant-inplace gdd/end
 #./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault dependency
