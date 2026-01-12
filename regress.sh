@@ -55,8 +55,11 @@ mkdir -p "$HOME/gpdb_src/src/test/regress/testtablespace_database_tablespace"
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 create_type create_table int8 int4 copy tidscan
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 create_type create_table create_function_2 int8 int4 text point polygon circle copy create_misc create_index misc_functions
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 create_type create_table int8 int4 copy rangetypes polymorphism
-./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 create_type create_table int8 int4 copy json jsonb gp_gin_index
+#./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 create_type create_table int8 int4 copy json jsonb gp_gin_index
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file hooktest
+#./pg_regress --load-extension=gp_inject_fault --init-file=init_file uao_ddl/alter_drop_allcol_column
+#./pg_regress --load-extension=gp_inject_fault --init-file=init_file uao_ddl/alter_rollback_column
+#./pg_regress --load-extension=gp_inject_fault --init-file=init_file uao_ddl/alter_drop_allcol_row uao_ddl/alter_rollback_row uao_ddl/alter_drop_allcol_column uao_ddl/alter_rollback_column
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file sysviews
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file regproc
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file gp_dqa
@@ -273,6 +276,7 @@ mkdir -p "$HOME/gpdb_src/src/test/regress/testtablespace_database_tablespace"
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file update_gp
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file bfv_dml gangsize gp_unique_rowid gporca partition_pruning qp_subquery update_gp
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file createdb gp_tablespace_with_faults gp_tablespace temp_tablespaces default_tablespace
+./pg_regress --load-extension=gp_inject_fault --init-file=init_file external_table temp_tablespaces
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file default_tablespace
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file gp_tablespace temp_tablespaces default_tablespace
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file temp_tablespaces
