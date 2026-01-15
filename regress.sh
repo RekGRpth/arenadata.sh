@@ -27,6 +27,7 @@ mkdir -p "$HOME/gpdb_src/src/test/regress/testtablespace_default_tablespace"
 mkdir -p "$HOME/gpdb_src/src/test/regress/testtablespace_database_tablespace"
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 constraints triggers updatable_views vacuum
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file alter_table_aocs2 partition1 partition appendonly
+#./pg_regress --load-extension=gp_inject_fault --init-file=init_file partition
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 triggers create_type create_table int8 int4 copy create_misc rangefuncs_cdb
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 create_type create_table int8 int4 copy create_misc rangefuncs_cdb
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 triggers create_type create_table int8 int4 copy create_misc rangefuncs_cdb gp_dqa subselect_gp subselect_gp2
@@ -56,6 +57,8 @@ mkdir -p "$HOME/gpdb_src/src/test/regress/testtablespace_database_tablespace"
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 create_type create_table create_function_2 int8 int4 text point polygon circle copy create_misc create_index misc_functions
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 create_type create_table int8 int4 copy rangetypes polymorphism
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 create_type create_table int8 int4 copy json jsonb gp_gin_index
+#./pg_regress --load-extension=gp_inject_fault --init-file=init_file freeze_aux_tables
+#./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_am_gp
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file hooktest
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file uao_ddl/alter_drop_allcol_column
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file uao_ddl/alter_rollback_column
@@ -262,7 +265,9 @@ mkdir -p "$HOME/gpdb_src/src/test/regress/testtablespace_database_tablespace"
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file qp_left_anti_semi_join
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file qp_subquery
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file DML_over_joins
-#./pg_regress --load-extension=gp_inject_fault --init-file=init_file alter_db_set_tablespace
+#while true; do
+./pg_regress --load-extension=gp_inject_fault --init-file=init_file alter_db_set_tablespace
+#done
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file gpsd alter_db_set_tablespace
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file gpsd
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file enable_autovacuum session_reset fts_error alter_db_set_tablespace
@@ -276,7 +281,7 @@ mkdir -p "$HOME/gpdb_src/src/test/regress/testtablespace_database_tablespace"
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file update_gp
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file bfv_dml gangsize gp_unique_rowid gporca partition_pruning qp_subquery update_gp
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file createdb gp_tablespace_with_faults gp_tablespace temp_tablespaces default_tablespace
-./pg_regress --load-extension=gp_inject_fault --init-file=init_file external_table temp_tablespaces
+#./pg_regress --load-extension=gp_inject_fault --init-file=init_file external_table temp_tablespaces
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file default_tablespace
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file gp_tablespace temp_tablespaces default_tablespace
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file temp_tablespaces

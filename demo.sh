@@ -18,6 +18,14 @@ killall -9 sleep || echo $?
 killall -9 postgres || echo $?
 killall -9 gpmmon || echo $?
 killall -9 gpsmon || echo $?
+if [ -f "$HOME/gpdb_src/gpAux/gpdemo/hostfile" ]; then
+    gpssh -f "$HOME/gpdb_src/gpAux/gpdemo/hostfile" rm -rf /tmp/.s.PGSQL.*
+    gpssh -f "$HOME/gpdb_src/gpAux/gpdemo/hostfile" killall -9 psql || echo $?
+    gpssh -f "$HOME/gpdb_src/gpAux/gpdemo/hostfile" killall -9 sleep || echo $?
+    gpssh -f "$HOME/gpdb_src/gpAux/gpdemo/hostfile" killall -9 postgres || echo $?
+    gpssh -f "$HOME/gpdb_src/gpAux/gpdemo/hostfile" killall -9 gpmmon || echo $?
+    gpssh -f "$HOME/gpdb_src/gpAux/gpdemo/hostfile" killall -9 gpsmon || echo $?
+fi
 BLDWRAP_POSTGRES_CONF_ADDONS=
 if [[ "$GP_MAJOR" == "6c" || "$GP_MAJOR" == "6" ]]; then
     if make -C "$HOME/gpdb_src/contrib/dummy_seclabel" -j"$(nproc)" install; then
@@ -68,6 +76,7 @@ export BLDWRAP_POSTGRES_CONF_ADDONS="$BLDWRAP_POSTGRES_CONF_ADDONS"
 #export BLDWRAP_POSTGRES_CONF_ADDONS="gp_keep_all_xlog=true"
 #export BLDWRAP_POSTGRES_CONF_ADDONS="wal_recycle=off"
 #export BLDWRAP_POSTGRES_CONF_ADDONS="wal_debug=on"
+#make destroy-demo-cluster
 make create-demo-cluster
 createdb --owner="$USER" "$USER"
 #) 2>&1 | tee "$HOME/demo.log"
