@@ -25,6 +25,7 @@ if [ -f "$HOME/gpdb_src/gpAux/gpdemo/hostfile" ]; then
     gpssh -f "$HOME/gpdb_src/gpAux/gpdemo/hostfile" killall -9 postgres || echo $?
     gpssh -f "$HOME/gpdb_src/gpAux/gpdemo/hostfile" killall -9 gpmmon || echo $?
     gpssh -f "$HOME/gpdb_src/gpAux/gpdemo/hostfile" killall -9 gpsmon || echo $?
+    rm -rf "$HOME/gpdb_src/gpAux/gpdemo/hostfile"
 fi
 BLDWRAP_POSTGRES_CONF_ADDONS=
 if [[ "$GP_MAJOR" == "6c" || "$GP_MAJOR" == "6" ]]; then

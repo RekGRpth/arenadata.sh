@@ -2,6 +2,8 @@
 
 exec 2>&1 &> >(tee "$HOME/behave.log")
 
+rm -rf "$HOME/gpAdminLogs/"*.log
+
 #if [ "$(hostname)" != "cdw" ]; then
 #    sudo bash -c 'echo "$(hostname -i) cdw" >>/etc/hosts'
 #    sudo bash -c 'echo "$(hostname -i) sdw1" >>/etc/hosts'

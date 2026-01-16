@@ -23,11 +23,6 @@ pushd "$HOME/gpdb_src"
             #popd
         fi
     fi
-    if [[ "$GP_MAJOR" == "6c" || "$GP_MAJOR" == "6" ]]; then
-        make -C contrib/dummy_seclabel -j"$(nproc)" install
-    elif [[ "$GP_MAJOR" == "7c" || "$GP_MAJOR" == "7" || "$GP_MAJOR" == "8" ]]; then
-        make -C src/test/modules/dummy_seclabel -j"$(nproc)" install
-    fi
 popd
 #cd "$HOME/gpdb_src/gpcontrib/gp_internal_tools"
 #make -j"$(nproc)" install
