@@ -16,6 +16,12 @@ rm -rf "$HOME/gpAdminLogs/"*.log
 #unset MASTER_DATA_DIRECTORY
 #unset COORDINATOR_DATA_DIRECTORY
 
+gpssh -h cdw -h sdw1 -h sdw2 -h sdw3 -h sdw4 -h sdw5 -h sdw6 <<EOF
+sudo mkdir -p /data
+sudo chown "$USER":"$GROUP" /data
+rm -rf /data/gpdata
+#mkdir -p /data/gpdata
+EOF
 pushd "$HOME/gpdb_src/gpMgmt"
 #behave test/behave/mgmt_utils --tags=gpstart -n 'gpstart succeeds when cluster shut down during segment promotion'
 #behave test/behave/mgmt_utils --tags=gpcheckcat
@@ -25,10 +31,19 @@ pushd "$HOME/gpdb_src/gpMgmt"
 #behave test/behave/mgmt_utils/gpperfmon.feature --tags @gpperfmon --tags ~@gpperfmon_diskspace_history --verbose
 #behave test/behave/mgmt_utils/gpperfmon.feature --tags @gpperfmon_diskspace_history --verbose
 #behave test/behave/mgmt_utils/gpmovemirrors.feature -n 'gpmovemirrors can move mirrors even if start fails for some mirrors' --verbose
-behave test/behave/mgmt_utils/gprecoverseg.feature -n 'Differential recovery succeeds if previous full recovery failed' --verbose
+#behave test/behave/mgmt_utils/gpaddmirrors.feature -n 'gprecoverseg works correctly on a newly added mirror with HBA_HOSTNAMES=0' --verbose
+behave test/behave/mgmt_utils/gpconfig.feature --tags ~concourse_cluster,demo_cluster -n 'running gpconfig test case: utf-8 works, for guc type: string' --verbose
+#behave test/behave/mgmt_utils/gprecoverseg_newhost.feature --tags concourse_cluster -n '"gprecoverseg -p newhosts" successfully recovers for one_host_down' --verbose
+#behave test/behave/mgmt_utils/gpstate.feature -n 'gpstate -e -v logs no errors when the user unsets PGDATABASE' --verbose
+#behave test/behave/mgmt_utils/gpstate.feature --tags concourse_cluster -n 'gpstate -e -v logs no errors when the user unsets PGDATABASE' --verbose
+#behave test/behave/mgmt_utils/gprecoverseg.feature --verbose
+#behave test/behave/mgmt_utils/gprecoverseg.feature -n 'Differential recovery succeeds if previous full recovery failed' --verbose
 #behave test/behave/mgmt_utils --tags=gpactivatestandby -n 'gpactivatestandby -f forces standby coordinator to start'
 #behave test/behave/mgmt_utils --tags=gpinitstandby -n 'gpinitstandby should create pg_hba entry to segment primary'
 #make -j$(nproc) behave tags=gpperfmon
+#export flags="--verbose --tags gprecoverseg_newhost --name '\"gprecoverseg -p newhosts\" successfully recovers for one_host_down'"
+#make -f Makefile.behave behave tags=gprecoverseg_newhost flags="--name 'successfully recovers for one_host_down' --verbose"
+#make -f Makefile.behave behave tags=gprecoverseg_newhost flags="--verbose"
 popd
 exit
 

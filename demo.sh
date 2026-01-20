@@ -5,28 +5,22 @@ exec 2>&1 &> >(tee "$HOME/demo.log")
 #(
 #test -f "$HOME/data$GP_MAJOR/qddir/demoDataDir-1/postmaster.pid" && test -f "/tmp/.s.PGSQL.${GP_MAJOR}432" &&  
 #gpstop -af || echo $?
-rm -rf /tmp/.s.PGSQL.* "$HOME/.ssh/known_hosts"
-rm -rf "$HOME/gpAdminLogs/"*.log
 #rm -rf "$HOME/data/*"
 #rm -rf "$HOME/data$GP_MAJOR/*"
 #rm -rf "$HOME/data$GP_MAJOR"
 #ln -fs "/tmpfs/data$GP_MAJOR" "$HOME/data$GP_MAJOR"
 #mkdir -p "$HOME/data$GP_MAJOR"
 #sudo mount -o bind "/tmpfs/data$GP_MAJOR" "$HOME/data$GP_MAJOR"
-killall -9 psql || echo $?
-killall -9 sleep || echo $?
-killall -9 postgres || echo $?
-killall -9 gpmmon || echo $?
-killall -9 gpsmon || echo $?
-if [ -f "$HOME/gpdb_src/gpAux/gpdemo/hostfile" ]; then
-    gpssh -f "$HOME/gpdb_src/gpAux/gpdemo/hostfile" rm -rf /tmp/.s.PGSQL.*
-    gpssh -f "$HOME/gpdb_src/gpAux/gpdemo/hostfile" killall -9 psql || echo $?
-    gpssh -f "$HOME/gpdb_src/gpAux/gpdemo/hostfile" killall -9 sleep || echo $?
-    gpssh -f "$HOME/gpdb_src/gpAux/gpdemo/hostfile" killall -9 postgres || echo $?
-    gpssh -f "$HOME/gpdb_src/gpAux/gpdemo/hostfile" killall -9 gpmmon || echo $?
-    gpssh -f "$HOME/gpdb_src/gpAux/gpdemo/hostfile" killall -9 gpsmon || echo $?
-    rm -rf "$HOME/gpdb_src/gpAux/gpdemo/hostfile"
-fi
+gpssh -h cdw -h sdw1 -h sdw2 -h sdw3 -h sdw4 -h sdw5 -h sdw6 <<EOF
+killall -9 psql
+killall -9 sleep
+killall -9 postgres
+killall -9 gpmmon
+killall -9 gpsmon
+rm -rf /tmp/.s.PGSQL.*
+EOF
+rm -rf /tmp/.s.PGSQL.* "$HOME/.ssh/known_hosts"
+rm -rf "$HOME/gpAdminLogs/"*.log
 BLDWRAP_POSTGRES_CONF_ADDONS=
 if [[ "$GP_MAJOR" == "6c" || "$GP_MAJOR" == "6" ]]; then
     if make -C "$HOME/gpdb_src/contrib/dummy_seclabel" -j"$(nproc)" install; then
