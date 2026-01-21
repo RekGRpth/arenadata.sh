@@ -31,8 +31,11 @@ pushd "$HOME/gpdb_src/gpMgmt"
 #behave test/behave/mgmt_utils/gpperfmon.feature --tags @gpperfmon --tags ~@gpperfmon_diskspace_history --verbose
 #behave test/behave/mgmt_utils/gpperfmon.feature --tags @gpperfmon_diskspace_history --verbose
 #behave test/behave/mgmt_utils/gpmovemirrors.feature -n 'gpmovemirrors can move mirrors even if start fails for some mirrors' --verbose
-#behave test/behave/mgmt_utils/gpaddmirrors.feature -n 'gprecoverseg works correctly on a newly added mirror with HBA_HOSTNAMES=0' --verbose
-behave test/behave/mgmt_utils/gpconfig.feature --tags ~concourse_cluster,demo_cluster -n 'running gpconfig test case: utf-8 works, for guc type: string' --verbose
+#behave test/behave/mgmt_utils/gpaddmirrors.feature -n 'gprecoverseg works correctly on a newly added mirror with HBA_HOSTNAMES=0' --verbose --no-skipped
+behave test/behave/mgmt_utils/gpaddmirrors.feature -n 'gprecoverseg works correctly on a newly added mirror with HBA_HOSTNAMES=1' --verbose --no-skipped
+#export LANG=en_US.UTF-8
+#behave test/behave/mgmt_utils/gpconfig.feature --tags ~concourse_cluster,demo_cluster -n 'running gpconfig test case: utf-8 works, for guc type: string' --verbose --no-skipped
+#behave test/behave/mgmt_utils/gpinitsystem.feature --tags concourse_cluster --verbose --no-skipped
 #behave test/behave/mgmt_utils/gprecoverseg_newhost.feature --tags concourse_cluster -n '"gprecoverseg -p newhosts" successfully recovers for one_host_down' --verbose
 #behave test/behave/mgmt_utils/gpstate.feature -n 'gpstate -e -v logs no errors when the user unsets PGDATABASE' --verbose
 #behave test/behave/mgmt_utils/gpstate.feature --tags concourse_cluster -n 'gpstate -e -v logs no errors when the user unsets PGDATABASE' --verbose
@@ -43,7 +46,9 @@ behave test/behave/mgmt_utils/gpconfig.feature --tags ~concourse_cluster,demo_cl
 #make -j$(nproc) behave tags=gpperfmon
 #export flags="--verbose --tags gprecoverseg_newhost --name '\"gprecoverseg -p newhosts\" successfully recovers for one_host_down'"
 #make -f Makefile.behave behave tags=gprecoverseg_newhost flags="--name 'successfully recovers for one_host_down' --verbose"
-#make -f Makefile.behave behave tags=gprecoverseg_newhost flags="--verbose"
+#make -f Makefile.behave behave tags=gpconfig flags="--tags ~concourse_cluster,demo_cluster --verbose --no-skipped"
+#flags="--tags gpconfig --verbose --tags=~concourse_cluster,demo_cluster --no-skipped --name 'running gpconfig test case: utf-8 works, for guc type: string'" make -f Makefile.behave behave
+#flags="--tags gpconfig --verbose --tags=~concourse_cluster,demo_cluster" make -f Makefile.behave behave
 popd
 exit
 
