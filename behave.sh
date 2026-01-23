@@ -29,8 +29,14 @@ gpssh -h cdw -h sdw1 -h sdw2 -h sdw3 -h sdw4 -h sdw5 -h sdw6 <<EOF
 sudo mkdir -p /data
 sudo chown "$USER":"$GROUP" /data
 rm -rf /data/gpdata
-#mkdir -p /data/gpdata
+killall -9 psql
+killall -9 sleep
+killall -9 postgres
+killall -9 gpmmon
+killall -9 gpsmon
+rm -rf /tmp/.s.PGSQL.*
 EOF
+rm -rf /tmp/.s.PGSQL.* "$HOME/.ssh/known_hosts"
 pushd "$HOME/gpdb_src/gpMgmt"
 #behave test/behave/mgmt_utils --tags=gpstart -n 'gpstart succeeds when cluster shut down during segment promotion'
 #behave test/behave/mgmt_utils --tags=gpcheckcat
@@ -39,17 +45,29 @@ pushd "$HOME/gpdb_src/gpMgmt"
 #behave test/behave/mgmt_utils --tags=@gpperfmon --tags ~@gpperfmon_queries_history_metrics --verbose
 #behave test/behave/mgmt_utils/gpperfmon.feature --tags @gpperfmon --tags ~@gpperfmon_diskspace_history --verbose
 #behave test/behave/mgmt_utils/gpperfmon.feature --tags @gpperfmon_diskspace_history --verbose
-#behave test/behave/mgmt_utils/gpmovemirrors.feature -n 'gpmovemirrors can move mirrors even if start fails for some mirrors' --verbose
+#behave test/behave/mgmt_utils/gpmovemirrors.feature --tags ~concourse_cluster,demo_cluster -n 'gpmovemirrors can move mirrors even if start fails for some mirrors' --verbose --no-skipped
 #behave test/behave/mgmt_utils/gpaddmirrors.feature -n 'gprecoverseg works correctly on a newly added mirror with HBA_HOSTNAMES=0' --verbose --no-skipped
 #behave test/behave/mgmt_utils/gpcheckcat.feature -n 'gpcheckcat should drop leaked schemas' --verbose --no-skipped
-#behave test/behave/mgmt_utils/gpaddmirrors.feature -n 'gprecoverseg works correctly on a newly added mirror with HBA_HOSTNAMES=1' --verbose --no-skipped
+#behave test/behave/mgmt_utils/gpaddmirrors.feature --tags concourse_cluster -n 'gprecoverseg works correctly on a newly added mirror with HBA_HOSTNAMES=1' --verbose --no-skipped
+#behave test/behave/mgmt_utils/gpaddmirrors.feature --tags concourse_cluster -n 'gprecoverseg works correctly on a newly added mirror with HBA_HOSTNAMES=1' --verbose --no-skipped
 #export LANG=en_US.UTF-8
 #behave test/behave/mgmt_utils/gpconfig.feature --tags ~concourse_cluster,demo_cluster -n 'running gpconfig test case: utf-8 works, for guc type: string' --verbose --no-skipped
+#behave test/behave/mgmt_utils/gpconfig.feature --tags ~concourse_cluster,demo_cluster -n 'gpconfig checks liveness of correct number of hosts' --verbose --no-skipped
+#behave test/behave/mgmt_utils/gpstop.feature --tags ~concourse_cluster,demo_cluster -n 'gpstop runs with given master data directory option' --verbose --no-skipped
+#behave test/behave/mgmt_utils/gplogfilter.feature --tags ~concourse_cluster,demo_cluster -n 'time range covers all files' --verbose --no-skipped
 #behave test/behave/mgmt_utils/gpconfig.feature --tags concourse_cluster -n 'running gpconfig test case: utf-8 works, for guc type: string' --verbose --no-skipped
 #behave test/behave/mgmt_utils/gpinitsystem.feature --tags concourse_cluster --verbose --no-skipped
 #behave test/behave/mgmt_utils/gprecoverseg_newhost.feature --tags concourse_cluster -n '"gprecoverseg -p newhosts" successfully recovers for one_host_down' --verbose --no-skipped
-behave test/behave/mgmt_utils/gprecoverseg.feature --tags ~concourse_cluster,demo_cluster -n 'gprecoverseg mixed recovery displays pg_basebackup and rewind progress to the user' --verbose --no-skipped
+#behave test/behave/mgmt_utils/gprecoverseg.feature --tags ~concourse_cluster,demo_cluster -n 'gprecoverseg mixed recovery displays pg_basebackup and rewind progress to the user' --verbose --no-skipped
+#behave test/behave/mgmt_utils/gpstart.feature --tags ~concourse_cluster,demo_cluster -n 'gpstart runs with given master data directory option' --verbose --no-skipped
+#behave test/behave/mgmt_utils/gpstate.feature --tags ~concourse_cluster,demo_cluster -n 'gpstate -b logs cluster for a cluster where the mirrors failed over to primary' --verbose --no-skipped
 #behave test/behave/mgmt_utils/gprecoverseg.feature --tags ~concourse_cluster,demo_cluster -n 'gprecoverseg recovery with a recovery configuration file and differential flag' --verbose --no-skipped
+behave test/behave/mgmt_utils/gprecoverseg.feature --tags ~concourse_cluster,demo_cluster -n 'gprecoverseg recovers segment when config file contains hostname on demo cluster' --verbose --no-skipped
+#behave test/behave/mgmt_utils/gprecoverseg.feature --tags ~concourse_cluster,demo_cluster -n 'gprecoverseg skips recovery when config file contains invalid hostname on demo cluster' --verbose --no-skipped
+#behave test/behave/mgmt_utils/gprecoverseg.feature --tags ~concourse_cluster,demo_cluster -n 'gprecoverseg rebalance aborts and throws exception if replay lag on mirror is more than or equal to the allowed limit' --verbose --no-skipped
+#behave test/behave/mgmt_utils/gprecoverseg.feature --tags ~concourse_cluster,demo_cluster -n 'None of the accumulated wal (after running pg_start_backup and before copying the pg_control file) is lost during differential' --verbose --no-skipped
+#behave test/behave/mgmt_utils/gprecoverseg.feature --tags ~concourse_cluster,demo_cluster -n 'Cleanup orphaned directory of dropped database after differential recovery' --verbose --no-skipped
+behave test/behave/mgmt_utils/gprecoverseg.feature --tags concourse_cluster -n 'gprecoverseg recovery with a recovery configuration file and differential flag' --verbose --no-skipped
 #behave test/behave/mgmt_utils/gpstate.feature -n 'gpstate -e -v logs no errors when the user unsets PGDATABASE' --verbose
 #behave test/behave/mgmt_utils/gpstate.feature --tags concourse_cluster -n 'gpstate -e -v logs no errors when the user unsets PGDATABASE' --verbose
 #behave test/behave/mgmt_utils/gprecoverseg.feature --verbose
