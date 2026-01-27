@@ -2,7 +2,7 @@
 
 exec 2>&1 &> >(tee "$HOME/behave.log")
 
-rm -rf "$HOME/gpAdminLogs/"*.log
+rm -rf "$HOME/gpAdminLogs/"*.log "$HOME/gpAdminLogs/"*.out
 
 #if [ "$(hostname)" != "cdw" ]; then
 #    sudo bash -c 'echo "$(hostname -i) cdw" >>/etc/hosts'
@@ -25,18 +25,22 @@ unset MIRROR_0_DATA_DIRECTORY
 unset MIRROR_1_DATA_DIRECTORY
 unset MIRROR_2_DATA_DIRECTORY
 
+export LANG=en_US.UTF-8
+
+#sudo mkdir -p /data/gpdata
+#sudo chown -R "$USER:$GROUP" /data
+
 gpssh -h cdw -h sdw1 -h sdw2 -h sdw3 -h sdw4 -h sdw5 -h sdw6 <<EOF
 sudo mkdir -p /data
-sudo chown "$USER":"$GROUP" /data
-rm -rf /data/gpdata
+sudo chown -R "$USER":"$GROUP" /data
 killall -9 psql
 killall -9 sleep
 killall -9 postgres
 killall -9 gpmmon
 killall -9 gpsmon
-rm -rf /tmp/.s.PGSQL.*
+rm -rf /tmp/.s.PGSQL.* /data/gpdata
 EOF
-rm -rf /tmp/.s.PGSQL.* "$HOME/.ssh/known_hosts"
+rm -rf "$HOME/.ssh/known_hosts"
 pushd "$HOME/gpdb_src/gpMgmt"
 #behave test/behave/mgmt_utils --tags=gpstart -n 'gpstart succeeds when cluster shut down during segment promotion'
 #behave test/behave/mgmt_utils --tags=gpcheckcat
@@ -51,6 +55,10 @@ pushd "$HOME/gpdb_src/gpMgmt"
 #behave test/behave/mgmt_utils/gpaddmirrors.feature --tags concourse_cluster -n 'gprecoverseg works correctly on a newly added mirror with HBA_HOSTNAMES=1' --verbose --no-skipped
 #behave test/behave/mgmt_utils/gpaddmirrors.feature --tags concourse_cluster -n 'gprecoverseg works correctly on a newly added mirror with HBA_HOSTNAMES=1' --verbose --no-skipped
 #export LANG=en_US.UTF-8
+#behave test/behave/mgmt_utils/gpinitsystem.feature --tags ~concourse_cluster,demo_cluster -n 'gpinitsystem creates a cluster with data_checksums on' --verbose --no-skipped
+#behave test/behave/mgmt_utils/gpinitsystem.feature --tags ~concourse_cluster,demo_cluster -n 'gpinitsystem creates a cluster with data_checksums off' --verbose --no-skipped
+#behave test/behave/mgmt_utils/gpinitsystem.feature --tags ~concourse_cluster,demo_cluster -n 'gpinitsystem creates a cluster with data_checksums on' --verbose --no-skipped
+#behave test/behave/mgmt_utils/gpinitsystem.feature --tags ~concourse_cluster,demo_cluster -n 'gpinitsystem creates a cluster with data_checksums' --verbose --no-skipped
 #behave test/behave/mgmt_utils/gpconfig.feature --tags ~concourse_cluster,demo_cluster -n 'running gpconfig test case: utf-8 works, for guc type: string' --verbose --no-skipped
 #behave test/behave/mgmt_utils/gpconfig.feature --tags ~concourse_cluster,demo_cluster -n 'gpconfig checks liveness of correct number of hosts' --verbose --no-skipped
 #behave test/behave/mgmt_utils/gpstop.feature --tags ~concourse_cluster,demo_cluster -n 'gpstop runs with given master data directory option' --verbose --no-skipped
@@ -62,13 +70,20 @@ pushd "$HOME/gpdb_src/gpMgmt"
 #behave test/behave/mgmt_utils/gpstart.feature --tags ~concourse_cluster,demo_cluster -n 'gpstart runs with given master data directory option' --verbose --no-skipped
 #behave test/behave/mgmt_utils/gpstate.feature --tags ~concourse_cluster,demo_cluster -n 'gpstate -b logs cluster for a cluster where the mirrors failed over to primary' --verbose --no-skipped
 #behave test/behave/mgmt_utils/gprecoverseg.feature --tags ~concourse_cluster,demo_cluster -n 'gprecoverseg recovery with a recovery configuration file and differential flag' --verbose --no-skipped
-behave test/behave/mgmt_utils/gprecoverseg.feature --tags ~concourse_cluster,demo_cluster -n 'gprecoverseg recovers segment when config file contains hostname on demo cluster' --verbose --no-skipped
+#behave test/behave/mgmt_utils/gprecoverseg.feature --tags ~concourse_cluster,demo_cluster -n 'gprecoverseg recovers segment when config file contains hostname on demo cluster' --verbose --no-skipped
 #behave test/behave/mgmt_utils/gprecoverseg.feature --tags ~concourse_cluster,demo_cluster -n 'gprecoverseg skips recovery when config file contains invalid hostname on demo cluster' --verbose --no-skipped
 #behave test/behave/mgmt_utils/gprecoverseg.feature --tags ~concourse_cluster,demo_cluster -n 'gprecoverseg rebalance aborts and throws exception if replay lag on mirror is more than or equal to the allowed limit' --verbose --no-skipped
 #behave test/behave/mgmt_utils/gprecoverseg.feature --tags ~concourse_cluster,demo_cluster -n 'None of the accumulated wal (after running pg_start_backup and before copying the pg_control file) is lost during differential' --verbose --no-skipped
 #behave test/behave/mgmt_utils/gprecoverseg.feature --tags ~concourse_cluster,demo_cluster -n 'Cleanup orphaned directory of dropped database after differential recovery' --verbose --no-skipped
-behave test/behave/mgmt_utils/gprecoverseg.feature --tags concourse_cluster -n 'gprecoverseg recovery with a recovery configuration file and differential flag' --verbose --no-skipped
-#behave test/behave/mgmt_utils/gpstate.feature -n 'gpstate -e -v logs no errors when the user unsets PGDATABASE' --verbose
+#behave test/behave/mgmt_utils/gprecoverseg.feature --tags concourse_cluster -n 'gprecoverseg recovery with a recovery configuration file and differential flag' --verbose --no-skipped
+#behave test/behave/mgmt_utils/gprecoverseg.feature --tags concourse_cluster -n 'Propagating env var' -n 'gprecoverseg gives warning if pg_rewind already running for one failed segments' --verbose --no-skipped
+behave test/behave/mgmt_utils/gprecoverseg.feature --tags concourse_cluster -n 'gprecoverseg gives warning if pg_rewind already running for one failed segments' --verbose --no-skipped
+#behave test/behave/mgmt_utils/gprecoverseg.feature --tags concourse_cluster -n 'gpstate track of differential recovery for single host' --verbose --no-skipped
+#behave test/behave/mgmt_utils/ggssh_exkeys.feature --tags concourse_cluster -n 'N-to-N exchange works' --verbose --no-skipped
+#behave test/behave/mgmt_utils/ggssh_exkeys.feature --tags concourse_cluster -n 'IPv6 addresses are accepted' --verbose --no-skipped
+#behave test/behave/mgmt_utils/ggssh_exkeys.feature --tags concourse_cluster -n 'IPv6 addresses are accepted' --verbose
+#behave test/behave/mgmt_utils/gprecoverseg.feature --tags concourse_cluster -n 'gprecoverseg recovery with a recovery configuration file and differential flag' -n 'gprecoverseg" with a recovery configuration file specifying the recovery type' -n 'differential recovery runs successfully' -n 'Differential recovery succeeds if previous incremental recovery failed' -n 'Differential recovery succeeds if previous full recovery failed' -n 'gpstate track of differential recovery for single host' --verbose --no-skipped
+#behave test/behave/mgmt_utils/gpstate.feature --tags concourse_cluster -n 'gpstate -e -v logs no errors when the user unsets PGDATABASE' --verbose --no-skipped
 #behave test/behave/mgmt_utils/gpstate.feature --tags concourse_cluster -n 'gpstate -e -v logs no errors when the user unsets PGDATABASE' --verbose
 #behave test/behave/mgmt_utils/gprecoverseg.feature --verbose
 #behave test/behave/mgmt_utils/gprecoverseg.feature -n 'Differential recovery succeeds if previous full recovery failed' --verbose
@@ -81,6 +96,7 @@ behave test/behave/mgmt_utils/gprecoverseg.feature --tags concourse_cluster -n '
 #make -f Makefile.behave behave tags=gpconfig flags="--tags ~concourse_cluster,demo_cluster --verbose --no-skipped"
 #flags="--tags gpconfig --verbose --tags=~concourse_cluster,demo_cluster --no-skipped --name 'running gpconfig test case: utf-8 works, for guc type: string'" make -f Makefile.behave behave
 #flags="--tags gpconfig --verbose --tags=~concourse_cluster,demo_cluster" make -f Makefile.behave behave
+#flags="--tags ggssh_exkeys --verbose --tags=concourse_cluster --name 'IPv6 addresses are accepted'" make -f Makefile.behave behave
 popd
 exit
 
