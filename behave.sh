@@ -27,10 +27,18 @@ unset MIRROR_2_DATA_DIRECTORY
 
 export LANG=en_US.UTF-8
 
-#sudo mkdir -p /data/gpdata
-#sudo chown -R "$USER:$GROUP" /data
+for HOST in cdw sdw1 sdw2 sdw3 sdw4 sdw5 sdw6; do
+    echo $HOST
+    IP="$(host "$HOST" | grep 'has address' | head -n 1 | cut -d ' ' -f 4)"
+    gpssh -v -e -h cdw -h sdw1 -h sdw2 -h sdw3 -h sdw4 -h sdw5 -h sdw6 <<EOF
+        cat /etc/hosts | sed "/$IP $HOST/d" | sudo bash -c "cat >/etc/hosts"
+        grep -q "$IP $HOST" /etc/hosts || sudo bash -c "echo '$IP $HOST' >>/etc/hosts"
+EOF
+done
 
-gpssh -h cdw -h sdw1 -h sdw2 -h sdw3 -h sdw4 -h sdw5 -h sdw6 <<EOF
+#exit
+
+gpssh -v -e -h cdw -h sdw1 -h sdw2 -h sdw3 -h sdw4 -h sdw5 -h sdw6 <<EOF
 sudo mkdir -p /data
 sudo chown -R "$USER":"$GROUP" /data
 killall -9 psql
@@ -78,6 +86,8 @@ pushd "$HOME/gpdb_src/gpMgmt"
 #behave test/behave/mgmt_utils/gprecoverseg.feature --tags concourse_cluster -n 'gprecoverseg recovery with a recovery configuration file and differential flag' --verbose --no-skipped
 #behave test/behave/mgmt_utils/gprecoverseg.feature --tags concourse_cluster -n 'Propagating env var' -n 'gprecoverseg gives warning if pg_rewind already running for one failed segments' --verbose --no-skipped
 behave test/behave/mgmt_utils/gprecoverseg.feature --tags concourse_cluster -n 'gprecoverseg gives warning if pg_rewind already running for one failed segments' --verbose --no-skipped
+#behave test/behave/mgmt_utils/gprecoverseg.feature --tags concourse_cluster -n 'None of the accumulated wal (after running pg_start_backup and before copying the pg_control file) is lost during differential' --verbose --no-skipped
+#behave test/behave/mgmt_utils/gprecoverseg.feature --tags concourse_cluster -n 'None of the accumulated wal ' --verbose --no-skipped
 #behave test/behave/mgmt_utils/gprecoverseg.feature --tags concourse_cluster -n 'gpstate track of differential recovery for single host' --verbose --no-skipped
 #behave test/behave/mgmt_utils/ggssh_exkeys.feature --tags concourse_cluster -n 'N-to-N exchange works' --verbose --no-skipped
 #behave test/behave/mgmt_utils/ggssh_exkeys.feature --tags concourse_cluster -n 'IPv6 addresses are accepted' --verbose --no-skipped
