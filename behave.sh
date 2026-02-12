@@ -2,7 +2,8 @@
 
 exec 2>&1 &> >(tee "$HOME/behave.log")
 
-rm -rf "$HOME/gpAdminLogs/"*.log "$HOME/gpAdminLogs/"*.out
+rm -rf "$HOME/gpAdminLogs/"*.log "$HOME/gpAdminLogs/"*.out /tmp/allure-results
+sudo chmod u+s "$(which ping)"
 
 #if [ "$(hostname)" != "cdw" ]; then
 #    sudo bash -c 'echo "$(hostname -i) cdw" >>/etc/hosts'
@@ -11,6 +12,7 @@ rm -rf "$HOME/gpAdminLogs/"*.log "$HOME/gpAdminLogs/"*.out
 #    sudo bash -c 'echo "$(hostname -i) sdw3" >>/etc/hosts'
 #    sudo hostname cdw
 #fi
+if [[ "$GP_MAJOR" == "6" ]]; then
 unset COORDINATOR_DATA_DIRECTORY
 unset DATADIRS
 unset MASTER_DATA_DIRECTORY
@@ -24,20 +26,24 @@ unset STANDBY_DATA_DIRECTORY
 unset MIRROR_0_DATA_DIRECTORY
 unset MIRROR_1_DATA_DIRECTORY
 unset MIRROR_2_DATA_DIRECTORY
+fi
 
 export LANG=en_US.UTF-8
 
+if [[ "$GP_MAJOR" == "6" ]]; then
 for HOST in cdw sdw1 sdw2 sdw3 sdw4 sdw5 sdw6; do
     echo $HOST
     IP="$(host "$HOST" | grep 'has address' | head -n 1 | cut -d ' ' -f 4)"
-    gpssh -v -e -h cdw -h sdw1 -h sdw2 -h sdw3 -h sdw4 -h sdw5 -h sdw6 <<EOF
+    gpssh -e -h cdw -h sdw1 -h sdw2 -h sdw3 -h sdw4 -h sdw5 -h sdw6 <<EOF
         cat /etc/hosts | sed "/$IP $HOST/d" | sudo bash -c "cat >/etc/hosts"
         grep -q "$IP $HOST" /etc/hosts || sudo bash -c "echo '$IP $HOST' >>/etc/hosts"
 EOF
 done
+fi
 
 #exit
 
+if [[ "$GP_MAJOR" == "6" ]]; then
 gpssh -v -e -h cdw -h sdw1 -h sdw2 -h sdw3 -h sdw4 -h sdw5 -h sdw6 <<EOF
 sudo mkdir -p /data
 sudo chown -R "$USER":"$GROUP" /data
@@ -46,8 +52,10 @@ killall -9 sleep
 killall -9 postgres
 killall -9 gpmmon
 killall -9 gpsmon
-rm -rf /tmp/.s.PGSQL.* /data/gpdata
+rm -rf /tmp/.s.PGSQL.* /data/gpdata /tmp/gpexpand_behave
 EOF
+fi
+mkdir -p /data/gpdata/gpexpand
 rm -rf "$HOME/.ssh/known_hosts"
 pushd "$HOME/gpdb_src/gpMgmt"
 #behave test/behave/mgmt_utils --tags=gpstart -n 'gpstart succeeds when cluster shut down during segment promotion'
@@ -73,7 +81,14 @@ pushd "$HOME/gpdb_src/gpMgmt"
 #behave test/behave/mgmt_utils/gplogfilter.feature --tags ~concourse_cluster,demo_cluster -n 'time range covers all files' --verbose --no-skipped
 #behave test/behave/mgmt_utils/gpconfig.feature --tags concourse_cluster -n 'running gpconfig test case: utf-8 works, for guc type: string' --verbose --no-skipped
 #behave test/behave/mgmt_utils/gpinitsystem.feature --tags concourse_cluster --verbose --no-skipped
+#flags="--tags gprecoverseg_newhost --tags=concourse_cluster --name 'failed host is not in reach gprecoverseg recovery works well with all instances recovered'" make -f Makefile.behave behave
+#flags="--tags=concourse_cluster --tags gprecoverseg_newhost --name 'failed host is not in reach gprecoverseg recovery works well with all instances recovered'" make -f Makefile.behave behave
+#flags="--tags gpexpand --tags=~concourse_cluster -f behave_utils.ci.formatter:CustomFormatter -o non-existed-output -f allure_behave.formatter:AllureFormatter -o /tmp/allure-results -f pretty -o /dev/stdout --name 'on expand check if one or more cluster is down'" make -f Makefile.behave behave
+#flags="--tags gpexpand --tags=~concourse_cluster -f pretty -o /dev/stdout --show-source --verbose --name 'on expand check if one or more cluster is down'" make -f Makefile.behave behave
 #behave test/behave/mgmt_utils/gprecoverseg_newhost.feature --tags concourse_cluster -n '"gprecoverseg -p newhosts" successfully recovers for one_host_down' --verbose --no-skipped
+#behave test/behave/mgmt_utils/gpexpand.feature --tags ~concourse_cluster -n 'on expand check if one or more cluster is down' --verbose --no-skipped
+#behave test/behave/mgmt_utils/gpexpand.feature --tags ~concourse_cluster -n 'on expand check if one or more cluster is not in their preferred role' --verbose --no-skipped
+behave test/behave/mgmt_utils/gpexpand.feature --tags ~concourse_cluster -n 'expand a cluster that has mirrors and check that gpexpand does not copy extra data directories from master' --verbose --no-skipped
 #behave test/behave/mgmt_utils/gprecoverseg.feature --tags ~concourse_cluster,demo_cluster -n 'gprecoverseg mixed recovery displays pg_basebackup and rewind progress to the user' --verbose --no-skipped
 #behave test/behave/mgmt_utils/gpstart.feature --tags ~concourse_cluster,demo_cluster -n 'gpstart runs with given master data directory option' --verbose --no-skipped
 #behave test/behave/mgmt_utils/gpstate.feature --tags ~concourse_cluster,demo_cluster -n 'gpstate -b logs cluster for a cluster where the mirrors failed over to primary' --verbose --no-skipped
@@ -85,10 +100,22 @@ pushd "$HOME/gpdb_src/gpMgmt"
 #behave test/behave/mgmt_utils/gprecoverseg.feature --tags ~concourse_cluster,demo_cluster -n 'Cleanup orphaned directory of dropped database after differential recovery' --verbose --no-skipped
 #behave test/behave/mgmt_utils/gprecoverseg.feature --tags concourse_cluster -n 'gprecoverseg recovery with a recovery configuration file and differential flag' --verbose --no-skipped
 #behave test/behave/mgmt_utils/gprecoverseg.feature --tags concourse_cluster -n 'Propagating env var' -n 'gprecoverseg gives warning if pg_rewind already running for one failed segments' --verbose --no-skipped
-behave test/behave/mgmt_utils/gprecoverseg.feature --tags concourse_cluster -n 'gprecoverseg gives warning if pg_rewind already running for one failed segments' --verbose --no-skipped
+#behave test/behave/mgmt_utils/gprecoverseg.feature --tags concourse_cluster -n 'gprecoverseg gives warning if pg_rewind already running for one failed segments' --verbose --no-skipped
 #behave test/behave/mgmt_utils/gprecoverseg.feature --tags concourse_cluster -n 'None of the accumulated wal (after running pg_start_backup and before copying the pg_control file) is lost during differential' --verbose --no-skipped
 #behave test/behave/mgmt_utils/gprecoverseg.feature --tags concourse_cluster -n 'None of the accumulated wal ' --verbose --no-skipped
 #behave test/behave/mgmt_utils/gprecoverseg.feature --tags concourse_cluster -n 'gpstate track of differential recovery for single host' --verbose --no-skipped
+#behave test/behave/mgmt_utils/gpssh.feature --tags ~concourse_cluster,demo_cluster --verbose --no-skipped
+#behave test/behave/mgmt_utils/gpexpand.feature --tags ~concourse_cluster,demo_cluster -n "after resuming a duration interrupted redistribution, tables are restored" --verbose --no-skipped
+#behave test/behave/mgmt_utils/gpexpand.feature --tags ~concourse_cluster,demo_cluster -n "after resuming an end time interrupted redistribution, tables are restored" --verbose --no-skipped
+#behave test/behave/mgmt_utils/gpexpand.feature --tags ~concourse_cluster,demo_cluster -n "expand a cluster without restarting db and catalog has been copied" --verbose --no-skipped
+#behave test/behave/mgmt_utils/gpexpand.feature --tags ~concourse_cluster,demo_cluster -n "on expand check if one or more cluster is down" --verbose --no-skipped
+#behave test/behave/mgmt_utils/gpexpand.feature --tags ~concourse_cluster,demo_cluster -n "on expand check if one or more cluster is not in their preferred role" --verbose --no-skipped
+#behave test/behave/mgmt_utils/gpexpand.feature --tags ~concourse_cluster,demo_cluster -n "expand a cluster that has mirrors and check that gpexpand does not copy extra data directories from master" --verbose --no-skipped
+#behave test/behave/mgmt_utils/gppkg.feature --tags ~demo_cluster,concourse_cluster -n "gppkg --install should report success because the package is not yet installed" --verbose --no-skipped
+#behave test/behave/mgmt_utils/gppkg.feature --tags ~concourse_cluster -n "gppkg --install should report success because the package is not yet installed" --verbose --no-skipped
+#behave test/behave/mgmt_utils/gppkg.feature --tags ~demo_cluster --tags concourse_cluster -n "gppkg --install should report success because the package is not yet installed" --verbose --no-skipped
+#behave test/behave/mgmt_utils/gpssh.feature --tags ~concourse_cluster,demo_cluster -n 'gpssh exceptions' --verbose --no-skipped
+#behave test/behave/mgmt_utils/gpssh.feature --tags ~concourse_cluster,demo_cluster -n 'gpssh succeeds when network has latency' --verbose --no-skipped
 #behave test/behave/mgmt_utils/ggssh_exkeys.feature --tags concourse_cluster -n 'N-to-N exchange works' --verbose --no-skipped
 #behave test/behave/mgmt_utils/ggssh_exkeys.feature --tags concourse_cluster -n 'IPv6 addresses are accepted' --verbose --no-skipped
 #behave test/behave/mgmt_utils/ggssh_exkeys.feature --tags concourse_cluster -n 'IPv6 addresses are accepted' --verbose
@@ -175,7 +202,7 @@ export MASTER_DATA_DIRECTORY="$DATADIRS/master/gpseg-1"
 #behave test/behave/mgmt_utils --tags=gpperfmon -n "gpperfmon ignore ALTER TABLE SET DISTRIBUTED BY"
 #behave test/behave/mgmt_utils --tags=gpperfmon -n "gpperfmon ignore ALTER TABLE SET DISTRIBUTED BY" -n "gpperfmon does not lose the query text if its text differs from the text in pg_stat_activity"
 #behave test/behave/mgmt_utils --tags=gprecoverseg -n "gprecoverseg should not give warning if pg_basebackup is running for the up segments"
-#behave test/behave/mgmt_utils --tags=gpexpand -n "expand the cluster by adding more segments"
+behave test/behave/mgmt_utils --tags=gpexpand -n "expand the cluster by adding more segments"
 #behave test/behave/mgmt_utils --tags=gpexpand --name="Avoid overwriting the tar file on coordinator"
 #behave test/behave/mgmt_utils --tags=gpexpand -n "after resuming a duration interrupted redistribution, tables are restored" -n "after a duration interrupted redistribution, state file on standby matches coordinator" -n "after resuming an end time interrupted redistribution, tables are restored"
 #behave test/behave/mgmt_utils --tags=gpstop -n 'gpstop gpstop should not print "Failed to kill processes for segment" when locale is different from English'
