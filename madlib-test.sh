@@ -48,9 +48,9 @@ export PATH="$PATH:/usr/local/madlib/bin"
 #madpack -p greenplum -c /madlib -d /tmp install-check
 #madpack -p greenplum -c /madlib -d /tmp install-check | tee -a "$HOME/madlib-test.log"
 #madpack -p greenplum -v -c /madlib -d "$DATADIRS/madlib" -l install-check
-#madpack -p greengage -v -c /madlib -d "$DATADIRS/madlib" -l install-check
+madpack -p greengage -v -c /madlib -d "$DATADIRS/madlib" -l install-check
 #madpack -p greengage -v -c /madlib -d "$DATADIRS/madlib" -l dev-check
-madpack -p greengage -v -c /madlib -d "$DATADIRS/madlib" -l unit-test
+#madpack -p greengage -v -c /madlib -d "$DATADIRS/madlib" -l unit-test
 #madpack -p greenplum -v -c /madlib -d "$DATADIRS/madlib" -l unit-test
 #madpack -p greenplum -v -d "$DATADIRS/madlib" -l unit-test
 #python3 "$HOME/src/madlib/tool/jenkins/report.py" "" "$HOME/madlib-test.log" "/dev/stderr"

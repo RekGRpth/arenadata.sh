@@ -84,11 +84,14 @@ pushd "$HOME/gpdb_src/gpMgmt"
 #flags="--tags gprecoverseg_newhost --tags=concourse_cluster --name 'failed host is not in reach gprecoverseg recovery works well with all instances recovered'" make -f Makefile.behave behave
 #flags="--tags=concourse_cluster --tags gprecoverseg_newhost --name 'failed host is not in reach gprecoverseg recovery works well with all instances recovered'" make -f Makefile.behave behave
 #flags="--tags gpexpand --tags=~concourse_cluster -f behave_utils.ci.formatter:CustomFormatter -o non-existed-output -f allure_behave.formatter:AllureFormatter -o /tmp/allure-results -f pretty -o /dev/stdout --name 'on expand check if one or more cluster is down'" make -f Makefile.behave behave
+#flags="--tags gpexpand --tags=~concourse_cluster -f behave_utils.ci.formatter:CustomFormatter -o non-existed-output -f allure_behave.formatter:AllureFormatter -o /tmp/allure-results -f pretty --name 'on expand check if one or more cluster is down'" make -f Makefile.behave behave
 #flags="--tags gpexpand --tags=~concourse_cluster -f pretty -o /dev/stdout --show-source --verbose --name 'on expand check if one or more cluster is down'" make -f Makefile.behave behave
 #behave test/behave/mgmt_utils/gprecoverseg_newhost.feature --tags concourse_cluster -n '"gprecoverseg -p newhosts" successfully recovers for one_host_down' --verbose --no-skipped
 #behave test/behave/mgmt_utils/gpexpand.feature --tags ~concourse_cluster -n 'on expand check if one or more cluster is down' --verbose --no-skipped
+#behave test/behave/mgmt_utils/gpexpand.feature --tags ~concourse_cluster -n 'Verify should succeed when expand partition table placed in different schemas' -n 'on expand check if one or more cluster is down' --verbose --no-skipped
+#behave test/behave/mgmt_utils/gpexpand.feature --tags ~concourse_cluster -n 'inject a fail and test if retry is ok' -n 'on expand check if one or more cluster is down' --verbose --no-skipped
 #behave test/behave/mgmt_utils/gpexpand.feature --tags ~concourse_cluster -n 'on expand check if one or more cluster is not in their preferred role' --verbose --no-skipped
-behave test/behave/mgmt_utils/gpexpand.feature --tags ~concourse_cluster -n 'expand a cluster that has mirrors and check that gpexpand does not copy extra data directories from master' --verbose --no-skipped
+#behave test/behave/mgmt_utils/gpexpand.feature --tags ~concourse_cluster -n 'expand a cluster that has mirrors and check that gpexpand does not copy extra data directories from master' --verbose --no-skipped
 #behave test/behave/mgmt_utils/gprecoverseg.feature --tags ~concourse_cluster,demo_cluster -n 'gprecoverseg mixed recovery displays pg_basebackup and rewind progress to the user' --verbose --no-skipped
 #behave test/behave/mgmt_utils/gpstart.feature --tags ~concourse_cluster,demo_cluster -n 'gpstart runs with given master data directory option' --verbose --no-skipped
 #behave test/behave/mgmt_utils/gpstate.feature --tags ~concourse_cluster,demo_cluster -n 'gpstate -b logs cluster for a cluster where the mirrors failed over to primary' --verbose --no-skipped
@@ -121,6 +124,7 @@ behave test/behave/mgmt_utils/gpexpand.feature --tags ~concourse_cluster -n 'exp
 #behave test/behave/mgmt_utils/ggssh_exkeys.feature --tags concourse_cluster -n 'IPv6 addresses are accepted' --verbose
 #behave test/behave/mgmt_utils/gprecoverseg.feature --tags concourse_cluster -n 'gprecoverseg recovery with a recovery configuration file and differential flag' -n 'gprecoverseg" with a recovery configuration file specifying the recovery type' -n 'differential recovery runs successfully' -n 'Differential recovery succeeds if previous incremental recovery failed' -n 'Differential recovery succeeds if previous full recovery failed' -n 'gpstate track of differential recovery for single host' --verbose --no-skipped
 #behave test/behave/mgmt_utils/gpstate.feature --tags concourse_cluster -n 'gpstate -e -v logs no errors when the user unsets PGDATABASE' --verbose --no-skipped
+#behave test/behave/mgmt_utils/gpstate.feature --tags ~demo_cluster --tags concourse_cluster -n 'gpstate -e -v logs no errors when the user unsets PGDATABASE' --verbose --no-skipped
 #behave test/behave/mgmt_utils/gpstate.feature --tags concourse_cluster -n 'gpstate -e -v logs no errors when the user unsets PGDATABASE' --verbose
 #behave test/behave/mgmt_utils/gprecoverseg.feature --verbose
 #behave test/behave/mgmt_utils/gprecoverseg.feature -n 'Differential recovery succeeds if previous full recovery failed' --verbose
@@ -134,6 +138,10 @@ behave test/behave/mgmt_utils/gpexpand.feature --tags ~concourse_cluster -n 'exp
 #flags="--tags gpconfig --verbose --tags=~concourse_cluster,demo_cluster --no-skipped --name 'running gpconfig test case: utf-8 works, for guc type: string'" make -f Makefile.behave behave
 #flags="--tags gpconfig --verbose --tags=~concourse_cluster,demo_cluster" make -f Makefile.behave behave
 #flags="--tags ggssh_exkeys --verbose --tags=concourse_cluster --name 'IPv6 addresses are accepted'" make -f Makefile.behave behave
+#behave test/behave/mgmt_utils/gpstate.feature --tags gpstate --tags=concourse_cluster -n 'gpstate -e -v logs no errors when the user unsets PGDATABASE' --verbose
+behave test/behave/mgmt_utils/gpstate.feature --tags=concourse_cluster -n 'gpstate -e -v logs no errors when the user unsets PGDATABASE' --verbose
+#behave test/behave/mgmt_utils/gprecoverseg_newhost.feature --tags=concourse_cluster -n 'gpstate -e -v logs no errors when the user unsets PGDATABASE' --verbose
+#flags="--tags gpstate --tags=concourse_cluster --name 'gpstate -e -v logs no errors when the user unsets PGDATABASE'" make -f Makefile.behave behave
 popd
 exit
 
