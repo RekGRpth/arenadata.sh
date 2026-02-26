@@ -139,7 +139,12 @@ pushd "$HOME/gpdb_src/gpMgmt"
 #flags="--tags gpconfig --verbose --tags=~concourse_cluster,demo_cluster" make -f Makefile.behave behave
 #flags="--tags ggssh_exkeys --verbose --tags=concourse_cluster --name 'IPv6 addresses are accepted'" make -f Makefile.behave behave
 #behave test/behave/mgmt_utils/gpstate.feature --tags gpstate --tags=concourse_cluster -n 'gpstate -e -v logs no errors when the user unsets PGDATABASE' --verbose
-behave test/behave/mgmt_utils/gpstate.feature --tags=concourse_cluster -n 'gpstate -e -v logs no errors when the user unsets PGDATABASE' --verbose
+#behave test/behave/mgmt_utils/gpstate.feature --tags=concourse_cluster -n 'gpstate -e -v logs no errors when the user unsets PGDATABASE' --verbose
+#behave test/behave/mgmt_utils/gprecoverseg.feature --tags=~concourse_cluster -n 'full recovery limits number of parallel processes correctly' --verbose
+#behave test/behave/mgmt_utils/gpstop.feature --tags=concourse_cluster -n 'gpstop fails when the lock file is already held by another gpstop process' --verbose
+#behave test/behave/mgmt_utils/gprecoverseg.feature --tags=concourse_cluster -n 'gprecoverseg differential recovery gives warning if all of the failed segment' --verbose
+#behave test/behave/mgmt_utils/gpstop.feature --tags=concourse_cluster -n 'gpstop removes the lock directory when it is empty' --verbose
+behave test/behave/mgmt_utils/gpstop.feature --tags=concourse_cluster -n 'when the first gpstop interrupted and second gpstop with sighup option fails' --verbose
 #behave test/behave/mgmt_utils/gprecoverseg_newhost.feature --tags=concourse_cluster -n 'gpstate -e -v logs no errors when the user unsets PGDATABASE' --verbose
 #flags="--tags gpstate --tags=concourse_cluster --name 'gpstate -e -v logs no errors when the user unsets PGDATABASE'" make -f Makefile.behave behave
 popd
