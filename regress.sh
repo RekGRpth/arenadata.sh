@@ -152,7 +152,7 @@ mkdir -p "$HOME/gpdb_src/src/test/regress/testtablespace_database_tablespace"
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file qp_targeted_dispatch
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file qp_gist_indexes4
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file external_table
-#./pg_regress --load-extension=gp_inject_fault --init-file=init_file gp_create_table
+./pg_regress --load-extension=gp_inject_fault --init-file=init_file gp_create_table
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file updatable_views union olap_window_seq
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file updatable_views
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file updatable_views gist
@@ -266,7 +266,7 @@ mkdir -p "$HOME/gpdb_src/src/test/regress/testtablespace_database_tablespace"
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file qp_subquery
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file DML_over_joins
 #while true; do
-./pg_regress --load-extension=gp_inject_fault --init-file=init_file alter_db_set_tablespace
+#./pg_regress --load-extension=gp_inject_fault --init-file=init_file alter_db_set_tablespace
 #done
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file gpsd alter_db_set_tablespace
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file gpsd

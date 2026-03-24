@@ -11,7 +11,9 @@ exec 2>&1 &> >(tee "$HOME/demo.log")
 #ln -fs "/tmpfs/data$GP_MAJOR" "$HOME/data$GP_MAJOR"
 #mkdir -p "$HOME/data$GP_MAJOR"
 #sudo mount -o bind "/tmpfs/data$GP_MAJOR" "$HOME/data$GP_MAJOR"
-gpssh -h cdw -h sdw1 -h sdw2 -h sdw3 -h sdw4 -h sdw5 -h sdw6 <<EOF
+
+if [[ "$(hostname)" == "cdw" ]]; then
+    gpssh -h cdw -h sdw1 -h sdw2 -h sdw3 -h sdw4 -h sdw5 -h sdw6 <<EOF
 killall -9 psql
 killall -9 sleep
 killall -9 postgres
@@ -19,6 +21,15 @@ killall -9 gpmmon
 killall -9 gpsmon
 rm -rf /tmp/.s.PGSQL.*
 EOF
+else
+killall -9 psql || echo $?
+killall -9 sleep || echo $?
+killall -9 postgres || echo $?
+killall -9 gpmmon || echo $?
+killall -9 gpsmon || echo $?
+rm -rf /tmp/.s.PGSQL.*
+fi
+
 rm -rf /tmp/.s.PGSQL.* "$HOME/.ssh/known_hosts"
 rm -rf "$HOME/gpAdminLogs/"*.log
 BLDWRAP_POSTGRES_CONF_ADDONS=

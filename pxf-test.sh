@@ -3,11 +3,12 @@
 exec 2>&1 &> >(tee "$HOME/pxf-test.log")
 
 #(
-pushd "$HOME/src/pxf/external-table"
+pushd "$HOME/src/pxf/fdw"
 make -j"$(nproc)" install
 make -j"$(nproc)" installcheck
 popd
-pushd "$HOME/src/pxf/fdw"
+exit
+pushd "$HOME/src/pxf/external-table"
 make -j"$(nproc)" install
 make -j"$(nproc)" installcheck
 popd

@@ -1,6 +1,6 @@
-#!/bin/bash -eux
+exec 2>&1 &> >(tee "$HOME/adbcc-isolation2.log")
 
-(
+#(
 sudo chmod -R 777 /sys/fs/cgroup/{memory,cpu,cpuset}
 sudo mkdir -p /sys/fs/cgroup/{memory,cpu,cpuset}/gpdb
 sudo chmod -R 777 /sys/fs/cgroup/{memory,cpu,cpuset}/gpdb
@@ -11,7 +11,7 @@ sudo chown -R $USER:$GROUP /sys/fs/cgroup/{memory,cpu,cpuset}/gpdb
 #gpconfig -c log_min_messages -v debug1;
 #gpstop -u;
 export PGOPTIONS="-c optimizer=off"
-cd "$HOME/src/adbcc/adcc-extension/isolation2"
+pushd "$HOME/src/adbcc/adcc-extension/isolation2"
 rm -f expected
 if [[ "$GP_MAJOR" == "6c" || "$GP_MAJOR" == "6" ]]; then
     ln -fs expected6 expected
@@ -19,6 +19,7 @@ elif [[ "$GP_MAJOR" == "7c" || "$GP_MAJOR" == "7" || "$GP_MAJOR" == "8" ]]; then
     ln -fs expected7 expected
 fi
 ISOLATION2_ROOT="$HOME/gpdb_src/src/test/isolation2" make installcheck
+popd
 exit
 cd "$HOME/gpdb_src/src/test/isolation2"
 make -j$(nproc) clean
@@ -43,4 +44,4 @@ make -j$(nproc) install
 #./pg_isolation2_regress  --init-file="$HOME/src/adbcc/adcc-extension/isolation2/init_file_adcc" --inputdir="$HOME/src/adbcc/adcc-extension/isolation2" --outputdir="$HOME/src/adbcc/adcc-extension/isolation2" --load-extension=gp_inject_fault --load-extension=plpython3u node_metric
 ./pg_isolation2_regress  --init-file="$HOME/src/adbcc/adcc-extension/isolation2/init_file_adcc" --inputdir="$HOME/src/adbcc/adcc-extension/isolation2" --outputdir="$HOME/src/adbcc/adcc-extension/isolation2" --load-extension=gp_inject_fault --load-extension=plpython3u errors node_metric
 #./pg_isolation2_regress  --init-file="$HOME/src/adbcc/adcc-extension/isolation2/init_file_adcc" --inputdir="$HOME/src/adbcc/adcc-extension/isolation2" --outputdir="$HOME/src/adbcc/adcc-extension/isolation2" --load-extension=gp_inject_fault --load-extension=plpython3u spill_snapshot
-) 2>&1 | tee "$HOME/adbcc-isolation2.log"
+#) 2>&1 | tee "$HOME/adbcc-isolation2.log"

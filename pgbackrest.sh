@@ -58,4 +58,12 @@ fi
 #pgbackrest/test/test.pl --gen-check --no-coverage-report --vm=none --c-only --no-valgrind --vm-out --module=command --test=archive-get
 #pgbackrest/test/test.pl --gen-check --no-coverage-report --vm=none --c-only --no-valgrind --vm-out --module=postgres --test=interface
 #PKG_CONFIG_PATH=/usr/local/lib/pkgconfig pgbackrest/test/test.pl --gen-check --no-coverage-report --vm=none --c-only --no-valgrind --vm-out --module=command --test=backup
+#PKG_CONFIG_PATH="$GPHOME/lib/pkgconfig" pgbackrest/test/test.pl --gen-check --no-coverage-report --vm=none --c-only --no-valgrind --vm-out --module=common --test=walfilter --dry-run
+popd
+pushd "$HOME/src"
+#PKG_CONFIG_PATH="$GPHOME/lib/pkgconfig" pgbackrest/test/test.pl --gen-check --no-coverage-report --vm=none --c-only --no-valgrind --vm-out --module=common --dry-run
+#PKG_CONFIG_PATH="$GPHOME/lib/pkgconfig" pgbackrest/test/test.pl --gen-check --no-coverage-report --vm=none --c-only --no-valgrind --vm-out --module=command --dry-run
+#PKG_CONFIG_PATH="$GPHOME/lib/pkgconfig" pgbackrest/test/test.pl --gen-check --no-coverage-report --vm=none --c-only --no-valgrind --vm-out --module=command --test=archive-common --log-level-test=debug --log-level=debug
+rm -rf "$HOME/src/test"
+PKG_CONFIG_PATH="$GPHOME/lib/pkgconfig" pgbackrest/test/test.pl --module=command --test=archive-common --no-coverage --no-valgrind --c-only
 popd

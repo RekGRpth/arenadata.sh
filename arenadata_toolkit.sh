@@ -16,6 +16,10 @@ make -j$(nproc) installcheck
 if [[ "$GP_MAJOR" == "7" || "$GP_MAJOR" == "8" ]]; then
     export ISOLATION2_ROOT="$HOME/gpdb_src/src/test/isolation2";
     make -j$(nproc) installcheck-isolation2
+else
+    pushd "$HOME/gpdb_src/gpcontrib/arenadata_toolkit/isolation2"
+    make -j$(nproc) installcheck
+    popd
 fi
 #) 2>&1 | tee "$HOME/arenadata_toolkit.log"
 popd
