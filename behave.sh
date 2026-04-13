@@ -43,6 +43,8 @@ fi
 
 #exit
 
+sudo mkdir -p /data
+sudo chown -R "$USER":"$GROUP" /data
 if [[ "$GP_MAJOR" == "6" ]]; then
 gpssh -v -e -h cdw -h sdw1 -h sdw2 -h sdw3 -h sdw4 -h sdw5 -h sdw6 <<EOF
 sudo mkdir -p /data
@@ -144,7 +146,8 @@ pushd "$HOME/gpdb_src/gpMgmt"
 #behave test/behave/mgmt_utils/gpstop.feature --tags=concourse_cluster -n 'gpstop fails when the lock file is already held by another gpstop process' --verbose
 #behave test/behave/mgmt_utils/gprecoverseg.feature --tags=concourse_cluster -n 'gprecoverseg differential recovery gives warning if all of the failed segment' --verbose
 #behave test/behave/mgmt_utils/gpstop.feature --tags=concourse_cluster -n 'gpstop removes the lock directory when it is empty' --verbose
-behave test/behave/mgmt_utils/gpstop.feature --tags=concourse_cluster -n 'when the first gpstop interrupted and second gpstop with sighup option fails' --verbose
+#behave test/behave/mgmt_utils/gpstop.feature --tags=concourse_cluster -n 'when the first gpstop interrupted and second gpstop with sighup option fails' --verbose
+behave test/behave/mgmt_utils/gpcheckcat.feature --tags=~concourse_cluster -n 'gpcheckcat should report replicated tables policy violation via default volatile expressions' --verbose
 #behave test/behave/mgmt_utils/gprecoverseg_newhost.feature --tags=concourse_cluster -n 'gpstate -e -v logs no errors when the user unsets PGDATABASE' --verbose
 #flags="--tags gpstate --tags=concourse_cluster --name 'gpstate -e -v logs no errors when the user unsets PGDATABASE'" make -f Makefile.behave behave
 popd

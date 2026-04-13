@@ -33,11 +33,11 @@ fi
 #    CFLAGS="-O0 -ggdb -g3 -fno-omit-frame-pointer -fno-pie -no-pie -Wclobbered" \
 #    CXXFLAGS="-DGPOS_DEBUG -O0 -ggdb -g3 -fno-omit-frame-pointer -fno-pie -no-pie -Wclobbered"
 #export CFLAGS="-O0 -ggdb -g3 -fno-omit-frame-pointer -fno-pie -no-pie -Wclobbered"
-export CFLAGS="-O0 -ggdb -g3 -fno-omit-frame-pointer -Wclobbered"
+export CFLAGS="-O0 -ggdb -g3 -fno-omit-frame-pointer -Wclobbered -Werror=maybe-uninitialized"
 #export CFLAGS="-O3 -ggdb -g3 -fno-omit-frame-pointer"
 #export CFLAGS="-O0 -ggdb -g3 -fno-omit-frame-pointer -fno-pie -no-pie -Wclobbered -DEXTRA_DYNAMIC_MEMORY_DEBUG"
 #export CXXFLAGS="-DGPOS_DEBUG -O0 -ggdb -g3 -fno-omit-frame-pointer -fno-pie -no-pie -Wclobbered"
-export CXXFLAGS="-DGPOS_DEBUG -O0 -ggdb -g3 -fno-omit-frame-pointer -Wclobbered"
+export CXXFLAGS="-DGPOS_DEBUG -O0 -ggdb -g3 -fno-omit-frame-pointer -Wclobbered -Werror=maybe-uninitialized"
 #export CXXFLAGS="-DGPOS_DEBUG -O3 -ggdb -g3 -fno-omit-frame-pointer"
 #CONFIGURE_FLAGS="$CONFIGURE_FLAGS --with-wal-segsize=1"
 #export CFLAGS="$CFLAGS -DCLOBBER_CACHE_ALWAYS"
@@ -55,6 +55,7 @@ export CXXFLAGS="-DGPOS_DEBUG -O0 -ggdb -g3 -fno-omit-frame-pointer -Wclobbered"
     --enable-orca \
     --enable-gpperfmon \
     --enable-tap-tests \
+    --enable-thread-safety \
     --prefix="$GPHOME" \
     --with-gssapi \
     --with-gssapi \

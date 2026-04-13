@@ -84,6 +84,7 @@ export BLDWRAP_POSTGRES_CONF_ADDONS="$BLDWRAP_POSTGRES_CONF_ADDONS"
 #export BLDWRAP_POSTGRES_CONF_ADDONS="wal_debug=on"
 #make destroy-demo-cluster
 make create-demo-cluster
+#exit
 createdb --owner="$USER" "$USER"
 #) 2>&1 | tee "$HOME/demo.log"
 #source $HOME/gpdb_src/gpAux/gpdemo/gpdemo-env.sh

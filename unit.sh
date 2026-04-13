@@ -18,7 +18,8 @@ ninja -j"$(nproc)"
 #server/gporca_test -d ../data/dxl/minidump/CTEvolatile.mdp
 #exit
 #server/gporca_test -d ../data/dxl/minidump/CTEMisAlignedProducerConsumer.mdp
-ctest -j"$(nproc)" --rerun-failed --output-on-failure | tee "$HOME/gpdb_src/failures.out"
+#ctest -j"$(nproc)" --rerun-failed --output-on-failure | tee "$HOME/gpdb_src/failures.out"
+ctest -j"$(nproc)" --output-on-failure | tee "$HOME/gpdb_src/failures.out"
 python3 ../scripts/fix_mdps.py --logFile "$HOME/gpdb_src/failures.out"
 #../scripts/fix_mdps.py --logFile "$HOME/gpdb_src/failures.out"
 #) 2>&1 | tee "$HOME/unit.log"

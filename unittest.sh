@@ -5,13 +5,15 @@
 exec 2>&1 &> >(tee "$HOME/unittest.log")
 export GPROOT="$GPHOME"
 export CFLAGS=-DUNITTEST
-pushd "$HOME/gpdb_src/src/backend/fts"
+#pushd "$HOME/gpdb_src/src/backend/fts"
 #pushd "$HOME/gpdb_src/src/backend/utils/sort"
 #pushd "$HOME/gpdb_src/src/backend/cdb/dispatcher"
+pushd "$HOME/gpdb_src/src/backend/cdb"
 #pushd "$HOME/gpdb_src"
 #pushd "$HOME/gpdb_src/src/backend/access/appendonly"
 #make -j"$(nproc)" CFLAGS=-DUNITTEST -s unittest-check
 make -j"$(nproc)" -s unittest-check
+#make -j"$(nproc)" -s unittest-check-cdb-recurse
 popd
 exit
 
