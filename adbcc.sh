@@ -25,11 +25,14 @@ make -C adcc-extension/test/socket -j"$(nproc)" install
 popd
 #gpconfig -c shared_preload_libraries -v 'gpadcc'
 gpconfig -c shared_preload_libraries -v "$(psql -At -c "SELECT array_to_string(array_append(string_to_array(current_setting('shared_preload_libraries'), ','), 'gpadcc'), ',')" postgres)"
+#gpconfig -c shared_preload_libraries -v "$(psql -At -c "SELECT array_to_string(array_cat(string_to_array(current_setting('shared_preload_libraries'), ','), array['gpadcc', 'gg_wait_sampling']), ',')" postgres)"
 gpconfig -c gp_enable_query_metrics -v on
 psql -d postgres -c "CREATE EXTENSION IF NOT EXISTS gpadcc"
+psql -d postgres -c "CREATE EXTENSION IF NOT EXISTS gg_wait_sampling" || echo "$?"
 gpstop -afr
 #gpconfig -c adcc.send_buffer_size -v 10485760;
 gpconfig -c adcc.monitor_inner_queries -v on
+gpconfig -c adcc.poll_waits -v on
 gpconfig -c adcc.monitor_utility_inner_queries -v on
 gpstop -u
 #) 2>&1 | tee "$HOME/adbcc.log"

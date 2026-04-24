@@ -4,8 +4,8 @@
 export TESTDIR="$HOME/gpdb_src/src/bin/pg_verifybackup"
 cd "$TESTDIR"
 rm -rf tmp_check tmp_check_copy
-#make -j$(nproc) installcheck -i
-#exit
+make -j$(nproc) installcheck -i
+exit
 export top_builddir="$HOME/gpdb_src"
 export PG_REGRESS="$top_builddir/src/test/regress/pg_regress"
 export REGRESS_SHLIB="$top_builddir/src/test/regress/regress.so"

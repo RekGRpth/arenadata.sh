@@ -1,3 +1,5 @@
+#!/bin/bash -eux
+
 exec 2>&1 &> >(tee "$HOME/adbcc-isolation2.log")
 
 #(
@@ -18,7 +20,9 @@ if [[ "$GP_MAJOR" == "6c" || "$GP_MAJOR" == "6" ]]; then
 elif [[ "$GP_MAJOR" == "7c" || "$GP_MAJOR" == "7" || "$GP_MAJOR" == "8" ]]; then
     ln -fs expected7 expected
 fi
-ISOLATION2_ROOT="$HOME/gpdb_src/src/test/isolation2" make installcheck
+#ISOLATION2_ROOT="$HOME/gpdb_src/src/test/isolation2" make installcheck
+#"$HOME/gpdb_src/src/test/isolation2/pg_isolation2_regress" --init-file="$HOME/src/adbcc/adcc-extension/isolation2/init_file_adcc" --inputdir="$HOME/src/adbcc/adcc-extension/isolation2" --outputdir="$HOME/src/adbcc/adcc-extension/isolation2" --load-extension=gp_inject_fault --load-extension=plpython3u wait_snapshot
+"$HOME/gpdb_src/src/test/isolation2/pg_isolation2_regress" --init-file=init_file_adcc --inputdir="$HOME/src/adbcc/adcc-extension/isolation2" --outputdir="$HOME/src/adbcc/adcc-extension/isolation2" --load-extension=gp_inject_fault --load-extension=plpython3u wait_snapshot
 popd
 exit
 cd "$HOME/gpdb_src/src/test/isolation2"
@@ -42,6 +46,7 @@ make -j$(nproc) install
 #"$HOME/gpdb_src/src/test/isolation2/pg_isolation2_regress" --load-extension=plpythonu --load-extension=gp_inject_fault --init-file=./init_file_adcc node_metric
 #cd "$HOME/gpdb_src/src/test/isolation2"
 #./pg_isolation2_regress  --init-file="$HOME/src/adbcc/adcc-extension/isolation2/init_file_adcc" --inputdir="$HOME/src/adbcc/adcc-extension/isolation2" --outputdir="$HOME/src/adbcc/adcc-extension/isolation2" --load-extension=gp_inject_fault --load-extension=plpython3u node_metric
-./pg_isolation2_regress  --init-file="$HOME/src/adbcc/adcc-extension/isolation2/init_file_adcc" --inputdir="$HOME/src/adbcc/adcc-extension/isolation2" --outputdir="$HOME/src/adbcc/adcc-extension/isolation2" --load-extension=gp_inject_fault --load-extension=plpython3u errors node_metric
+#./pg_isolation2_regress  --init-file="$HOME/src/adbcc/adcc-extension/isolation2/init_file_adcc" --inputdir="$HOME/src/adbcc/adcc-extension/isolation2" --outputdir="$HOME/src/adbcc/adcc-extension/isolation2" --load-extension=gp_inject_fault --load-extension=plpython3u errors node_metric
+./pg_isolation2_regress  --init-file="$HOME/src/adbcc/adcc-extension/isolation2/init_file_adcc" --inputdir="$HOME/src/adbcc/adcc-extension/isolation2" --outputdir="$HOME/src/adbcc/adcc-extension/isolation2" --load-extension=gp_inject_fault --load-extension=plpython3u wait_snapshot
 #./pg_isolation2_regress  --init-file="$HOME/src/adbcc/adcc-extension/isolation2/init_file_adcc" --inputdir="$HOME/src/adbcc/adcc-extension/isolation2" --outputdir="$HOME/src/adbcc/adcc-extension/isolation2" --load-extension=gp_inject_fault --load-extension=plpython3u spill_snapshot
 #) 2>&1 | tee "$HOME/adbcc-isolation2.log"

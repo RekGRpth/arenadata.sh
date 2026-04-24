@@ -147,7 +147,21 @@ pushd "$HOME/gpdb_src/gpMgmt"
 #behave test/behave/mgmt_utils/gprecoverseg.feature --tags=concourse_cluster -n 'gprecoverseg differential recovery gives warning if all of the failed segment' --verbose
 #behave test/behave/mgmt_utils/gpstop.feature --tags=concourse_cluster -n 'gpstop removes the lock directory when it is empty' --verbose
 #behave test/behave/mgmt_utils/gpstop.feature --tags=concourse_cluster -n 'when the first gpstop interrupted and second gpstop with sighup option fails' --verbose
-behave test/behave/mgmt_utils/gpcheckcat.feature --tags=~concourse_cluster -n 'gpcheckcat should report replicated tables policy violation via default volatile expressions' --verbose
+#behave test/behave/mgmt_utils/gpcheckcat.feature --verbose
+#behave test/behave/mgmt_utils/gpcheckcat.feature -n 'run all the checks in gpcheckcat' --verbose
+#behave test/behave/mgmt_utils/gpcheckcat.feature -n 'gpcheckcat should drop leaked schemas' --verbose
+#behave test/behave/mgmt_utils/gpcheckcat.feature -n 'gpcheckcat should report unique index violations' --verbose
+#behave test/behave/mgmt_utils/gpcheckcat.feature -n 'gpcheckcat should discover missing attributes for tables' --verbose
+#behave test/behave/mgmt_utils/gpcheckcat.feature -n 'gpcheckcat should discover missing attributes for indexes' --verbose
+#behave test/behave/mgmt_utils/gpcheckcat.feature -n 'gpcheckcat should print out tables with missing and extraneous attributes in a readable format' --verbose
+#behave test/behave/mgmt_utils/gpcheckcat.feature -n 'gpcheckcat should generate repair scripts when only -g option is provided' --verbose
+#behave test/behave/mgmt_utils/gpcheckcat.feature -n 'gpcheckcat should report no inconsistency of pg_extension between Master and Segements' --verbose
+#behave test/behave/mgmt_utils/gpcheckcat.feature -n 'gpcheckcat should report vpinfo inconsistent error' --verbose
+#behave test/behave/mgmt_utils/gpcheckcat.feature -n 'skip one check in gpcheckcat' --verbose
+#behave test/behave/mgmt_utils/gpcheckcat.feature -n 'skip multiple checks in gpcheckcat' --verbose
+#behave test/behave/mgmt_utils/gpcheckcat.feature -n 'gpcheckcat should not report dependency error from pg_default_acl' --verbose
+behave test/behave/mgmt_utils/gpcheckcat.feature -n 'gpcheckcat should discover missing attributes for external tables' --verbose
+#behave test/behave/mgmt_utils/gpcheckcat.feature --tags=~concourse_cluster -n 'gpcheckcat should report replicated tables policy violation via default volatile expressions' --verbose
 #behave test/behave/mgmt_utils/gprecoverseg_newhost.feature --tags=concourse_cluster -n 'gpstate -e -v logs no errors when the user unsets PGDATABASE' --verbose
 #flags="--tags gpstate --tags=concourse_cluster --name 'gpstate -e -v logs no errors when the user unsets PGDATABASE'" make -f Makefile.behave behave
 popd

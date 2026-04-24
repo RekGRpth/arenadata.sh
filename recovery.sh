@@ -19,7 +19,7 @@ export TESTLOGDIR="$TESTDATADIR/log"
 #prove --verbose -I ../../../src/test/perl/ t/121_streaming_and_archiving.pl
 #prove --verbose -I ../../../src/test/perl/ t/122_streaming_and_archiving.pl
 #prove --verbose -I ../../../src/test/perl/ t/123_streaming_and_archiving.pl
-prove --verbose -I ../../../src/test/perl/ t/020_archive_status.pl
+#prove --verbose -I ../../../src/test/perl/ t/020_archive_status.pl
 #prove --verbose -I ../../../src/test/perl/ t/044_change_recovery_target.pl
 #prove --verbose -I ../../../src/test/perl/ t/004_timeline_switch.pl
 #prove --verbose -I ../../../src/test/perl/ t/010_logical_decoding_timelines.pl
@@ -31,7 +31,7 @@ prove --verbose -I ../../../src/test/perl/ t/020_archive_status.pl
 #prove --verbose -I ../../../src/test/perl/ t/017_shm.pl
 #prove --verbose -I ../../../src/test/perl/ t/020_archive_status.pl
 #prove --verbose -I ../../../src/test/perl/ t/020_archive_status_org.pl
-#prove --verbose -I ../../../src/test/perl/ t/003_recovery_targets.pl
+prove --verbose -I ../../../src/test/perl/ t/003_recovery_targets.pl
 #prove --verbose -I ../../../src/test/perl/ t/019_replslot_limit.pl
 #prove --verbose -I ../../../src/test/perl/ t/018_wal_optimize.pl
 #prove --verbose -I ../../../src/test/perl/ t/300_saslprep.pl

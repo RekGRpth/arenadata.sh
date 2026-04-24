@@ -12,7 +12,7 @@ sudo chown -R $USER:$GROUP /sys/fs/cgroup/{memory,cpu,cpuset}/gpdb
 #gpstop -afr
 pushd "$HOME/src/adbcc/adcc-extension"
 export ISOLATION2_ROOT="$HOME/gpdb_src/src/test/isolation2"
-export PGOPTIONS="-c optimizer=off"
+#export PGOPTIONS="-c optimizer=off"
 #export PGOPTIONS="-c optimizer_enable_table_alias=off"
 make installcheck installcheck-isolation2
 #) 2>&1 | tee "$HOME/adbcc-isolation2.log"
