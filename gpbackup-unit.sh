@@ -17,9 +17,11 @@ pushd "$HOME/src/gpbackup"
 #make -j"$(nproc)" integration
 #make -j"$(nproc)" end_to_end
 #make -j"$(nproc)" lint
+#make -j"$(nproc)" unit_all_gpdb_versions
+#exit
 export CUSTOM_BACKUP_DIR="$HOME/gpbackup"
 export GINKGO_FLAGS="-r --keep-going --randomize-suites --randomize-all --no-color --v"
-export TEST_GPDB_VERSION=6.999.0
+export TEST_GPDB_VERSION="$GP_MAJOR.999.0"
 #export GINKGO_FLAGS="-r --keep-going --randomize-suites --randomize-all --no-color -vv"
 #export GINKGO_FLAGS="-r --keep-going --no-color --v"
 #export GINKGO_FLAGS="-r --keep-going --no-color -vv"
@@ -56,7 +58,10 @@ export TEST_GPDB_VERSION=6.999.0
 #ginkgo $GINKGO_FLAGS --timeout=3h --poll-progress-after=0s integration -- --ginkgo.focus "RetrieveAndProcessTables" --ginkgo.focus "Tables order when no filtering is used or tables filtering is defined"
 #ginkgo $GINKGO_FLAGS --timeout=3h --poll-progress-after=0s integration -- --ginkgo.focus "returns the data tables in descending order of their sizes (relpages) when include-tables(-file) flag is used"
 #ginkgo $GINKGO_FLAGS --timeout=3h --poll-progress-after=0s integration -- --ginkgo.focus "runs restore gpbackup_helper with gzip compression with plugin"
-ginkgo $GINKGO_FLAGS --timeout=3h --poll-progress-after=0s integration -- --ginkgo.focus "StartGpbackupHelpers"
+#ginkgo $GINKGO_FLAGS --timeout=3h --poll-progress-after=0s integration -- --ginkgo.focus "StartGpbackupHelpers"
+#ginkgo $GINKGO_FLAGS --timeout=3h --poll-progress-after=0s integration -- --ginkgo.focus "gpexpand_sensor" --ginkgo.focus "ggrabalance_sensor"
+ginkgo $GINKGO_FLAGS --timeout=3h --poll-progress-after=0s utils -- --ginkgo.focus "gpexpand_sensor" --ginkgo.focus "ggrabalance_sensor"
+#ginkgo $GINKGO_FLAGS --timeout=3h --poll-progress-after=0s utils -- --ginkgo.focus "IsGpexpandRunning" --ginkgo.focus "IsGgrebalanceRunning"
 #ginkgo $GINKGO_FLAGS --timeout=3h --poll-progress-after=0s restore -- --ginkgo.focus "verifies backup file counts match on all segments with resize-cluster"
 #ginkgo $GINKGO_FLAGS --timeout=3h --poll-progress-after=0s restore -- --ginkgo.focus "verifies backup file counts match on all segments with resize-cluster"
 #ginkgo $GINKGO_FLAGS --timeout=3h --poll-progress-after=0s end_to_end -- --custom_backup_dir $CUSTOM_BACKUP_DIR --ginkgo.focus "Exclude subpartitions for given root partition in leaf-partition-data mode" --ginkgo.focus "End to End incremental tests Incremental restore No DDL no partitioning Include/Exclude schemas and tables"

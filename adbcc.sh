@@ -32,7 +32,7 @@ psql -d postgres -c "CREATE EXTENSION IF NOT EXISTS gg_wait_sampling" || echo "$
 gpstop -afr
 #gpconfig -c adcc.send_buffer_size -v 10485760;
 gpconfig -c adcc.monitor_inner_queries -v on
-gpconfig -c adcc.poll_waits -v on
+#gpconfig -c adcc.poll_waits -v on || echo "$?"
 gpconfig -c adcc.monitor_utility_inner_queries -v on
 gpstop -u
 #) 2>&1 | tee "$HOME/adbcc.log"

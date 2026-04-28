@@ -29,8 +29,18 @@ unset MIRROR_2_DATA_DIRECTORY
 fi
 
 export LANG=en_US.UTF-8
+export PYTHONPATH="$PYTHONPATH:test/behave/mgmt_utils/steps"
 
 if [[ "$GP_MAJOR" == "6" ]]; then
+sudo python -m pip install --no-cache-dir coverage
+export COVERAGE_PROCESS_START=test/coveragerc_behave
+cat >"$GPHOME/lib/python/sitecustomize.py" <<EOF
+import coverage
+coverage.process_startup()
+EOF
+fi
+
+if [[ "$GP_MAJOR" != "8" ]]; then
 for HOST in cdw sdw1 sdw2 sdw3 sdw4 sdw5 sdw6; do
     echo $HOST
     IP="$(host "$HOST" | grep 'has address' | head -n 1 | cut -d ' ' -f 4)"
@@ -45,7 +55,7 @@ fi
 
 sudo mkdir -p /data
 sudo chown -R "$USER":"$GROUP" /data
-if [[ "$GP_MAJOR" == "6" ]]; then
+if [[ "$GP_MAJOR" != "8" ]]; then
 gpssh -v -e -h cdw -h sdw1 -h sdw2 -h sdw3 -h sdw4 -h sdw5 -h sdw6 <<EOF
 sudo mkdir -p /data
 sudo chown -R "$USER":"$GROUP" /data
@@ -58,6 +68,7 @@ rm -rf /tmp/.s.PGSQL.* /data/gpdata /tmp/gpexpand_behave
 EOF
 fi
 mkdir -p /data/gpdata/gpexpand
+#mkdir -p /home/gpadmin/gpAdminLogs/ggupgrade
 rm -rf "$HOME/.ssh/known_hosts"
 pushd "$HOME/gpdb_src/gpMgmt"
 #behave test/behave/mgmt_utils --tags=gpstart -n 'gpstart succeeds when cluster shut down during segment promotion'
@@ -148,6 +159,7 @@ pushd "$HOME/gpdb_src/gpMgmt"
 #behave test/behave/mgmt_utils/gpstop.feature --tags=concourse_cluster -n 'gpstop removes the lock directory when it is empty' --verbose
 #behave test/behave/mgmt_utils/gpstop.feature --tags=concourse_cluster -n 'when the first gpstop interrupted and second gpstop with sighup option fails' --verbose
 #behave test/behave/mgmt_utils/gpcheckcat.feature --verbose
+#behave test/behave/mgmt_utils/gpstart.feature --tags=~concourse_cluster -n 'gpstart starts even if the standby host is unreachable' --verbose
 #behave test/behave/mgmt_utils/gpcheckcat.feature -n 'run all the checks in gpcheckcat' --verbose
 #behave test/behave/mgmt_utils/gpcheckcat.feature -n 'gpcheckcat should drop leaked schemas' --verbose
 #behave test/behave/mgmt_utils/gpcheckcat.feature -n 'gpcheckcat should report unique index violations' --verbose
@@ -160,7 +172,13 @@ pushd "$HOME/gpdb_src/gpMgmt"
 #behave test/behave/mgmt_utils/gpcheckcat.feature -n 'skip one check in gpcheckcat' --verbose
 #behave test/behave/mgmt_utils/gpcheckcat.feature -n 'skip multiple checks in gpcheckcat' --verbose
 #behave test/behave/mgmt_utils/gpcheckcat.feature -n 'gpcheckcat should not report dependency error from pg_default_acl' --verbose
-behave test/behave/mgmt_utils/gpcheckcat.feature -n 'gpcheckcat should discover missing attributes for external tables' --verbose
+#behave test/behave/mgmt_utils/gpcheckcat.feature -n 'gpcheckcat should discover missing attributes for external tables' --verbose
+#behave test/behave/mgmt_utils/gpcheckcat.feature -n 'gpcheckcat should not report inconsistency because of scram-sha-256 passwords' --verbose
+#behave test/behave/mgmt_utils/gpcheckcat.feature -n 'gpcheckcat should not report dependency error from pg_default_acl' -n 'gpcheckcat should not report inconsistency because of scram-sha-256 passwords' --verbose
+#export COORDINATOR_DATA_DIRECTORY=/data/gpdata/ggrebalance/data/coordinator/gpseg-1
+export PGPORT=7000
+#behave test/behave/mgmt_utils/ggrebalance_misc_options.feature -n 'Check other tools launch' --verbose
+behave test/behave/mgmt_utils/ggrebalance_misc_options.feature -n "Check rebalance with 'spread' mirror configuration" --verbose
 #behave test/behave/mgmt_utils/gpcheckcat.feature --tags=~concourse_cluster -n 'gpcheckcat should report replicated tables policy violation via default volatile expressions' --verbose
 #behave test/behave/mgmt_utils/gprecoverseg_newhost.feature --tags=concourse_cluster -n 'gpstate -e -v logs no errors when the user unsets PGDATABASE' --verbose
 #flags="--tags gpstate --tags=concourse_cluster --name 'gpstate -e -v logs no errors when the user unsets PGDATABASE'" make -f Makefile.behave behave
@@ -232,7 +250,7 @@ export MASTER_DATA_DIRECTORY="$DATADIRS/master/gpseg-1"
 #behave test/behave/mgmt_utils --tags=gpperfmon -n "gpperfmon ignore ALTER TABLE SET DISTRIBUTED BY"
 #behave test/behave/mgmt_utils --tags=gpperfmon -n "gpperfmon ignore ALTER TABLE SET DISTRIBUTED BY" -n "gpperfmon does not lose the query text if its text differs from the text in pg_stat_activity"
 #behave test/behave/mgmt_utils --tags=gprecoverseg -n "gprecoverseg should not give warning if pg_basebackup is running for the up segments"
-behave test/behave/mgmt_utils --tags=gpexpand -n "expand the cluster by adding more segments"
+#behave test/behave/mgmt_utils --tags=gpexpand -n "expand the cluster by adding more segments"
 #behave test/behave/mgmt_utils --tags=gpexpand --name="Avoid overwriting the tar file on coordinator"
 #behave test/behave/mgmt_utils --tags=gpexpand -n "after resuming a duration interrupted redistribution, tables are restored" -n "after a duration interrupted redistribution, state file on standby matches coordinator" -n "after resuming an end time interrupted redistribution, tables are restored"
 #behave test/behave/mgmt_utils --tags=gpstop -n 'gpstop gpstop should not print "Failed to kill processes for segment" when locale is different from English'
@@ -244,7 +262,7 @@ behave test/behave/mgmt_utils --tags=gpexpand -n "expand the cluster by adding m
 #behave test/behave/mgmt_utils --tags=gpperfmon -n "gpperfmon adds to diskspace_history table"
 #behave test/behave/mgmt_utils --tags=gpperfmon -k -n "gpperfmon adds to diskspace_history table"
 #behave test/behave/mgmt_utils --tags=gplogfilter -k -n "invalid begin and end arguments"
-behave test/behave/mgmt_utils --tags=gplogfilter -k
+#behave test/behave/mgmt_utils --tags=gplogfilter -k
 #arenadata/scripts/run_behave_tests.bash "gpexpand should skip already expanded/broken tables when redistributing"
 #cd "$HOME/gpdb_src"
 #arenadata/scripts/run_behave_tests.bash "gpexpand Avoid overwriting the tar file on coordinator"

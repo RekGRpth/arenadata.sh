@@ -2,7 +2,7 @@
 
 exec 2>&1 &> >(tee "$HOME/regress.log")
 
-#export PGOPTIONS="-c optimizer=off"
+export PGOPTIONS="-c optimizer=off"
 #export PGOPTIONS="-c optimizer_enable_table_alias=off"
 #export PGOPTIONS="-c optimizer=on -c optimizer_enable_table_alias=off"
 #export PGOPTIONS="-c optimizer=on -c jit=on -c jit_above_cost=0 -c optimizer_jit_above_cost=0 -c gp_explain_jit=off"
@@ -28,7 +28,8 @@ mkdir -p "$HOME/gpdb_src/src/test/regress/testtablespace_database_tablespace"
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 constraints triggers updatable_views vacuum
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file alter_table_aocs2 partition1 partition appendonly
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file test_setup statement_mem_for_windowagg
-./pg_regress --load-extension=gp_inject_fault --init-file=init_file test_setup gp_array_agg
+#./pg_regress --load-extension=gp_inject_fault --init-file=init_file test_setup gp_array_agg
+./pg_regress --load-extension=gp_inject_fault --init-file=init_file alter_rebalance
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 create_type create_table create_function_2 int8 int4 text point polygon circle copy create_misc create_index limit
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file gp_libpq_events
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file collate
