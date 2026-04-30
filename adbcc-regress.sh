@@ -36,8 +36,8 @@ sudo chown -R $USER:$GROUP /sys/fs/cgroup/{memory,cpu,cpuset}/gpdb
 #"$HOME/gpdb_src/src/test/regress/pg_regress" --load-extension=plpythonu --load-extension=socket create_extension bfv_interconnect cdb_dispatch_ccnt errors errors_resgroup inner_queries misc
 #"$HOME/gpdb_src/src/test/regress/pg_regress" --load-extension=plpython3u --load-extension=socket create_extension socket spill_snapshot
 #"$HOME/gpdb_src/src/test/regress/pg_regress" --load-extension=plpython3u --load-extension=socket create_extension spill_snapshot
-"$HOME/gpdb_src/src/test/regress/pg_regress" --load-extension=plpython3u --load-extension=socket create_extension hooks_manipulation
-#"$HOME/gpdb_src/src/test/regress/pg_regress" --load-extension=plpython3u --load-extension=socket create_extension wait_snapshot
+#"$HOME/gpdb_src/src/test/regress/pg_regress" --load-extension=plpython3u --load-extension=socket create_extension hooks_manipulation
+"$HOME/gpdb_src/src/test/regress/pg_regress" --load-extension=plpython3u --load-extension=socket create_extension wait_snapshot
 #"$HOME/gpdb_src/src/test/regress/pg_regress" --load-extension=plpython3u --load-extension=socket create_extension failure_in_txn failure_in_txn_2 failure_in_txn_gc failure_ssid failure_ssid_gc deparse_context
 #"$HOME/gpdb_src/src/test/regress/pg_regress" --load-extension=plpythonu --load-extension=socket create_extension failure_in_txn failure_in_txn_2 failure_in_txn_resgroup errors errors_resgroup
 #"$HOME/gpdb_src/src/test/regress/pg_regress" --load-extension=plpythonu --load-extension=socket create_extension failure_in_txn failure_in_txn_2 errors
