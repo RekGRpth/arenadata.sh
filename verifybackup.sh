@@ -4,8 +4,8 @@
 export TESTDIR="$HOME/gpdb_src/src/bin/pg_verifybackup"
 cd "$TESTDIR"
 rm -rf tmp_check tmp_check_copy
-make -j$(nproc) installcheck -i
-exit
+#make -j$(nproc) installcheck -i
+#exit
 export top_builddir="$HOME/gpdb_src"
 export PG_REGRESS="$top_builddir/src/test/regress/pg_regress"
 export REGRESS_SHLIB="$top_builddir/src/test/regress/regress.so"
@@ -28,5 +28,6 @@ export TESTLOGDIR="$TESTDATADIR/log"
 #prove --verbose -I ../../../src/test/perl/ t/004_options.pl
 #prove --verbose -I ../../../src/test/perl/ t/006_encoding.pl
 prove --verbose -I ../../../src/test/perl/ t/007_wal.pl
+#prove --verbose -I ../../../src/test/perl/ t/004_options.pl
 #prove --verbose -I ../../../src/test/perl/ t/123_streaming_and_archiving_with_archive_mode_always.pl
 ) 2>&1 | tee "$HOME/basebackup.log"
