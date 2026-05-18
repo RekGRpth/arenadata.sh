@@ -2,8 +2,8 @@
 
 exec 2>&1 &> >(tee "$HOME/plpython.log")
 
-#export PGOPTIONS="-c optimizer=off"
+export PGOPTIONS="-c optimizer=off"
 
 pushd "$HOME/gpdb_src/src/pl/plpython"
-make -j"$(nproc)" installcheck
+make -j"$(nproc)" installcheck -i
 popd

@@ -16,6 +16,7 @@ export TESTLOGDIR="$TESTDATADIR/log"
 #prove --verbose -I ../../../src/test/perl/ t/001_basic.pl
 #prove --verbose -I ../../../src/test/perl/ t/010_target_is_ancestor.pl
 prove --verbose -I ../../../src/test/perl/ t/003_extrafiles.pl
+#prove --verbose -I ../../../src/test/perl/ t/101_ao_rewind.pl
 #prove --verbose -I ../../../src/test/perl/ t/107_empty_conf.pl
 #prove --verbose -I ../../../src/test/perl/ t/003_extrafiles.pl
 exit

@@ -29,8 +29,14 @@ mkdir -p "$HOME/gpdb_src/src/test/regress/testtablespace_database_tablespace"
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file alter_table_aocs2 partition1 partition appendonly
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file test_setup statement_mem_for_windowagg
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file test_setup gp_array_agg
+#./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 create_type create_table create_function_2 int8 int4 text point polygon circle copy create_misc xml
+#./pg_regress --load-extension=gp_inject_fault --init-file=init_file vacuum_stats
+#./pg_regress --load-extension=gp_inject_fault --init-file=init_file gp_toolkit
+#./pg_regress --load-extension=gp_inject_fault --init-file=init_file jsonb_jsonpath
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file alter_rebalance
-./pg_regress --load-extension=gp_inject_fault --init-file=init_file toast
+#./pg_regress --load-extension=gp_inject_fault --init-file=init_file uao_compaction/full uao_compaction/outdated_partialindex uao_compaction/drop_column_update uao_compaction/eof_truncate uao_compaction/basic uao_compaction/outdatedindex uao_compaction/update_toast uao_compaction/outdatedindex_abort uao_compaction/delete_toast uao_compaction/alter_table_analyze uao_compaction/full_eof_truncate uao_compaction/full_threshold
+#./pg_regress --load-extension=gp_inject_fault --init-file=init_file query_info_hook_test
+#./pg_regress --load-extension=gp_inject_fault --init-file=init_file toast
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 create_type create_table create_function_2 int8 int4 text point polygon circle copy create_misc create_index limit
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file gp_libpq_events
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file collate
@@ -131,7 +137,7 @@ mkdir -p "$HOME/gpdb_src/src/test/regress/testtablespace_database_tablespace"
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file zlib
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file box
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 foreign_data
-#./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 create_type create_table create_function_2 int8 int4 text point polygon circle copy create_misc create_index misc select_parallel
+#./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 create_type create_table create_function_2 int8 int4 text point polygon circle copy create_misc create_index select misc select_parallel
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 create_type create_table create_function_2 int8 int4 text point polygon circle copy create_misc create_index
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file generated
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file generated domain
@@ -206,7 +212,7 @@ mkdir -p "$HOME/gpdb_src/src/test/regress/testtablespace_database_tablespace"
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file expand_table_ao expand_table_aoco
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file expand_table_ao expand_table_aoco alter_table_ao alter_table_aocs
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file explain_analyze
-#./pg_regress --load-extension=gp_inject_fault --init-file=init_file analyze incremental_analyze
+./pg_regress --load-extension=gp_inject_fault --init-file=init_file analyze incremental_analyze
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file gp_copy_dtx distributed_transactions qp_targeted_dispatch gp_query_id analyze incremental_analyze
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file gp_copy_dtx distributed_transactions qp_targeted_dispatch gp_query_id analyze
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file scale_factor
@@ -214,7 +220,7 @@ mkdir -p "$HOME/gpdb_src/src/test/regress/testtablespace_database_tablespace"
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file bfv_joins bfv_planner explain_format gp_recursive_cte gporca rpt scale_factor
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file explain_format
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 create_type create_table int8 int4 copy subselectMY
-#./pg_regress --load-extension=gp_inject_fault --init-file=init_file --schedule=./parallel_schedule_my
+#./pg_regress --load-extension=gp_inject_fault --init-file=init_file --schedule=./greenplum_schedule_uao_compaction
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file --schedule=./greenplum_schedule.test
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file --schedule=./greenplum_schedule.test2
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file --schedule=./greenplum_schedule.test2
