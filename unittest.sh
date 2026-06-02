@@ -3,19 +3,33 @@
 #exec 2>&1 &> >(tee "$HOME/unittest.log")
 
 exec 2>&1 &> >(tee "$HOME/unittest.log")
+pushd "$HOME/gpdb_src"
+find -name "objfiles.txt" -delete
+find -name "cdbappendonlyxlog.t" -delete
+find -name "fd_mock.o" -delete
+find -name "fd_mock.c" -delete
+find -name "mcxt.o" -delete
+find -name "libpgcommon.a" -delete
+find -name "file_utils.o" -delete
+find -name "file_utils_srv.o" -delete
+find -name "fe_memutils_srv.o" -delete
+popd
+export PATH=${PATH/:\/usr\/lib\/ccache/}
 export GPROOT="$GPHOME"
 export CFLAGS=-DUNITTEST
 #pushd "$HOME/gpdb_src/src/backend/fts"
 #pushd "$HOME/gpdb_src/src/backend/utils/sort"
 #pushd "$HOME/gpdb_src/src/backend/cdb/dispatcher"
-#pushd "$HOME/gpdb_src/src/backend/cdb"
+pushd "$HOME/gpdb_src/src/backend/cdb"
 #pushd "$HOME/gpdb_src/src/backend"
 #pushd "$HOME/gpdb_src/src/backend/access/transam"
-pushd "$HOME/gpdb_src/src/backend/access"
+#pushd "$HOME/gpdb_src/src/backend/access"
 #pushd "$HOME/gpdb_src"
 #pushd "$HOME/gpdb_src/src/backend/access/appendonly"
 #make -j"$(nproc)" CFLAGS=-DUNITTEST -s unittest-check
 #make -j"$(nproc)" -s unittest-check
+#make -j"$(nproc)" clean
+#make -j"$(nproc)" make
 make -j"$(nproc)" -s unittest-check
 #make -j"$(nproc)" -s unittest-check-transam-recurse
 #make -j"$(nproc)" -s unittest-check-cdb-recurse

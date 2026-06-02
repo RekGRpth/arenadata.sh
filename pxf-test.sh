@@ -4,6 +4,7 @@ exec 2>&1 &> >(tee "$HOME/pxf-test.log")
 
 #(
 pushd "$HOME/src/pxf/fdw"
+rm isolation2/expected
 make -j"$(nproc)" install
 make -j"$(nproc)" installcheck
 popd

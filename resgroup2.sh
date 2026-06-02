@@ -1,25 +1,27 @@
 #!/bin/bash -eux
 
-exec 2>&1 &> >(tee "$HOME/isolation2.log")
+exec 2>&1 &> >(tee "$HOME/resgroup.log")
 
-pushd "$HOME/gpdb_src/src/test/isolation2"
-
+#(
 export PGOPTIONS="-c optimizer=off"
+#ls -d @cgroup_mnt_point@/cpu/gpdb/*/;
+#ls -d @cgroup_mnt_point@/cpuacct/gpdb/*/;
+#sudo chmod -R 777 /sys/fs/cgroup/{memory,cpu,cpuset}
+#sudo mkdir -p /sys/fs/cgroup/{memory,cpu,cpuset}/gpdb
+#sudo chmod -R 777 /sys/fs/cgroup/{memory,cpu,cpuset}/gpdb
+#sudo chown -R $USER:$GROUP /sys/fs/cgroup/{memory,cpu,cpuset}/gpdb
+#gpconfig -c gp_resource_manager -v group
+#gpconfig -r gp_resource_manager
+#gpstop -afr
 #cd "$HOME/gpdb_src/src/test/regress"
-#make -j$(nproc) clean
 #make -j$(nproc) install
-#cd "$HOME/gpdb_src/src/test/isolation2"
-#make -j$(nproc) clean
+pushd "$HOME/gpdb_src/src/test/isolation2"
 #make -j$(nproc) install
-#make -j$(nproc) installcheck -i
-#exit
-#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault uao_crash_compaction_column
 #./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_parallel_retrieve_cursor --inputdir=. --dbname=isolation2parallelretrcursor --load-extension=gp_inject_fault --schedule=./parallel_retrieve_cursor_schedule
 #./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 setup cached_plan gpdispatch checkpoint_dtx_info lockmodes prepare_limit pg_rewind_fail_missing_xlog prepared_xact_deadlock_pg_rewind ao_partition_lock query_gp_partitions_view dml_on_root_locks_all_parts select_dropped_table update_hash_col_utilitymode execute_on_utilitymode uao_crash_compaction_column
 #./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 resgroup/resgroup_memory_limit
 #./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 select_for_update gdd/prepare gdd/concurrent_update
 #./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 ao_select
-#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 uao/vacuum_index_stats_row uao/vacuum_index_stats_column
 #./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 setup ao vacuum_drop_phase_ao uao/alter_while_vacuum_row uao/alter_while_vacuum2_row uao/cursor_before_deletevacuum_row uao/delete_while_vacuum_row uao/insert_while_vacuum_row uao/modcount_vacuum_row uao/select_after_vacuum_row uao/select_after_vacuum_serializable_row uao/select_before_vacuum_row uao/select_while_full_vacuum_row uao/select_while_vacuum_row uao/select_while_vacuum_serializable_row uao/select_while_vacuum_serializable2_row uao/selectinsert_while_vacuum_row uao/selectinsertupdate_while_vacuum_row uao/selectupdate_while_vacuum_row uao/update_while_vacuum_row uao/vacuum_self_serializable_row uao/vacuum_self_serializable2_row uao/vacuum_self_serializable3_row uao/vacuum_while_insert_row uao/vacuum_while_vacuum_row uao/vacuum_cleanup_row uao/vacuum_index_stats_row reorganize_after_ao_vacuum_skip_drop truncate_after_ao_vacuum_skip_drop mark_all_aoseg_await_drop concurrent_vacuum_with_delete
 #./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 setup ao uao/vacuum_cleanup_row uao/update_while_vacuum_row mark_all_aoseg_await_drop
 #./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 setup ao uao/vacuum_cleanup_row uao/vacuum_cleanup_column uao/update_while_vacuum_row mark_all_aoseg_await_drop uao_crash_compaction_column gdd/prepare gdd/planner_insert_while_vacuum_drop
@@ -36,10 +38,6 @@ export PGOPTIONS="-c optimizer=off"
 #./pg_isolation2_regress --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 setup add_column_after_vacuum_skip_drop_column concurrent_vacuum_with_delete gdd/prepare gdd/planner_insert_while_vacuum_drop mark_all_aoseg_await_drop reorganize_after_ao_vacuum_skip_drop truncate_after_ao_vacuum_skip_drop uao/alter_while_vacuum2_row uao/alter_while_vacuum_row uao/compaction_utility_column uao/compaction_utility_row uao_crash_compaction_column uao/cursor_before_deletevacuum_row uao/delete_while_vacuum_row uao/insert_should_not_use_awaiting_drop_column uao/insert_should_not_use_awaiting_drop_row uao/insert_while_vacuum_drop_column uao/insert_while_vacuum_drop_row uao/insert_while_vacuum_row uao/modcount_vacuum_row uao/select_after_vacuum_column uao/select_after_vacuum_row uao/select_after_vacuum_serializable_row uao/select_before_vacuum_row uao/selectinsertupdate_while_vacuum_row uao/selectinsert_while_vacuum_row uao/selectupdate_while_vacuum_column uao/selectupdate_while_vacuum_row uao/select_while_full_vacuum_column uao/select_while_full_vacuum_row uao/select_while_vacuum_column uao/select_while_vacuum_row uao/select_while_vacuum_serializable2_row uao/select_while_vacuum_serializable_column uao/select_while_vacuum_serializable_row uao/update_while_vacuum_column uao/update_while_vacuum_row uao/vacuum_cleanup_column uao/vacuum_cleanup_row uao/vacuum_index_stats_row uao/vacuum_self_serializable2_column uao/vacuum_self_serializable2_row uao/vacuum_self_serializable3_row uao/vacuum_self_serializable_row uao/vacuum_while_insert_column uao/vacuum_while_insert_row uao/vacuum_while_vacuum_row vacuum_after_vacuum_skip_drop_column vacuum_drop_phase_ao reindex/vacuum_while_reindex_ao_bitmap uao/vacuum_while_max_concurrency_column uao/vacuum_while_max_concurrency_row
 #./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 ao ao_insert ao_delete ao_select
 #./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 ao ao_insert
-#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault uao/vacuum_cleanup_row
-#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault uao/vacuum_cleanup_row uao/vacuum_cleanup_column aoco_column_rewrite
-#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault concurrent_select_truncate_partitioned_table
-#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 packcore
 #./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 setup uao_crash_compaction_column vacuum_drop_phase_ao reorganize_after_ao_vacuum_skip_drop truncate_after_ao_vacuum_skip_drop mark_all_aoseg_await_drop
 #./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 setup vacuum_drop_phase_ao
 #./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 truncate_after_ao_vacuum_skip_drop
@@ -53,84 +51,63 @@ export PGOPTIONS="-c optimizer=off"
 #./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 setup uao/vacuum_while_max_concurrency_column uao/vacuum_while_max_concurrency_row uao/vacuum_while_max_concurrencyMY_column uao/vacuum_while_max_concurrencyMY_row
 #./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 setup uao/vacuum_while_max_concurrencyMY_column uao/vacuum_while_max_concurrencyMY_row
 #./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 setup uao/vacuum_while_max_concurrency_column uao/vacuum_while_max_concurrency_row
-#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 setup uao/vacuum_while_max_concurrency_column
-#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 setup uao/vacuum_while_max_concurrency_my_column
-#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 setup uao/vacuum_aoseg_repair_column
-#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 setup uao/vacuum_aoseg_repair_my_column
-#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 setup uao/vacuum_self_function_column
-#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 setup uao/insert_policy_7X_column
-#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault inplace-inval
-#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault export_distributed_snapshot
-#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault vacuum_full_interrupt
-#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault fts_segment_reset
-#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault standby_replay_dtx_info
 #./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault idle_gang_cleaner idle_gang_cleanerMY
 #./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault idle_gang_cleanerMY
 #./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault orphaned_gang_cleaner
 #./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault orphaned_gang_cleanerMY
-./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault idle_gang_cleaner
-#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault enable_autovacuum idle_gang_cleaner
+#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault idle_gang_cleaner
 #./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault segwalrep/dtm_recovery_on_standbyMY
 #./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault segwalrep/dtm_recovery_on_standby
 #./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault segwalrep/dtm_recovery_on_standby orphaned_gang_cleaner
 #./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault prevent_ao_wal
 #./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault frozen_insert_crash
-#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault reindex/vacuum_while_reindex_ao_bitmap
-#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault uao/compaction_full_stats_column
-#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault uao/alter_while_vacuum_row uao/alter_while_vacuum_column
-#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault distributed_snapshot
-#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault autovacuum-analyze
-#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault bitmap_index_ao_sparse
-#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault resource_queue
-#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault reader_waits_for_lock
-#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault drop_rename
-#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault drop_rename_my
-#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault alter_blocks_for_update_and_viceversa
-#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault pg_views_concurrent_drop
-#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault starve_case
-#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault gdd/prepare intra-grant-inplace gdd/end
-#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault dependency
-#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault intra-grant-inplace-db
-#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault frozen_insert_crash reindex/vacuum_while_reindex_ao_bitmap
-#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault --schedule=./isolation2_schedule_reindex
-#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault --schedule=./isolation2_schedule
-#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault --schedule=./isolation2_schedule_gdd
-#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault reindex/vacuum_while_reindex_ao_bitmap
-#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault frozen_insert_crash_1
-#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault frozen_insert_crash_2
-#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault resgroup/resgroup_concurrency
-#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault resgroup/resgroup_views_seg_down
-#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault copy_interrupt
-#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault orphan_temp_table
-#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault segwalrep/max_slot_wal_keep_size
-#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault segwalrep/max_slot_wal_keep_size1
-#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault sync_guc
-#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault ao_same_trans_truncate_crash
-#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault fsync_ao
-#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault disable_autovacuum invalid_database enable_autovacuum
-#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault resource_manager_switch_to_queue parallel_retrieve_cursor/set parallel_retrieve_cursor/extended_query
-#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault parallel_retrieve_cursor/set parallel_retrieve_cursor/extended_query
-#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault gpdispatch
-#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault lock_status
-#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault pg_rewind_fail_missing_xlog || cat regression.diffs
-#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault workfile_mgr_test workfile_gp_toolkit
-#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault workfile_gp_toolkit
-#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault setup cached_plan gpdispatch checkpoint_dtx_info lockmodes prepare_limit pg_rewind_fail_missing_xlog
 #./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault segwalrep/dtx_recovery_wait_lsn
 #./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault segwalrep/replication_keeps_crash
 #sudo cgconfigparser -l /etc/cgconfig.conf
 #./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_resgroup --load-extension=gp_inject_fault resgroup/enable_resgroup_validate resgroup/enable_resgroup resgroup/resgroup_views resgroup/resgroup_cpu_rate_limit resgroup/resgroup_memory_limit
 #./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_resgroup --load-extension=gp_inject_fault resgroup/resgroup_views resgroup/resgroup_cpu_rate_limit resgroup/resgroup_memory_limit
 #./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_resgroup --load-extension=gp_inject_fault resgroup/resgroup_auxiliary_tools_v1 resgroup/resgroup_bypass_catalog resgroup/resgroup_views resgroup/resgroup_memory_limit
-#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_resgroup --load-extension=gp_inject_fault resgroup/resgroup_bypass_catalog resgroup/resgroup_views resgroup/resgroup_memory_limit
-#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_resgroup --load-extension=gp_inject_fault resgroup/enable_resgroup_validate resgroup/enable_resgroup
+sudo chmod -R 777 /sys/fs/cgroup/{memory,cpu,cpuset}
+sudo mkdir -p /sys/fs/cgroup/{memory,cpu,cpuset}/gpdb
+sudo chmod -R 777 /sys/fs/cgroup/{memory,cpu,cpuset}/gpdb
+sudo chown -R $USER:$GROUP /sys/fs/cgroup/{memory,cpu,cpuset}/gpdb
+#gpconfig -c gp_resource_manager -v group
+#gpconfig -r gp_resource_manager
+#gpstop -afr
+#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_resgroup --load-extension=gp_inject_fault --dbname=isolation2resgrouptest resgroup/enable_resgroup_validate resgroup/enable_resgroup resgroup/resgroup_dumpinfo resgroup/disable_resgroup
+#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_resgroup --load-extension=gp_inject_fault --dbname=isolation2resgrouptest resgroup/enable_resgroup_validate resgroup/enable_resgroup resgroup/resgroup_cpuset resgroup/disable_resgroup
+#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_resgroup --dbname=isolation2resgrouptest resgroup/enable_resgroup_validate resgroup/enable_resgroup resgroup/resgroup_parallel_retrieve resgroup/disable_resgroup
+./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_resgroup --dbname=isolation2resgrouptest resgroup/resgroup_auxiliary_tools_v2 resgroup/resgroup_io_limit resgroup/resgroup_disable_resgroup
+#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_resgroup --dbname=isolation2resgrouptest resgroup/resgroup_auxiliary_tools_v1 resgroup/resgroup_dumpinfo resgroup/resgroup_disable_resgroup
+#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_resgroup --load-extension=gp_inject_fault --dbname=isolation2resgrouptest resgroup/resgroup_auxiliary_tools_v1 resgroup/resgroup_parallel_retrieve resgroup/resgroup_disable_resgroup
+#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_resgroup --load-extension=gp_inject_fault --dbname=isolation2resgrouptest resgroup/resgroup_auxiliary_tools_v1 resgroup/resgroup_move_query resgroup/resgroup_dumpinfo resgroup/resgroup_parallel_retrieve resgroup/resgroup_disable_resgroup
+#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_resgroup --load-extension=gp_inject_fault --dbname=isolation2resgrouptest resgroup/enable_resgroup_validate resgroup/enable_resgroup resgroup/resgroup_cpu_rate_limit resgroup/disable_resgroup
+#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_resgroup --load-extension=gp_inject_fault --dbname=isolation2resgrouptest resgroup/enable_resgroup_validate resgroup/enable_resgroup resgroup/resgroup_views resgroup/resgroup_cpu_rate_limit resgroup/resgroup_memory_limit
+#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_resgroup --load-extension=gp_inject_fault --dbname=isolation2resgrouptest resgroup/enable_resgroup_validate resgroup/enable_resgroup resgroup/resgroup_views resgroup/resgroup_memory_limit
+#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_resgroup --dbname=isolation2resgrouptest resgroup/enable_resgroup_validate resgroup/enable_resgroup resgroup/resgroup_views resgroup/resgroup_memory_limit resgroup/disable_resgroup
+#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_resgroup --dbname=isolation2resgrouptest resgroup/enable_resgroup_validate resgroup/enable_resgroup resgroup/resgroup_oom resgroup/disable_resgroup
+#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_resgroup --dbname=isolation2resgrouptest resgroup/resgroup_auxiliary_tools_v1 resgroup/resgroup_dumpinfo resgroup/resgroup_disable_resgroup
+#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_resgroup --dbname=isolation2resgrouptest resgroup/enable_resgroup_validate resgroup/enable_resgroup resgroup/resgroup_seg_down_2pc resgroup/disable_resgroup
+#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_resgroup --load-extension=gp_inject_fault --dbname=isolation2resgrouptest resgroup/resgroup_views resgroup/resgroup_memory_limit
+#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_resgroup --load-extension=gp_inject_fault --dbname=isolation2resgrouptest resgroup/resgroup_auxiliary_tools_v1 resgroup/resgroup_bypass_catalog resgroup/resgroup_views resgroup/resgroup_memory_limit
+#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_resgroup --load-extension=gp_inject_fault --dbname=isolation2resgrouptest resgroup/resgroup_auxiliary_tools_v1 resgroup/resgroup_views resgroup/resgroup_memory_limit
+#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_resgroup --dbname=isolation2resgrouptest resgroup/enable_resgroup_validate resgroup/enable_resgroup resgroup/resgroup_views_seg_down resgroup/disable_resgroup
+#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_resgroup --dbname=isolation2resgrouptest resgroup/resgroup_auxiliary_tools_v1 resgroup/resgroup_views_seg_down resgroup/resgroup_disable_resgroup
+#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_resgroup --dbname=isolation2resgrouptest resgroup/resgroup_oom resgroup/resgroup_disable_resgroup
+#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_resgroup --dbname=isolation2resgrouptest resgroup/enable_resgroup_validate
+#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_resgroup --dbname=isolation2resgrouptest resgroup/enable_resgroup_validate resgroup/enable_resgroup resgroup/resgroup_memory_limit resgroup/resgroup_memory_runaway resgroup/disable_resgroup
+#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_resgroup --dbname=isolation2resgrouptest resgroup/resgroup_views_seg_down
+#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_resgroup --load-extension=gp_inject_fault --dbname=isolation2resgrouptest resgroup/resgroup_bypass_catalog resgroup/resgroup_views resgroup/resgroup_memory_limit
+#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_resgroup --dbname=isolation2resgrouptest resgroup/enable_resgroup_validate resgroup/enable_resgroup
+#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_resgroup --dbname=isolation2resgrouptest resgroup/enable_resgroup_validate resgroup/enable_resgroup resgroup/disable_resgroup resgroup/resgroup_startup_memory
+#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_resgroup --dbname=isolation2resgrouptest resgroup/disable_resgroup
+#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_resgroup --dbname=isolation2resgrouptest resgroup/enable_resgroup_validate resgroup/resgroup_startup_memory
 #./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault frozen_insert_crashMY
 #./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 idle_gang_cleanerMY
 #./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault cancel_query cancel_queryMY
 #./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault uao_crash_compaction_column uao_crash_compaction_row
-#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault segwalrep/fts_unblock_primary segwalrep/recoverseg_from_file
+#./pg_isolation2_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file_isolation2 --load-extension=gp_inject_fault pg_terminate_backendMY
 #make -j$(nproc) installcheck -i
 #test -f regression.diffs && cat regression.diffs
-#) || cat "$HOME/gpdb_src/src/test/isolation2/regression.diffs" 2>&1 | tee "$HOME/isolation2.log"
-#) 2>&1 | tee "$HOME/isolation2.log"
+#) 2>&1 | tee "$HOME/resgroup.log"
 popd
