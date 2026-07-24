@@ -15,17 +15,17 @@ CONFIGURE_FLAGS=
 #    CONFIGURE_FLAGS="--with-libraries=$HOME/.local$GP_MAJOR/lib"
 #    CONFIGURE_FLAGS="--with-libraries=$GPHOME/lib --with-includes=$GPHOME/include"
 #    export LD_LIBRARY_PATH="$GPHOME/lib"
-if [ "$GP_MAJOR" -eq "6" ]; then
-#    sudo rpm -i --replacepkgs https://downloads.adsw.io/ADB/6.22.0_arenadata38/centos/7/community/x86_64/sigar-1.6.5-1056.git2932df5.el7.x86_64.rpm
-#    sudo rpm -i --replacepkgs http://downloads.adsw.io/ADB/6.22.0_arenadata38/centos/7/community/x86_64/sigar-headers-1.6.5-1056.git2932df5.el7.x86_64.rpm
-    sigar=https://downloads.adsw.io/ADB/6.27.1_arenadata56/ubuntu/22.04/community/x86_64/packages/sigar_1.6.5-3304%2Bgite8961a6_all.deb
-    sigar_headers=https://downloads.adsw.io/ADB/6.27.1_arenadata56/ubuntu/22.04/community/x86_64/packages/sigar-headers_1.6.5-3304%2Bgite8961a6_all.deb
-    pushd /tmp
-    wget "$sigar" "$sigar_headers"
-    sudo apt install -y ./*.deb
-    rm ./*.deb
-    popd
-fi
+#if [ "$GP_MAJOR" -eq "6" ]; then
+##    sudo rpm -i --replacepkgs https://downloads.adsw.io/ADB/6.22.0_arenadata38/centos/7/community/x86_64/sigar-1.6.5-1056.git2932df5.el7.x86_64.rpm
+##    sudo rpm -i --replacepkgs http://downloads.adsw.io/ADB/6.22.0_arenadata38/centos/7/community/x86_64/sigar-headers-1.6.5-1056.git2932df5.el7.x86_64.rpm
+#    sigar=https://downloads.adsw.io/ADB/6.27.1_arenadata56/ubuntu/22.04/community/x86_64/packages/sigar_1.6.5-3304%2Bgite8961a6_all.deb
+#    sigar_headers=https://downloads.adsw.io/ADB/6.27.1_arenadata56/ubuntu/22.04/community/x86_64/packages/sigar-headers_1.6.5-3304%2Bgite8961a6_all.deb
+#    pushd /tmp
+#    wget "$sigar" "$sigar_headers"
+#    sudo apt install -y ./*.deb
+#    rm ./*.deb
+#    popd
+#fi
 #export CONFIGURE_FLAGS="--enable-debug-extensions --with-gssapi --enable-cassert --enable-debug --enable-depend"
 #source "$HOME/gpdb_src/concourse/scripts/common.bash"
 #export enable_debug_extensions=set
@@ -35,10 +35,12 @@ fi
 #export CFLAGS="-O0 -ggdb -g3 -fno-omit-frame-pointer -fno-pie -no-pie -Wclobbered"
 #export CFLAGS="-O0 -ggdb -g3 -fno-omit-frame-pointer -Wclobbered -Werror=maybe-uninitialized -Werror=incompatible-pointer-types"
 export CFLAGS="-O0 -ggdb -g3 -fno-omit-frame-pointer -Wclobbered -Werror=maybe-uninitialized"
+#export CFLAGS="-O0 -ggdb -g3 -fno-omit-frame-pointer -Wclobbered -Werror=maybe-uninitialized -DEXTRA_DYNAMIC_MEMORY_DEBUG"
 #export CFLAGS="-O3 -ggdb -g3 -fno-omit-frame-pointer"
 #export CFLAGS="-O0 -ggdb -g3 -fno-omit-frame-pointer -fno-pie -no-pie -Wclobbered -DEXTRA_DYNAMIC_MEMORY_DEBUG"
 #export CXXFLAGS="-DGPOS_DEBUG -O0 -ggdb -g3 -fno-omit-frame-pointer -fno-pie -no-pie -Wclobbered"
 export CXXFLAGS="-DGPOS_DEBUG -O0 -ggdb -g3 -fno-omit-frame-pointer -Wclobbered -Werror=maybe-uninitialized"
+#export CXXFLAGS="-DGPOS_DEBUG -O0 -ggdb -g3 -fno-omit-frame-pointer -Wclobbered -Werror=maybe-uninitialized -DEXTRA_DYNAMIC_MEMORY_DEBUG"
 #export CXXFLAGS="-DGPOS_DEBUG -O0 -ggdb -g3 -fno-omit-frame-pointer -Wclobbered -Werror=maybe-uninitialized -Werror=incompatible-pointer-types"
 #export CXXFLAGS="-DGPOS_DEBUG -O3 -ggdb -g3 -fno-omit-frame-pointer"
 #CONFIGURE_FLAGS="$CONFIGURE_FLAGS --with-wal-segsize=1"
@@ -59,7 +61,6 @@ export CXXFLAGS="-DGPOS_DEBUG -O0 -ggdb -g3 -fno-omit-frame-pointer -Wclobbered 
     --enable-tap-tests \
     --enable-thread-safety \
     --prefix="$GPHOME" \
-    --with-gssapi \
     --with-gssapi \
     --with-ldap \
     --with-libxml \

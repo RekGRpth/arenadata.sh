@@ -4,25 +4,35 @@
 
 exec 2>&1 &> >(tee "$HOME/unittest.log")
 pushd "$HOME/gpdb_src"
-find -name "objfiles.txt" -delete
-find -name "cdbappendonlyxlog.t" -delete
-find -name "fd_mock.o" -delete
-find -name "fd_mock.c" -delete
-find -name "mcxt.o" -delete
-find -name "libpgcommon.a" -delete
-find -name "file_utils.o" -delete
-find -name "file_utils_srv.o" -delete
-find -name "fe_memutils_srv.o" -delete
+#find -name "cdbappendonlyxlog.t" -delete
+#find -name "fd_mock.c" -delete
+#find -name "fd_mock.o" -delete
+#find -name "fe-connect.o" -delete
+#find -name "fe-connect_mock.c" -delete
+#find -name "fe_memutils_srv.o" -delete
+#find -name "file_utils.o" -delete
+#find -name "file_utils_srv.o" -delete
+#find -name "libpgcommon.a" -delete
+#find -name "mcxt.o" -delete
+#find -name "objfiles.txt" -delete
+#find -name "hash_mock.*" -delete
 popd
-export PATH=${PATH/:\/usr\/lib\/ccache/}
+#export PATH=${PATH/:\/usr\/lib\/ccache/}
 export GPROOT="$GPHOME"
 export CFLAGS=-DUNITTEST
+#pushd "$HOME/gpdb_src/src/backend/tcop"
 #pushd "$HOME/gpdb_src/src/backend/fts"
 #pushd "$HOME/gpdb_src/src/backend/utils/sort"
+#pushd "$HOME/gpdb_src/src/backend/utils/fmgr"
+#pushd "$HOME/gpdb_src/src/backend/utils/mmgr"
+#pushd "$HOME/gpdb_src/src/backend/utils/init"
+pushd "$HOME/gpdb_src/src/backend/utils"
+#pushd "$HOME/gpdb_src/src/backend/utils"
 #pushd "$HOME/gpdb_src/src/backend/cdb/dispatcher"
-pushd "$HOME/gpdb_src/src/backend/cdb"
+#pushd "$HOME/gpdb_src/src/backend/cdb"
 #pushd "$HOME/gpdb_src/src/backend"
 #pushd "$HOME/gpdb_src/src/backend/access/transam"
+#pushd "$HOME/gpdb_src/src/backend/replication"
 #pushd "$HOME/gpdb_src/src/backend/access"
 #pushd "$HOME/gpdb_src"
 #pushd "$HOME/gpdb_src/src/backend/access/appendonly"

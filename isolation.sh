@@ -5,7 +5,7 @@ exec 2>&1 &> >(tee "$HOME/isolation.log")
 pushd "$HOME/gpdb_src/src/test/isolation"
 
 #(
-#export PGOPTIONS="-c optimizer=on"
+export PGOPTIONS="-c optimizer=on"
 export PGOPTIONS="-c optimizer=off"
 #cd "$HOME/gpdb_src/src/test/isolation"
 #make -j$(nproc) installcheck -i
@@ -19,8 +19,12 @@ export PGOPTIONS="-c optimizer=off"
 #./pg_isolation_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file --load-extension=gp_inject_fault predicate-lock-hot-tuple deadlock-parallel
 #./pg_isolation_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file --load-extension=gp_inject_fault ao-insert-eof
 #./pg_isolation_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file --load-extension=gp_inject_fault update-conflict-out
-./pg_isolation_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file --load-extension=gp_inject_fault heap-repeatable-read-vacuum
-./pg_isolation_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file --load-extension=gp_inject_fault --load-extension=pageinspect heap-repeatable-read-vacuum-freeze
+#./pg_isolation_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file --load-extension=gp_inject_fault horizons
+#./pg_isolation_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file --load-extension=gp_inject_fault reindex-schema
+./pg_isolation_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file --load-extension=gp_inject_fault ao-repeatable-read-vacuum
+#./pg_isolation_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file --load-extension=gp_inject_fault partition-concurrent-attach
+#./pg_isolation_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file --load-extension=gp_inject_fault heap-repeatable-read-vacuum
+#./pg_isolation_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file --load-extension=gp_inject_fault --load-extension=pageinspect heap-repeatable-read-vacuum-freeze
 #./pg_isolation_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file --load-extension=gp_inject_fault inplace-inval
 #./pg_isolation_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file --load-extension=gp_inject_fault eval-plan-qual
 #./pg_isolation_regress  --init-file=../../../src/test/regress/init_file --init-file=./init_file --load-extension=gp_inject_fault eval-plan-qual-trigger
