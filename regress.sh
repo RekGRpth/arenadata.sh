@@ -212,7 +212,7 @@ mkdir -p "$HOME/gpdb_src/src/test/regress/testtablespace_database_tablespace"
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file qp_dropped_cols
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file qp_targeted_dispatch
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file qp_gist_indexes4
-#./pg_regress --load-extension=gp_inject_fault --init-file=init_file external_table
+./pg_regress --load-extension=gp_inject_fault --init-file=init_file external_table
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file gp_create_table
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file gp_create_table expand_table_ao
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file updatable_views union olap_window_seq
@@ -231,6 +231,7 @@ mkdir -p "$HOME/gpdb_src/src/test/regress/testtablespace_database_tablespace"
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file pg_lsn
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file orca_groupingsets_fallbacks
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file rangetypes multirangetypes
+#./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 create_type create_table copy int4 int8 rangetypes multirangetypes
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file rangetypes
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file pg_resetwal
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file rpt
@@ -318,7 +319,7 @@ mkdir -p "$HOME/gpdb_src/src/test/regress/testtablespace_database_tablespace"
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 create_type create_table int8 int4 copy create_misc gin gist spgist privileges init_privs collate matview lock replica_identity rowsecurity object_address tablesample
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 create_type create_table int8 int4 copy create_misc gin gist spgist privileges init_privs collate matview lock replica_identity rowsecurity object_address
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 create_type create_table int8 int4 copy create_misc gin gist spgist privileges init_privs collate matview lock replica_identity
-./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 create_type create_table int8 int4 copy create_misc gin gist spgist privileges init_privs collate matview
+#./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 create_type create_table int8 int4 copy create_misc gin gist spgist privileges init_privs collate matview
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 create_type create_table int8 int4 copy create_misc gin
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 create_type create_table int8 int4 copy create_misc gin gist
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file join_hash
