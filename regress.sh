@@ -82,7 +82,7 @@ mkdir -p "$HOME/gpdb_src/src/test/regress/testtablespace_database_tablespace"
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file partition partition1 partition_indexing
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file temp
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 triggers create_type create_table int8 int4 copy create_misc rangefuncs_cdb
-#./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 create_type create_table int8 int4 copy create_misc incremental_sort
+#./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 create_type create_table int8 int4 copy create_misc point polygon circle create_index incremental_sort
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 create_type create_table int8 int4 copy create_misc rangefuncs_cdb
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 create_type create_table int8 int4 copy create_misc rangefuncs_cdb gp_dqa subselect_gp subselect_gp2
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 triggers create_type create_table int8 int4 copy create_misc rangefuncs_cdb gp_dqa subselect_gp subselect_gp2
