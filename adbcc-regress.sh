@@ -3,7 +3,7 @@
 exec 2>&1 &> >(tee "$HOME/adbcc-regress.log")
 
 #(
-#export PGOPTIONS="-c optimizer=off"
+export PGOPTIONS="-c optimizer=off"
 pushd "$HOME/src/adbcc/adcc-extension/regress"
 rm -f expected
 if [[ "$GP_MAJOR" == "6c" || "$GP_MAJOR" == "6" ]]; then
@@ -11,10 +11,10 @@ if [[ "$GP_MAJOR" == "6c" || "$GP_MAJOR" == "6" ]]; then
 elif [[ "$GP_MAJOR" == "7c" || "$GP_MAJOR" == "7" || "$GP_MAJOR" == "8" ]]; then
     ln -fs expected7 expected
 fi
-sudo chmod -R 777 /sys/fs/cgroup/{memory,cpu,cpuset}
-sudo mkdir -p /sys/fs/cgroup/{memory,cpu,cpuset}/gpdb
-sudo chmod -R 777 /sys/fs/cgroup/{memory,cpu,cpuset}/gpdb
-sudo chown -R $USER:$GROUP /sys/fs/cgroup/{memory,cpu,cpuset}/gpdb
+#sudo chmod -R 777 /sys/fs/cgroup/{memory,cpu,cpuset}
+#sudo mkdir -p /sys/fs/cgroup/{memory,cpu,cpuset}/gpdb
+#sudo chmod -R 777 /sys/fs/cgroup/{memory,cpu,cpuset}/gpdb
+#sudo chown -R $USER:$GROUP /sys/fs/cgroup/{memory,cpu,cpuset}/gpdb
 #gpconfig -c gp_resource_manager -v group
 #gpconfig -r gp_resource_manager
 #gpstop -afr
@@ -35,9 +35,10 @@ sudo chown -R $USER:$GROUP /sys/fs/cgroup/{memory,cpu,cpuset}/gpdb
 #"$HOME/gpdb_src/src/test/regress/pg_regress" --load-extension=plpythonu --load-extension=socket create_extension bfv_interconnect
 #"$HOME/gpdb_src/src/test/regress/pg_regress" --load-extension=plpythonu --load-extension=socket create_extension bfv_interconnect cdb_dispatch_ccnt errors errors_resgroup inner_queries misc
 #"$HOME/gpdb_src/src/test/regress/pg_regress" --load-extension=plpython3u --load-extension=socket create_extension socket spill_snapshot
+"$HOME/gpdb_src/src/test/regress/pg_regress" --load-extension=plpython3u --load-extension=socket create_extension partition_pruning
 #"$HOME/gpdb_src/src/test/regress/pg_regress" --load-extension=plpython3u --load-extension=socket create_extension spill_snapshot
 #"$HOME/gpdb_src/src/test/regress/pg_regress" --load-extension=plpython3u --load-extension=socket create_extension hooks_manipulation
-"$HOME/gpdb_src/src/test/regress/pg_regress" --load-extension=plpython3u --load-extension=socket create_extension wait_snapshot
+#"$HOME/gpdb_src/src/test/regress/pg_regress" --load-extension=plpython3u --load-extension=socket create_extension wait_snapshot
 #"$HOME/gpdb_src/src/test/regress/pg_regress" --load-extension=plpython3u --load-extension=socket create_extension failure_in_txn failure_in_txn_2 failure_in_txn_gc failure_ssid failure_ssid_gc deparse_context
 #"$HOME/gpdb_src/src/test/regress/pg_regress" --load-extension=plpythonu --load-extension=socket create_extension failure_in_txn failure_in_txn_2 failure_in_txn_resgroup errors errors_resgroup
 #"$HOME/gpdb_src/src/test/regress/pg_regress" --load-extension=plpythonu --load-extension=socket create_extension failure_in_txn failure_in_txn_2 errors
