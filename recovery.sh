@@ -12,6 +12,8 @@ export PG_REGRESS="$top_builddir/src/test/regress/pg_regress"
 export REGRESS_SHLIB="$top_builddir/src/test/regress/regress.so"
 export TESTDATADIR="$TESTDIR/tmp_check"
 export TESTLOGDIR="$TESTDATADIR/log"
+export with_openssl=yes
+export with_ssl=openssl
 #prove -I ../../../src/test/perl/ t/101_non_standby_recovery.pl
 #prove --verbose -I ../../../src/test/perl/ t/139_archive_mode_always.pl
 #prove --verbose -I ../../../src/test/perl/ t/140_archive_mode_always.pl
@@ -31,7 +33,8 @@ export TESTLOGDIR="$TESTDATADIR/log"
 #prove --verbose -I ../../../src/test/perl/ t/017_shm.pl
 #prove --verbose -I ../../../src/test/perl/ t/020_archive_status.pl
 #prove --verbose -I ../../../src/test/perl/ t/020_archive_status_org.pl
-prove --verbose -I ../../../src/test/perl/ t/003_recovery_targets.pl
+#prove --verbose -I ../../../src/test/perl/ t/003_recovery_targets.pl
+prove --verbose -I ../../../src/test/perl/ t/201_close_connection.pl
 #prove --verbose -I ../../../src/test/perl/ t/019_replslot_limit.pl
 #prove --verbose -I ../../../src/test/perl/ t/001_stream_rep.pl
 #prove --verbose -I ../../../src/test/perl/ t/102_non_standby_recovery.pl
