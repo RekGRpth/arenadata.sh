@@ -12,7 +12,8 @@ killall -9 gpmmon || echo $?
 killall -9 gpsmon || echo $?
 pushd "$HOME/gpdb_src"
     #make -j"$(nproc)" clean
-    make -j"$(nproc)" install
+#    make -j"$(nproc)" install
+    make -k -j"$(nproc)" -Otarget install
     if [[ "$GP_MAJOR" == "6" ]]; then
         if [ -n "${PYTHON3:-}" ]; then
             export PYTHON="$PYTHON3"
