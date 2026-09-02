@@ -35,7 +35,7 @@ ln -fs "$HOME/gpdb_src/src/test/regress/regress.so" "$GPHOME/lib/postgresql/regr
 mkdir -p "$HOME/gpdb_src/src/test/regress/testtablespace_default_tablespace"
 mkdir -p "$HOME/gpdb_src/src/test/regress/testtablespace_database_tablespace"
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 create_type create_table create_function_2 int8 int4 text point polygon circle copy create_misc create_index portals
-./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 create_type create_table create_function_2 int8 int4 text point polygon circle copy create_misc create_index brin_bloom
+#./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 create_type create_table create_function_2 int8 int4 text point polygon circle copy create_misc create_index brin_bloom
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_procedure
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file strings
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file mvcc
@@ -253,7 +253,7 @@ mkdir -p "$HOME/gpdb_src/src/test/regress/testtablespace_database_tablespace"
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file matview_ao
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file alter_table_set_am
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file partition_locking
-#./pg_regress --load-extension=gp_inject_fault --init-file=init_file date expressions
+./pg_regress --load-extension=gp_inject_fault --init-file=init_file date expressions
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file python3/plpython_error
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file partition_pruning
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file interval

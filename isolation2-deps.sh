@@ -26,11 +26,18 @@ exec 2>&1 &> >(tee "$HOME/isolation2.log")
 ISO_DIR="$HOME/gpdb_src/src/test/isolation2"
 
 # ---------------------------------------------------------------------------
-# Curated dependency map:  TEST -> "prereq1 prereq2 ..."
-# Extend as needed. Name/prefix based rules go into deps_for().
+# Dependency map:  TEST -> "prereq1 prereq2 ..."  (expanded recursively).
+# Name/prefix rules (gdd/*) live in deps_for() below.
+#
+# isolation2 tests set up and tear down their own state, so a source scan
+# (deps_analyze.py) finds almost nothing -- only a few obvious pairs are
+# encoded here. Add more by hand as you hit ordering failures.
 # ---------------------------------------------------------------------------
 declare -A DEPS=(
-  [gdd/end]=""
+  [uao_crash_compaction_row]="uao_crash_compaction_column"
+  [gdd/end]="gdd/prepare"
+  [enable_autovacuum]="disable_autovacuum"
+  [idle_gang_cleaner]="enable_autovacuum"
 )
 
 # teardown:  TEST -> "test to run at the very end"
