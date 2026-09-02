@@ -56,7 +56,7 @@ CREATE_RE = re.compile(
     r'(temp\s+|temporary\s+)?'
     r'(table|view|materialized\s+view|sequence|type|domain|'
     r'aggregate|operator\s+class|operator\s+family|index|'
-    r'foreign\s+table)\s+'          # no schema/extension/collation/language:
+    r'access\s+method|foreign\s+table)\s+'   # no schema/extension/collation:
     r'(?:if\s+not\s+exists\s+)?'    # those are environment, not test deps
     r'([a-z_][\w.$"]*)',
     re.I)
@@ -69,7 +69,7 @@ FUNC_RE = re.compile(r'\bcreate\s+(?:or\s+replace\s+)?function\s+([a-z_][\w.$"]*
 # capture the whole (possibly comma-separated) object list after DROP
 DROP_RE = re.compile(r'\bdrop\s+(?:table|view|materialized\s+view|sequence|type|'
                      r'domain|aggregate|index|schema|extension|foreign\s+table|'
-                     r'function|collation)\s+(?:if\s+exists\s+)?'
+                     r'function|collation|access\s+method)\s+(?:if\s+exists\s+)?'
                      r'([a-z_][\w.$"]*(?:\s*,\s*[a-z_][\w.$"]*)*)', re.I)
 
 # common words that are never a meaningful cross-test object dependency
@@ -155,6 +155,19 @@ def parse_schedule_order(sdir, schedules):
     return order
 
 
+def read_expected(sdir, name):
+    """concatenate expected/<name>.out and expected/<name>_N.out variants"""
+    import glob
+    base = os.path.join(sdir, "expected", name)
+    out = []
+    for p in [base + ".out"] + sorted(glob.glob(base + "_*.out")):
+        try:
+            out.append(open(p, encoding="utf-8", errors="replace").read())
+        except OSError:
+            pass
+    return "\n".join(out)
+
+
 def analyze(suite, cfg):
     sdir = cfg["dir"]
     sqldir = os.path.join(sdir, cfg["sqldir"])
@@ -206,8 +219,11 @@ def analyze(suite, cfg):
         net = (created - dropped) - BLACKLIST
         for obj in net:
             provides[obj].add(t)
-        test_text[t] = txt
-        test_created[t] = created | temp_created | dropped
+        test_text[t] = (txt, read_expected(sdir, t))
+        # only names this test CREATES are "its own"; a test that DROPs a name
+        # it never creates (e.g. create_am does `DROP INDEX grect2ind` inside a
+        # rollback block) actually depends on whoever created it
+        test_created[t] = created | temp_created
 
     # regress: tables are CREATEd in create_table.sql but populated in
     # copy.sql -- a test that reads their data really needs `copy`.
@@ -235,9 +251,11 @@ def analyze(suite, cfg):
         if (o in BLACKLIST or o in SQL_KW or o in BUILTIN_TYPES or o in STOPWORDS
                 or SCRATCH_RE.fullmatch(o)):
             return False
-        if '_' in o and len(o) >= 5:      # int8_tbl, tenk1_unique1, hash_i4_heap
+        if '_' in o and len(o) >= 5:            # int8_tbl, tenk1_unique1
             return True
-        return len(o) >= 8               # equipment, brinopers_bloom, ...
+        if len(o) >= 4 and re.search(r'\d', o):  # heap2, onek2, mpp21090
+            return True
+        return len(o) >= 8                      # equipment, brinopers_bloom, ...
 
     def trust(o, ps):
         if not distinctive(o):
@@ -251,15 +269,20 @@ def analyze(suite, cfg):
         return False
     good_provider = {o: ps for o, ps in provides.items() if trust(o, ps)}
 
-    # a test "needs" a provided object if its text contains that identifier
-    # as a bare token -- covers FROM/JOIN, ::type, and names inside string
-    # literals such as brin_summarize_new_values('tenk1_unique1').
+    # a test "needs" a provided object if it mentions that identifier as a bare
+    # token.  In the SQL body any provided name counts (covers FROM/JOIN,
+    # ::type, quoted names like 'tenk1_unique1').  In the *expected output* we
+    # only trust names that clearly look like an object (have a digit or '_'),
+    # since outputs also contain lots of prose and data values.
     ident = re.compile(r'[A-Za-z_][A-Za-z_0-9]*')
     prov_set = set(good_provider)
+    prov_strict = {o for o in prov_set if len(o) >= 5 and re.search(r'[_0-9]', o)}
     for t in tests:
-        toks = {m.group(0).lower() for m in ident.finditer(test_text.get(t, ""))}
+        sql, exp = test_text.get(t, ("", ""))
+        stoks = {m.group(0).lower() for m in ident.finditer(sql)}
+        etoks = {m.group(0).lower() for m in ident.finditer(exp)}
         own = test_created.get(t, set())
-        needs[t] = (toks & prov_set) - own
+        needs[t] = ((stoks & prov_set) | (etoks & prov_strict)) - own
 
     edges = collections.defaultdict(set)  # test -> {prereq test}
     why = collections.defaultdict(set)    # (test, prereq) -> {obj}

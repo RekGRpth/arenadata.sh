@@ -2,7 +2,7 @@
 
 exec 2>&1 &> >(tee "$HOME/regress.log")
 
-#export PGOPTIONS="-c optimizer=off"
+export PGOPTIONS="-c optimizer=off"
 #export PGOPTIONS="-c optimizer_enable_table_alias=off"
 #export PGOPTIONS="-c optimizer=on -c optimizer_enable_table_alias=off"
 #export PGOPTIONS="-c optimizer=on -c jit=on -c jit_above_cost=0 -c optimizer_jit_above_cost=0 -c gp_explain_jit=off"
