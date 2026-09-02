@@ -1,7 +1,8 @@
 #!/bin/bash -eu
 #
-# Run the given regress tests together with every test they depend on.
-# Analogous to ~/src/regress.sh, but the test list is computed from:
+# Run the given regress tests together with every test they depend on,
+# via the canonical `make installcheck-tests TESTS="..."`.
+# The test list is computed from:
 #   * the curated DEPS map below (extend it as needed);
 #   * the ordering of the final list is taken from the schedule files.
 #
@@ -15,7 +16,8 @@
 #   -j on|off  enable JIT tuned for tests (default: off)
 #   -s FILE    schedule file used for ordering (may be given several times;
 #              the first occurrence of a test fixes its position)
-#   -x ARG     extra argument passed to pg_regress (may be given several times)
+#   -x ARG     extra pg_regress option, passed via EXTRA_REGRESS_OPTS
+#              (may be given several times)
 #
 # Examples:
 #   ~/src/regress-deps.sh brin_bloom
@@ -269,9 +271,11 @@ ln -fs "$REGRESS_DIR/regress.so" "$GPHOME/lib/postgresql/regress.so"
 mkdir -p "$REGRESS_DIR/testtablespace_default_tablespace"
 mkdir -p "$REGRESS_DIR/testtablespace_database_tablespace"
 
-cmd=(./pg_regress --load-extension=gp_inject_fault --init-file=init_file)
+# Canonical entry point: `make installcheck-tests TESTS="..."` supplies
+# --init-file / --dlpath / --load-extension=gp_inject_fault itself and
+# rebuilds pg_regress as needed.
+make_args=(installcheck-tests "TESTS=${RESULT[*]}")
 if [[ ${#EXTRA_ARGS[@]} -gt 0 ]]; then
-  cmd+=("${EXTRA_ARGS[@]}")
+  make_args+=("EXTRA_REGRESS_OPTS=${EXTRA_ARGS[*]}")
 fi
-cmd+=("${RESULT[@]}")
-"${cmd[@]}"
+make "${make_args[@]}"

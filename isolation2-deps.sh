@@ -191,7 +191,12 @@ if [[ $JIT == on ]]; then
 fi
 export PGOPTIONS="$PGOPT"
 
+# There is no `make ... TESTS=` target for isolation2, so invoke the driver
+# directly with the same flags the Makefile macro uses (see
+# pg_isolation2_regress_installcheck in src/Makefile.global) plus the two
+# --init-file / --load-extension options from the `installcheck` recipe.
 cmd=(./pg_isolation2_regress
+     --inputdir=.
      --init-file=../../../src/test/regress/init_file
      --init-file=./init_file_isolation2
      --load-extension=gp_inject_fault)
