@@ -182,8 +182,11 @@ def analyze(suite, cfg):
 
     provides = collections.defaultdict(set)   # obj -> {test}
     needs = collections.defaultdict(set)      # test -> {obj}
-    test_text = {}                            # test -> comment-stripped sql
-    test_created = {}                         # test -> {obj it makes/drops}
+    test_text = {}                            # test -> (sql, expected)
+    test_created = {}                         # test -> {obj it creates}
+    made_and_dropped = {}                     # test -> {obj created & dropped}
+    ident = re.compile(r'[A-Za-z_][A-Za-z_0-9]*')
+    global_tokens = collections.Counter()    # every identifier seen anywhere
 
     for t in tests:
         raw = read_test(os.path.join(sqldir, t + ".sql"))
@@ -219,11 +222,17 @@ def analyze(suite, cfg):
         net = (created - dropped) - BLACKLIST
         for obj in net:
             provides[obj].add(t)
-        test_text[t] = (txt, read_expected(sdir, t))
+        exp = read_expected(sdir, t)
+        test_text[t] = (txt, exp)
         # only names this test CREATES are "its own"; a test that DROPs a name
         # it never creates (e.g. create_am does `DROP INDEX grect2ind` inside a
         # rollback block) actually depends on whoever created it
         test_created[t] = created | temp_created
+        made_and_dropped[t] = (created & dropped) - BLACKLIST
+        for tok in ident.finditer(txt):
+            global_tokens[tok.group(0).lower()] += 1
+        for tok in ident.finditer(exp):
+            global_tokens[tok.group(0).lower()] += 1
 
     # regress: tables are CREATEd in create_table.sql but populated in
     # copy.sql -- a test that reads their data really needs `copy`.
@@ -242,6 +251,31 @@ def analyze(suite, cfg):
             provides[obj] = {"copy"}
             fixtures.add(obj)
         forced_edges["copy"].add("create_table")
+
+    # tokenize every test once (sql body + expected output), reused below
+    sql_tokens, exp_tokens = {}, {}
+    for t in tests:
+        sql, exp = test_text.get(t, ("", ""))
+        sql_tokens[t] = {m.group(0).lower() for m in ident.finditer(sql)}
+        exp_tokens[t] = {m.group(0).lower() for m in ident.finditer(exp)}
+
+    # A test may CREATE and then DROP the same object, yet the DROP is expected
+    # to fail (create_am: "Drop table access method, which fails as objects
+    # depend on it" -- heap2 stays alive). If such an object is distinctive and
+    # some *other* test references it, the drop clearly didn't take: restore
+    # the creator as its provider.
+    md_all = {o for s in made_and_dropped.values() for o in s
+              if len(o) >= 4 and re.search(r'[_0-9]', o)}
+    ref_by = collections.defaultdict(set)
+    for t in tests:
+        for o in (sql_tokens[t] | exp_tokens[t]) & md_all:
+            ref_by[o].add(t)
+    for o in md_all:
+        if o in provides:
+            continue
+        owners = {w for w, objs in made_and_dropped.items() if o in objs}
+        if ref_by[o] - owners:          # referenced by a non-owner test
+            provides[o] |= owners
 
     # keep only objects with a small, well-defined provider set and a name
     # distinctive enough that a bare mention in another test is meaningful.
@@ -274,15 +308,12 @@ def analyze(suite, cfg):
     # ::type, quoted names like 'tenk1_unique1').  In the *expected output* we
     # only trust names that clearly look like an object (have a digit or '_'),
     # since outputs also contain lots of prose and data values.
-    ident = re.compile(r'[A-Za-z_][A-Za-z_0-9]*')
     prov_set = set(good_provider)
     prov_strict = {o for o in prov_set if len(o) >= 5 and re.search(r'[_0-9]', o)}
     for t in tests:
-        sql, exp = test_text.get(t, ("", ""))
-        stoks = {m.group(0).lower() for m in ident.finditer(sql)}
-        etoks = {m.group(0).lower() for m in ident.finditer(exp)}
         own = test_created.get(t, set())
-        needs[t] = ((stoks & prov_set) | (etoks & prov_strict)) - own
+        needs[t] = ((sql_tokens[t] & prov_set)
+                    | (exp_tokens[t] & prov_strict)) - own
 
     edges = collections.defaultdict(set)  # test -> {prereq test}
     why = collections.defaultdict(set)    # (test, prereq) -> {obj}
