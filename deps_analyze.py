@@ -64,7 +64,7 @@ CREATE_RE = re.compile(
 CTAS_RE = re.compile(r'\bcreate\s+(temp\s+|temporary\s+)?table\s+(?:if\s+not\s+exists\s+)?'
                      r'([a-z_][\w.$"]*)\s+as\b', re.I)
 SELECT_INTO_RE = re.compile(r'\bselect\b.*?\binto\s+(temp\s+|temporary\s+)?'
-                            r'([a-z_][\w.$"]*)', re.I | re.S)
+                            r'(?:table\s+)?([a-z_][\w.$"]*)', re.I | re.S)
 FUNC_RE = re.compile(r'\bcreate\s+(?:or\s+replace\s+)?function\s+([a-z_][\w.$"]*)', re.I)
 # capture the whole (possibly comma-separated) object list after DROP
 DROP_RE = re.compile(r'\bdrop\s+(?:table|view|materialized\s+view|sequence|type|'
@@ -234,23 +234,35 @@ def analyze(suite, cfg):
         for tok in ident.finditer(exp):
             global_tokens[tok.group(0).lower()] += 1
 
-    # regress: tables are CREATEd in create_table.sql but populated in
-    # copy.sql -- a test that reads their data really needs `copy`.
+    # regress: many shared tables are CREATEd in create_table.sql but only
+    # *populated* later -- tenk1/onek/... in copy.sql, tenk2/fast_emp4000 in
+    # create_misc.sql.  A test that reads their data needs that loader.
     forced_edges = collections.defaultdict(set)
     fixtures = set()          # known shared fixtures -> always trusted
     if suite == "regress":
-        craw = strip_sql_comments(read_test(os.path.join(sqldir, "copy.sql")) or "")
-        loaded = set()
-        for m in re.finditer(r'\bcopy\s+([a-z_][\w.$"]*)\s+from\b', craw, re.I):
-            obj = norm(m.group(1))
-            if obj:
-                loaded.add(obj)
-        # created inside copy.sql itself -> not an external dependency
-        made_in_copy = {norm(m.group(3)) for m in CREATE_RE.finditer(craw)}
-        for obj in loaded - made_in_copy - BLACKLIST:
-            provides[obj] = {"copy"}
-            fixtures.add(obj)
-        forced_edges["copy"].add("create_table")
+        # (loader test, its own prereqs); processed in order
+        LOADERS = [("copy", ["create_table"]),
+                   ("create_misc", ["copy", "create_table"])]
+        for loader, prereqs in LOADERS:
+            lraw = strip_sql_comments(read_test(os.path.join(sqldir, loader + ".sql")) or "")
+            loaded = set()
+            for m in re.finditer(r'\bcopy\s+([a-z_][\w.$"]*)\s+from\b', lraw, re.I):
+                obj = norm(m.group(1))
+                if obj:
+                    loaded.add(obj)
+            for m in re.finditer(r'\binsert\s+into\s+([a-z_][\w.$"]*)\s+'
+                                 r'(?:\([^)]*\)\s*)?(?:select|values)\b', lraw, re.I):
+                obj = norm(m.group(1))
+                if obj:
+                    loaded.add(obj)
+            made_in_loader = {norm(m.group(3)) for m in CREATE_RE.finditer(lraw)}
+            made_in_loader |= {norm(m.group(2)) for m in CTAS_RE.finditer(lraw)}
+            made_in_loader |= {norm(m.group(2)) for m in SELECT_INTO_RE.finditer(lraw)}
+            for obj in loaded - made_in_loader - BLACKLIST:
+                provides[obj] = {loader}
+                fixtures.add(obj)
+            for p in prereqs:
+                forced_edges[loader].add(p)
 
     # tokenize every test once (sql body + expected output), reused below
     sql_tokens, exp_tokens = {}, {}
