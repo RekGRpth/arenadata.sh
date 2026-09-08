@@ -4,6 +4,10 @@
 export TESTDIR="$HOME/gpdb_src/src/test/ssl"
 cd "$TESTDIR"
 rm -rf tmp_check tmp_check_copy
+export with_ssl=openssl
+export MASTER_DATA_DIRECTORY="$COORDINATOR_DATA_DIRECTORY"
+./configure_ssl.sh
+exit
 #make -j$(nproc) installcheck -i
 #exit
 export top_builddir="$HOME/gpdb_src"

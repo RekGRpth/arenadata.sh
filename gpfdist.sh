@@ -9,6 +9,7 @@ make -j$(nproc) install
 cd "$HOME/gpdb_src/src/bin/gpfdist/regress"
 make -j$(nproc) clean
 make -j$(nproc) install
+rm -rf data/gpfdist2/lineitem.tbl.out.zst data/gpfdist2/lineitem.tbl.w
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file alter_table_ao alter_table_aocs
 #../../../src/test/regress/pg_regress --dbname=gpfdist_regression exttab1 custom_format gpfdist2 gpfdist_path gpfdist_ssl gpfdists_multiCA gpfdist2_compress --init-file=init_file
 #../../../../src/test/regress/pg_regress --dbname=gpfdist_regression --init-file=init_file exttab1 gpfdist2

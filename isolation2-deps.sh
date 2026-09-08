@@ -12,8 +12,8 @@
 # Options:
 #   -n         dry run: only print the computed test list and exit
 #   -B         do not prepend the base test(s) ($BASE)
-#   -o on|off  set the `optimizer` GUC (default: off)
-#   -j on|off  enable JIT tuned for tests (default: off)
+#   -o         turn the `optimizer` GUC on (default: off)
+#   -j         enable JIT tuned for tests (default: off)
 #   -s FILE    schedule file used for ordering (may be given several times)
 #   -x ARG     extra argument passed to pg_isolation2_regress (repeatable)
 #
@@ -78,12 +78,12 @@ S_SET=0
 OPTIMIZER=off
 JIT=off
 EXTRA_ARGS=()
-while getopts ":nBo:j:s:x:" opt; do
+while getopts ":nBojs:x:" opt; do
   case $opt in
     n) DRY=1 ;;
     B) BASE="" ;;
-    o) OPTIMIZER="$OPTARG" ;;
-    j) JIT="$OPTARG" ;;
+    o) OPTIMIZER=on ;;
+    j) JIT=on ;;
     s) if [[ $S_SET -eq 0 ]]; then SCHEDULES=(); S_SET=1; fi
        SCHEDULES+=("$OPTARG") ;;
     x) EXTRA_ARGS+=("$OPTARG") ;;
@@ -91,15 +91,6 @@ while getopts ":nBo:j:s:x:" opt; do
   esac
 done
 shift $((OPTIND - 1))
-
-case $OPTIMIZER in
-  on|off) ;;
-  *) echo "invalid -o value: $OPTIMIZER (expected on|off)" >&2; exit 2 ;;
-esac
-case $JIT in
-  on|off) ;;
-  *) echo "invalid -j value: $JIT (expected on|off)" >&2; exit 2 ;;
-esac
 
 if [[ $# -eq 0 ]]; then
   echo "specify at least one test" >&2
