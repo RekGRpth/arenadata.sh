@@ -19,7 +19,7 @@ SUITES = {
     "regress": dict(
         dir=os.path.join(ROOT, "regress"),
         sqldir="sql",
-        schedules=["parallel_schedule", "greenplum_schedule"],
+        schedules=["parallel_schedule", "greenplum_schedule", "greengage_schedule"],
     ),
     "isolation2": dict(
         dir=os.path.join(ROOT, "isolation2"),

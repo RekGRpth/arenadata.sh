@@ -183,11 +183,14 @@ declare -A DEPS=(
   [gp_upgrade_cornercases]="alter_table"
 )
 
-# Tests always prepended to the list (disable with -B).
+# Tests always prepended to the list (disable with -B). Not every branch has
+# this test (e.g. 6.x-based Greengage checkouts have no test_setup at all) --
+# it's silently dropped below if sql/test_setup.sql doesn't exist here.
 BASE="test_setup"
 
-# Schedule files used to order the final list.
-SCHEDULES=(parallel_schedule greenplum_schedule)
+# Schedule files used to order the final list. Try every naming this repo has
+# used across branches; missing ones are skipped with a note below.
+SCHEDULES=(parallel_schedule greenplum_schedule greengage_schedule)
 
 # ---------------------------------------------------------------------------
 DRY=0
@@ -274,6 +277,19 @@ fi
 for t in "${ordered_requested[@]}"; do
   resolve "$t"
 done
+
+# Drop prerequisites that don't exist on this checkout (e.g. `test_setup` on
+# branches that don't have it) -- but keep explicitly requested tests as-is
+# so a genuine typo still surfaces as pg_regress's own "test not found" error.
+FILTERED=()
+for t in "${RESULT[@]}"; do
+  if [[ -f "sql/$t.sql" || -n ${want[$t]+x} ]]; then
+    FILTERED+=("$t")
+  else
+    echo "note: dropping prerequisite not present on this checkout: $t" >&2
+  fi
+done
+RESULT=("${FILTERED[@]}")
 
 echo "=== Final test list (${#RESULT[@]}): ==="
 printf '  %s\n' "${RESULT[@]}"

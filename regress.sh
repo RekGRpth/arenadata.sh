@@ -2,7 +2,7 @@
 
 exec 2>&1 &> >(tee "$HOME/regress.log")
 
-export PGOPTIONS="-c optimizer=off"
+#export PGOPTIONS="-c optimizer=off"
 #export PGOPTIONS="-c optimizer_enable_table_alias=off"
 #export PGOPTIONS="-c optimizer=on -c optimizer_enable_table_alias=off"
 #export PGOPTIONS="-c optimizer=on -c jit=on -c jit_above_cost=0 -c optimizer_jit_above_cost=0 -c gp_explain_jit=off"
@@ -98,7 +98,7 @@ mkdir -p "$HOME/gpdb_src/src/test/regress/testtablespace_database_tablespace"
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file create_function_1 triggers create_type create_table int8 int4 copy create_misc rangetypes rangefuncs
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file external_table create_function_1 triggers create_type create_table int8 int4 copy create_misc rangetypes rangefuncs
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file external_table create_function_1 triggers create_type create_table int8 int4 copy create_misc rangefuncs rangefuncs_cdb gp_dqa subselect_gp subselect_gp2 subselect_gp_indexes
-#./pg_regress --load-extension=gp_inject_fault --init-file=init_file bfv_catalog bfv_olap bfv_statistic bfv_index bfv_partition_plans
+./pg_regress --load-extension=gp_inject_fault --init-file=init_file bfv_catalog bfv_olap bfv_statistic bfv_index bfv_partition_plans
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file bfv_catalog bfv_olap bfv_statistic bfv_index bfv_partition_plans bfv_aggregate
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file bfv_catalog bfv_olap bfv_statistic bfv_index bfv_partition_plans bfv_aggregate bfv_partition table_statistics
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file bfv_catalog bfv_olap bfv_statistic bfv_index bfv_partition_plans bfv_aggregate bfv_partition DML_over_joins gporca
@@ -253,7 +253,7 @@ mkdir -p "$HOME/gpdb_src/src/test/regress/testtablespace_database_tablespace"
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file matview_ao
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file alter_table_set_am
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file partition_locking
-./pg_regress --load-extension=gp_inject_fault --init-file=init_file date expressions
+#./pg_regress --load-extension=gp_inject_fault --init-file=init_file date expressions
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file python3/plpython_error
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file partition_pruning
 #./pg_regress --load-extension=gp_inject_fault --init-file=init_file interval
