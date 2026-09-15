@@ -305,6 +305,67 @@ for t in "${RESULT[@]}"; do
 done
 RESULT=("${FILTERED[@]}")
 
+# --- final ordering: topological sort (Kahn's algorithm), tie-broken by
+# schedule position. DEPS edges are a hard constraint; among tests with no
+# ordering constraint between them, the real schedule position decides.
+#
+# A naive per-requested-test DFS append (the old approach) instead just
+# concatenates each requested test's whole dependency subtree in the order
+# the tests were requested/schedule-sorted *against each other only* -- so a
+# root with no known prerequisites (e.g. partial_table) that happens to sit
+# earlier in the schedule than another requested root (e.g. partition) got
+# spliced in front of that other root's entire prerequisite chain, even
+# though partial_table's real schedule position is much later than
+# create_function_1/create_table/etc. `regress-deps.sh partition` alone
+# passed; `regress-deps.sh partition partial_table` inverted that order and
+# started failing -- this is what fixes it.
+declare -A POS=()          # DFS position above, used only as a tiebreak
+for i in "${!RESULT[@]}"; do
+  POS[${RESULT[$i]}]=$i
+done
+declare -A INCLUDED=()
+for t in "${RESULT[@]}"; do
+  INCLUDED[$t]=1
+done
+declare -A REMAIN=() CHILDREN=()
+for t in "${RESULT[@]}"; do
+  n=0
+  for d in ${DEPS[$t]:-}; do
+    if [[ -n ${INCLUDED[$d]+x} ]]; then
+      n=$((n + 1))
+      CHILDREN[$d]="${CHILDREN[$d]:-} $t"
+    fi
+  done
+  REMAIN[$t]=$n
+done
+TOPO=()
+declare -A EMITTED=()
+left=${#RESULT[@]}
+while [[ $left -gt 0 ]]; do
+  best="" best_order=999999999 best_pos=999999999
+  for t in "${RESULT[@]}"; do
+    if [[ -n ${EMITTED[$t]+x} || ${REMAIN[$t]} -gt 0 ]]; then
+      continue
+    fi
+    o=${ORDER_IDX[$t]:-999999999}
+    p=${POS[$t]}
+    if [[ -z $best || $o -lt $best_order || ($o -eq $best_order && $p -lt $best_pos) ]]; then
+      best=$t; best_order=$o; best_pos=$p
+    fi
+  done
+  if [[ -z $best ]]; then
+    echo "internal error: dependency cycle among: ${RESULT[*]}" >&2
+    exit 1
+  fi
+  TOPO+=("$best")
+  EMITTED[$best]=1
+  left=$((left - 1))
+  for c in ${CHILDREN[$best]:-}; do
+    REMAIN[$c]=$((REMAIN[$c] - 1))
+  done
+done
+RESULT=("${TOPO[@]}")
+
 echo "=== Final test list (${#RESULT[@]}): ==="
 printf '  %s\n' "${RESULT[@]}"
 echo "==="
