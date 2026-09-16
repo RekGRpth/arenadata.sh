@@ -13,7 +13,7 @@ elif [[ "$GP_MAJOR" == "7c" || "$GP_MAJOR" == "7" || "$GP_MAJOR" == "8" ]]; then
     gpconfig -c max_worker_processes -v 100 --coordinatoronly
     gpconfig -c pg_task.json -v "'[{\"data\":\"gpadmin\",\"user\":\"gpadmin\"}]'" --coordinatoronly --skipvalidation
 fi
-gpconfig -c shared_preload_libraries -v "$(psql -At -c "SELECT array_to_string(array_append(string_to_array(current_setting('shared_preload_libraries'), ','), 'pg_task'), ',')" postgres)"
+gpconfig -c shared_preload_libraries -v "$(psql -At -c "SELECT string_agg(lib, ',' ORDER BY min_ord) FROM (SELECT lib, min(ord) AS min_ord FROM unnest(string_to_array(current_setting('shared_preload_libraries'), ',') || ARRAY['pg_task']) WITH ORDINALITY AS t(lib, ord) GROUP BY lib) s" postgres)"
 gpstop -afr
 #exit
 #export PGUSER=postgres
