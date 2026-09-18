@@ -5,11 +5,11 @@ exec 2>&1 &> >(tee "$HOME/isolation.log")
 pushd "$HOME/gpdb_src/src/test/isolation"
 
 #(
-export PGOPTIONS="-c optimizer=on"
+#export PGOPTIONS="-c optimizer=on"
 export PGOPTIONS="-c optimizer=off"
 #cd "$HOME/gpdb_src/src/test/isolation"
-#make -j$(nproc) installcheck -i
-#exit
+make -j$(nproc) installcheck -i
+exit
 #make -j$(nproc) clean
 #make -j$(nproc) install
 #make -j$(nproc) install pg_isolation_regress gpstringsubs.pl gpdiff.pl isolationtester

@@ -34,6 +34,7 @@ export with_ssl=openssl
 #prove --verbose -I ../../../src/test/perl/ t/020_archive_status.pl
 #prove --verbose -I ../../../src/test/perl/ t/020_archive_status_org.pl
 #prove --verbose -I ../../../src/test/perl/ t/003_recovery_targets.pl
+prove --verbose -I ../../../src/test/perl/ t/021_row_visibility.pl
 prove --verbose -I ../../../src/test/perl/ t/024_archive_recovery.pl
 #prove --verbose -I ../../../src/test/perl/ t/201_close_connection.pl
 #prove --verbose -I ../../../src/test/perl/ t/019_replslot_limit.pl
