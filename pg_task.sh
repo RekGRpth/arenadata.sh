@@ -18,5 +18,5 @@ gpstop -afr
 #exit
 #export PGUSER=postgres
 export PGDATABASE=gpadmin
-make -j"$(nproc)" USE_PGXS=1 MYSQL=0 SQLITE3=0 installcheck CONTRIB_TESTDB="$PGDATABASE"
+make -j"$(nproc)" USE_PGXS=1 installcheck CONTRIB_TESTDB="$PGDATABASE" PG_TASK_TEST_INSTANCE=existing
 ) 2>&1 | tee pg_task.log

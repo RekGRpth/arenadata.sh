@@ -296,9 +296,10 @@ done
 # Drop prerequisites that don't exist on this checkout (e.g. `test_setup` on
 # branches that don't have it) -- but keep explicitly requested tests as-is
 # so a genuine typo still surfaces as pg_regress's own "test not found" error.
+# Tests generated from input/*.source have no sql/*.sql until pg_regress runs.
 FILTERED=()
 for t in "${RESULT[@]}"; do
-  if [[ -f "sql/$t.sql" || -n ${want[$t]+x} ]]; then
+  if [[ -f "sql/$t.sql" || -f "input/$t.source" || -n ${want[$t]+x} ]]; then
     FILTERED+=("$t")
   else
     echo "note: dropping prerequisite not present on this checkout: $t" >&2
