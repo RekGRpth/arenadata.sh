@@ -12,6 +12,8 @@
 #                 tree found above FILE)
 #
 # Removed:
+#   - "-- start_ignore" ... "-- end_ignore" blocks, markers included (atmsort
+#     prefixes all their lines with GP_IGNORE:);
 #   - lines starting with HINT:, CONTEXT:, GP_IGNORE: (gpdiff runs diff with
 #     -I HINT: -I CONTEXT: -I GP_IGNORE:);
 #   - lines matching a matchignore pattern of atmsort.pm or of the init files
@@ -123,10 +125,24 @@ for my $file (@ARGV)
 	close $in;
 
 	my ($nremoved, $ncut) = (0, 0);
+	my $depth = 0;
 	my @kept;
 	for my $line (@lines)
 	{
 		my $nl = ($line =~ s/\n\z//) ? "\n" : '';
+
+		# (as atmsort.pm finds the blocks: no nesting, the first end_ignore
+		# ends one, and one outside a block is kept)
+		if ($depth > 0 || $line =~ /--\s*start_ignore\s*$/)
+		{
+			if ($depth == 0)
+				{ $depth = 1; }
+			elsif ($line =~ /--\s*end_ignore\s*$/)
+				{ $depth = 0; }
+			print "$file: removed: $line\n" if $dry || $ENV{VERBOSE};
+			$nremoved++;
+			next;
+		}
 
 		if ($line =~ /^(?:HINT|CONTEXT|GP_IGNORE):/ || grep { $_->($line) } @ignores)
 		{
