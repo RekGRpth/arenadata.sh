@@ -13,6 +13,8 @@ elif [[ "$GP_MAJOR" == "7c" || "$GP_MAJOR" == "7" || "$GP_MAJOR" == "8" ]]; then
     gpconfig -c max_worker_processes -v 100 --coordinatoronly
     gpconfig -c pg_task.json -v "'[{\"data\":\"gpadmin\",\"user\":\"gpadmin\"}]'" --coordinatoronly --skipvalidation
 fi
+# an assert build defaults gp_debug_linger to 120 seconds, of which a backend dying on a FATAL holds all its locks, past every wait of the tests
+gpconfig -c gp_debug_linger -v 0
 gpconfig -c shared_preload_libraries -v "$(psql -At -c "SELECT string_agg(lib, ',' ORDER BY min_ord) FROM (SELECT lib, min(ord) AS min_ord FROM unnest(string_to_array(current_setting('shared_preload_libraries'), ',') || ARRAY['pg_task']) WITH ORDINALITY AS t(lib, ord) GROUP BY lib) s" postgres)"
 gpstop -afr
 #exit

@@ -77,12 +77,14 @@ if [[ "$GP_MAJOR" == "9" ]]; then
     export WITH_MIRRORS=false
     export WITH_STANDBY=false
 fi
-export BLDWRAP_POSTGRES_CONF_ADDONS="$BLDWRAP_POSTGRES_CONF_ADDONS,synchronous_commit=off,full_page_writes=off"
+#export BLDWRAP_POSTGRES_CONF_ADDONS="$BLDWRAP_POSTGRES_CONF_ADDONS,synchronous_commit=off,full_page_writes=off"
+export BLDWRAP_POSTGRES_CONF_ADDONS="$BLDWRAP_POSTGRES_CONF_ADDONS"
 #export BLDWRAP_POSTGRES_CONF_ADDONS="gp_log_stack_trace_lines=false"
 #export BLDWRAP_POSTGRES_CONF_ADDONS="gp_keep_all_xlog=true"
 #export BLDWRAP_POSTGRES_CONF_ADDONS="wal_recycle=off"
 #export BLDWRAP_POSTGRES_CONF_ADDONS="wal_debug=on"
 #make destroy-demo-cluster
+mkdir -p "$(dirname "$DATADIRS")" && chattr +C "$(dirname "$DATADIRS")"
 make create-demo-cluster
 #exit
 createdb --owner="$USER" "$USER"
