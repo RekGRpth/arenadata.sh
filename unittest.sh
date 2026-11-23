@@ -21,9 +21,9 @@ popd
 export GPROOT="$GPHOME"
 export CFLAGS=-DUNITTEST
 #pushd "$HOME/gpdb_src/src/backend/tcop"
-pushd "$HOME/gpdb_src/src/backend/fts"
+#pushd "$HOME/gpdb_src/src/backend/fts"
 #pushd "$HOME/gpdb_src/src/backend/utils/sort"
-#pushd "$HOME/gpdb_src/src/backend/utils/fmgr"
+pushd "$HOME/gpdb_src/src/backend/utils/fmgr"
 #pushd "$HOME/gpdb_src/src/backend/utils/mmgr"
 #pushd "$HOME/gpdb_src/src/backend/utils/init"
 #pushd "$HOME/gpdb_src/src/backend/utils"

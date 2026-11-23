@@ -13,6 +13,10 @@ killall -9 gpsmon || echo $?
 pushd "$HOME/gpdb_src"
     #make -j"$(nproc)" clean
 #    make -j"$(nproc)" install
+#    cmake --build src/backend/gporca/build -j"$(nproc)"
+#    pushd src/backend/gporca
+#        make -j"$(nproc)"
+#    popd
     make -k -j"$(nproc)" -Otarget install
     if [[ "$GP_MAJOR" == "6" ]]; then
         if [ -n "${PYTHON3:-}" ]; then
